@@ -2,6 +2,10 @@
 *.rar
 网盘资料/
 
+# 官方赛题原件与 skill 安装包不入库
+2026赛题/
+skill修复/
+
 # 系统垃圾文件
 Thumbs.db
 desktop.ini
