@@ -1,0 +1,26 @@
+{
+  "target": "T1",
+  "target_xyz": [
+    84.64101615137756,
+    70.0,
+    45.0
+  ],
+  "grid_points": 38025,
+  "feasible_points": 22788,
+  "grid_optimum": {
+    "r_m": 7.5854486299326656,
+    "x": 80.0,
+    "y": 76.0
+  },
+  "theoretical_r_min_m": 7.582060170463998,
+  "optimal_station": {
+    "x": 80.5004,
+    "y": 63.6484,
+    "azimuth_from_target_deg": 236.9,
+    "horizontal_range_m": 7.5821,
+    "elevation_deg": 80.0,
+    "Q_per_m": 0.13189,
+    "dist_to_center_m": 33.415
+  },
+  "optimization_criterion": "maximize Q(s)=1/r(s) over the feasible set (equivalently minimize horizontal range r); tie-break: (1) nearest to dispatch center O, (2) smallest azimuth CCW from east"
+}

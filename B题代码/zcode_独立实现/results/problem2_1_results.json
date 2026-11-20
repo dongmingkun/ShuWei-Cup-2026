@@ -1,0 +1,94 @@
+{
+  "target": "T2",
+  "target_xyz": [
+    11.02885682970026,
+    72.5,
+    35.0
+  ],
+  "vehicles_usable_within_30s": [
+    "V1",
+    "V2",
+    "V3",
+    "V4",
+    "V5"
+  ],
+  "pair_metric_table_m_per_rad": [
+    {
+      "pair": "V1+V3",
+      "metric": 8.229
+    },
+    {
+      "pair": "V1+V4",
+      "metric": 8.229
+    },
+    {
+      "pair": "V1+V5",
+      "metric": 8.229
+    },
+    {
+      "pair": "V3+V4",
+      "metric": 9.3578
+    },
+    {
+      "pair": "V3+V5",
+      "metric": 9.3578
+    },
+    {
+      "pair": "V4+V5",
+      "metric": 9.3578
+    },
+    {
+      "pair": "V1+V2",
+      "metric": 12.9886
+    },
+    {
+      "pair": "V2+V3",
+      "metric": 14.6854
+    },
+    {
+      "pair": "V2+V4",
+      "metric": 14.6854
+    },
+    {
+      "pair": "V2+V5",
+      "metric": 14.6854
+    }
+  ],
+  "optimal": {
+    "vehicles": [
+      "V3",
+      "V5"
+    ],
+    "stations": [
+      [
+        6.0049391200449715,
+        75.43574047551351
+      ],
+      [
+        13.964597305213774,
+        77.5239177096553
+      ]
+    ],
+    "baseline_m": 8.229,
+    "intersection_angle_deg": 90.0,
+    "ranges_m": [
+      5.8188,
+      5.8188
+    ],
+    "elevations_deg": [
+      80.0,
+      80.0
+    ],
+    "travel_times_s": [
+      4.416,
+      13.073
+    ],
+    "sigma_rms_m": 0.14362,
+    "metric_m_per_rad": 8.22901,
+    "MC_CEP50_m": 0.11916,
+    "MC_mean_radial_m": 0.12708,
+    "MC_exact_CEP50_m": 0.1197
+  },
+  "tie_breaking": "among accuracy-optimal pairs: (1) min total travel time, (2) min midpoint distance to dispatch center, (3) lexicographic",
+  "degeneracy_notes": "gamma->0/180 deg: sin(gamma)->0, C diverges (near-parallel LOS); boundary stations (el=80 deg): use margins and robust formulation; see README."
+}

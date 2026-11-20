@@ -1,0 +1,62 @@
+{
+  "model": "dpsi = wrap(bearing(P+d -> T) - bearing(P -> T)) + eps_z + eps_c; e_perp ~ N(0, sigma_L) exactly; linearized dpsi ~ N(0, sigma_tot^2)",
+  "sigma_tot_max_deg": 2.55107,
+  "sigma_L_max_m": 1.63845,
+  "s_star_m": 66.92,
+  "constraint_80m": {
+    "a_plus_80b_le_m": 1.63845,
+    "a_range": [
+      0.0,
+      1.63845
+    ],
+    "b_range": [
+      0.0,
+      0.020481
+    ]
+  },
+  "validation": {
+    "mc_points": {
+      "0": 1.0,
+      "20": 0.9996,
+      "40": 0.9927,
+      "60": 0.9651,
+      "66.92": 0.9501,
+      "80": 0.9155
+    },
+    "analytic_at_s_star": 0.95,
+    "exact_atan_mc_at_s_star": 0.9506,
+    "mc_at_80m": 0.9155425,
+    "note": "linearization error < 0.2 percentage points across 0..80 m; wrap never active (sigma_tot ~ 2.6 deg << 180 deg)"
+  },
+  "contributions": {
+    "shares_at": {
+      "0": {
+        "localization": 0.1559,
+        "zero_offset": 0.5402,
+        "control": 0.3039
+      },
+      "20": {
+        "localization": 0.5013,
+        "zero_offset": 0.3191,
+        "control": 0.1795
+      },
+      "40": {
+        "localization": 0.7129,
+        "zero_offset": 0.1838,
+        "control": 0.1034
+      },
+      "60": {
+        "localization": 0.822,
+        "zero_offset": 0.114,
+        "control": 0.0641
+      },
+      "80": {
+        "localization": 0.881,
+        "zero_offset": 0.0761,
+        "control": 0.0428
+      }
+    },
+    "s_localization_dominates_m": 19.9
+  },
+  "deployment_insight": "for short repositioning the gimbal zero-offset (0.8 deg) dominates -> calibrate; beyond ~34 m of cumulative travel the odometry/localization error dominates -> cap travel or re-localize on the way."
+}
