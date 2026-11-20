@@ -1,0 +1,480 @@
+{
+  "sigma_b_deg": 1.0,
+  "budget_m": 90.0,
+  "r80_m": 5.8188,
+  "analytic_lower_bound_rmse_m": 0.14362,
+  "optimality_gap_m": 0.0,
+  "reachability_counts": {
+    "V1": 83591,
+    "V2": 74509,
+    "V3": 94595,
+    "V4": 88142,
+    "V5": 95103
+  },
+  "coarse_screening": [
+    {
+      "pair": [
+        1,
+        3
+      ],
+      "rmse": 0.14925
+    },
+    {
+      "pair": [
+        1,
+        5
+      ],
+      "rmse": 0.14925
+    },
+    {
+      "pair": [
+        3,
+        4
+      ],
+      "rmse": 0.14925
+    },
+    {
+      "pair": [
+        4,
+        5
+      ],
+      "rmse": 0.14925
+    },
+    {
+      "pair": [
+        1,
+        4
+      ],
+      "rmse": 0.15391
+    },
+    {
+      "pair": [
+        3,
+        5
+      ],
+      "rmse": 0.16007
+    },
+    {
+      "pair": [
+        2,
+        3
+      ],
+      "rmse": 0.31969
+    },
+    {
+      "pair": [
+        2,
+        5
+      ],
+      "rmse": 0.31969
+    },
+    {
+      "pair": [
+        1,
+        2
+      ],
+      "rmse": 0.32308
+    },
+    {
+      "pair": [
+        2,
+        4
+      ],
+      "rmse": 0.32711
+    }
+  ],
+  "refined": [
+    {
+      "pair": [
+        1,
+        3
+      ],
+      "accepted": true,
+      "rmse_m": 0.14362,
+      "gamma_deg": 90.0,
+      "baseline_m": 8.229,
+      "travel_m": [
+        62.942,
+        19.548
+      ],
+      "travel_s": [
+        20.981,
+        6.516
+      ]
+    },
+    {
+      "pair": [
+        1,
+        5
+      ],
+      "accepted": true,
+      "rmse_m": 0.14362,
+      "gamma_deg": 90.0,
+      "baseline_m": 8.229,
+      "travel_m": [
+        62.942,
+        53.724
+      ],
+      "travel_s": [
+        20.981,
+        17.908
+      ]
+    },
+    {
+      "pair": [
+        3,
+        4
+      ],
+      "accepted": true,
+      "rmse_m": 0.14362,
+      "gamma_deg": 90.0,
+      "baseline_m": 8.229,
+      "travel_m": [
+        19.308,
+        82.677
+      ],
+      "travel_s": [
+        6.436,
+        27.559
+      ]
+    },
+    {
+      "pair": [
+        4,
+        5
+      ],
+      "accepted": true,
+      "rmse_m": 0.14362,
+      "gamma_deg": 90.0,
+      "baseline_m": 8.229,
+      "travel_m": [
+        83.083,
+        53.724
+      ],
+      "travel_s": [
+        27.694,
+        17.908
+      ]
+    },
+    {
+      "pair": [
+        1,
+        4
+      ],
+      "accepted": true,
+      "rmse_m": 0.14362,
+      "gamma_deg": 90.0,
+      "baseline_m": 8.229,
+      "travel_m": [
+        55.082,
+        82.671
+      ],
+      "travel_s": [
+        18.361,
+        27.557
+      ]
+    },
+    {
+      "pair": [
+        3,
+        5
+      ],
+      "accepted": true,
+      "rmse_m": 0.14402,
+      "gamma_deg": 87.54,
+      "baseline_m": 8.065,
+      "travel_m": [
+        20.365,
+        48.209
+      ],
+      "travel_s": [
+        6.788,
+        16.07
+      ]
+    },
+    {
+      "pair": [
+        2,
+        3
+      ],
+      "accepted": true,
+      "rmse_m": 0.29625,
+      "gamma_deg": 90.29,
+      "baseline_m": 17.001,
+      "travel_m": [
+        85.463,
+        18.42
+      ],
+      "travel_s": [
+        28.488,
+        6.14
+      ]
+    },
+    {
+      "pair": [
+        2,
+        5
+      ],
+      "accepted": true,
+      "rmse_m": 0.29625,
+      "gamma_deg": 90.29,
+      "baseline_m": 17.001,
+      "travel_m": [
+        85.463,
+        52.595
+      ],
+      "travel_s": [
+        28.488,
+        17.532
+      ]
+    },
+    {
+      "pair": [
+        1,
+        2
+      ],
+      "accepted": true,
+      "rmse_m": 0.30231,
+      "gamma_deg": 88.37,
+      "baseline_m": 17.128,
+      "travel_m": [
+        55.747,
+        85.692
+      ],
+      "travel_s": [
+        18.582,
+        28.564
+      ]
+    },
+    {
+      "pair": [
+        2,
+        4
+      ],
+      "accepted": true,
+      "rmse_m": 0.30741,
+      "gamma_deg": 77.27,
+      "baseline_m": 15.844,
+      "travel_m": [
+        85.231,
+        86.625
+      ],
+      "travel_s": [
+        28.41,
+        28.875
+      ]
+    }
+  ],
+  "chosen": {
+    "vehicle_pair": [
+      3,
+      5
+    ],
+    "station_A_veh": 3,
+    "station_A": [
+      13.9646,
+      77.5239
+    ],
+    "station_B_veh": 5,
+    "station_B": [
+      6.0049,
+      75.4357
+    ],
+    "baseline_m": 8.229,
+    "crossing_angle_deg": 90.0,
+    "travel_time_s": [
+      2.825,
+      15.846
+    ],
+    "rmse_m": 0.14362,
+    "detC_m4": 0.00010637518148631259,
+    "condC": 1.0000000000000016,
+    "ellipse_1sigma_axes_m": [
+      0.10156,
+      0.10156
+    ],
+    "elevation_deg": [
+      80.0,
+      80.0
+    ]
+  },
+  "optimal_family": {
+    "note": "RMSE 下界等号解族: 两站均在 r80 圆且交角 90°, 由旋转角 theta 参数化; 族上精度恒等, 以总行程最小破平",
+    "feasible_arc_deg": [
+      [
+        59.66,
+        244.24
+      ]
+    ],
+    "theta_grid_deg": 0.05,
+    "pair_minima": [
+      {
+        "pair": [
+          1,
+          2
+        ],
+        "total_travel_m": Infinity,
+        "theta_deg": NaN
+      },
+      {
+        "pair": [
+          1,
+          3
+        ],
+        "total_travel_m": 66.617,
+        "theta_deg": 121.95
+      },
+      {
+        "pair": [
+          1,
+          4
+        ],
+        "total_travel_m": 137.599,
+        "theta_deg": 59.7
+      },
+      {
+        "pair": [
+          1,
+          5
+        ],
+        "total_travel_m": 100.921,
+        "theta_deg": 104.85
+      },
+      {
+        "pair": [
+          2,
+          3
+        ],
+        "total_travel_m": Infinity,
+        "theta_deg": NaN
+      },
+      {
+        "pair": [
+          2,
+          4
+        ],
+        "total_travel_m": Infinity,
+        "theta_deg": NaN
+      },
+      {
+        "pair": [
+          2,
+          5
+        ],
+        "total_travel_m": Infinity,
+        "theta_deg": NaN
+      },
+      {
+        "pair": [
+          3,
+          4
+        ],
+        "total_travel_m": 88.757,
+        "theta_deg": 59.7
+      },
+      {
+        "pair": [
+          3,
+          5
+        ],
+        "total_travel_m": 52.467,
+        "theta_deg": 59.7
+      },
+      {
+        "pair": [
+          4,
+          5
+        ],
+        "total_travel_m": 123.047,
+        "theta_deg": 59.7
+      }
+    ],
+    "chosen_theta_deg": 59.7
+  },
+  "sigma_independence": {
+    "sigma=0.5°": {
+      "optimal_tie_group": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          5
+        ]
+      ],
+      "rmse_at_chosen": 0.07181,
+      "note": "argmin 不随 sigma 变化 (C ∝ sigma²)"
+    },
+    "sigma=1.0°": {
+      "optimal_tie_group": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          5
+        ]
+      ],
+      "rmse_at_chosen": 0.14362,
+      "note": "argmin 不随 sigma 变化 (C ∝ sigma²)"
+    },
+    "sigma=2.0°": {
+      "optimal_tie_group": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          5
+        ]
+      ],
+      "rmse_at_chosen": 0.28725,
+      "note": "argmin 不随 sigma 变化 (C ∝ sigma²)"
+    }
+  },
+  "mc_validation": {
+    "n": 200000,
+    "rmse_mc_m": 0.14363,
+    "rmse_analytic_m": 0.14362,
+    "rel_diff_pct": 0.0
+  }
+}
