@@ -1,0 +1,540 @@
+{
+  "objective": "min max_a start_a (GC11: 警报开始=两车ready较大值, 联合观测5s)",
+  "structure_space": "5x3x2x4!/2=360 (五车全用、恰一复用, 受限搜索)",
+  "candidates_per_alert": {
+    "T1": 776,
+    "T2": 623,
+    "T3": 843
+  },
+  "azimuth_guard_deg": 1.0,
+  "stageA_feasible": 360,
+  "stageA_top10": [
+    {
+      "double_veh": 5,
+      "ordered_alerts": [
+        "T1",
+        "T3"
+      ],
+      "max_start_s": 11.225
+    },
+    {
+      "double_veh": 5,
+      "ordered_alerts": [
+        "T1",
+        "T3"
+      ],
+      "max_start_s": 11.225
+    },
+    {
+      "double_veh": 5,
+      "ordered_alerts": [
+        "T1",
+        "T3"
+      ],
+      "max_start_s": 11.225
+    },
+    {
+      "double_veh": 3,
+      "ordered_alerts": [
+        "T1",
+        "T3"
+      ],
+      "max_start_s": 11.377
+    },
+    {
+      "double_veh": 3,
+      "ordered_alerts": [
+        "T1",
+        "T3"
+      ],
+      "max_start_s": 11.377
+    },
+    {
+      "double_veh": 3,
+      "ordered_alerts": [
+        "T1",
+        "T3"
+      ],
+      "max_start_s": 11.377
+    },
+    {
+      "double_veh": 3,
+      "ordered_alerts": [
+        "T1",
+        "T2"
+      ],
+      "max_start_s": 11.663
+    },
+    {
+      "double_veh": 3,
+      "ordered_alerts": [
+        "T1",
+        "T2"
+      ],
+      "max_start_s": 11.663
+    },
+    {
+      "double_veh": 3,
+      "ordered_alerts": [
+        "T1",
+        "T2"
+      ],
+      "max_start_s": 11.663
+    },
+    {
+      "double_veh": 3,
+      "ordered_alerts": [
+        "T3",
+        "T1"
+      ],
+      "max_start_s": 12.036
+    }
+  ],
+  "best": {
+    "structure": {
+      "double_veh": 3,
+      "ordered_alerts": [
+        "T1",
+        "T3"
+      ],
+      "a1_partner": 5,
+      "a2_partner": 1,
+      "a3_vehicles": [
+        2,
+        4
+      ]
+    },
+    "stations": {
+      "V3@T1": [
+        18.0,
+        90.0
+      ],
+      "V5@T1": [
+        51.0,
+        93.0
+      ],
+      "V3@T3": [
+        18.0,
+        90.0
+      ],
+      "V1@T3": [
+        15.0,
+        15.0
+      ],
+      "V2@T2": [
+        70.0,
+        3.5
+      ],
+      "V4@T2": [
+        87.5,
+        73.5
+      ]
+    },
+    "alert_start_s": {
+      "T1": 2.943,
+      "T2": 10.73,
+      "T3": 11.046
+    },
+    "alert_end_s": {
+      "T1": 7.943,
+      "T2": 15.73,
+      "T3": 16.046
+    },
+    "azimuth_gap_deg": {
+      "T1": 17.65,
+      "T2": 50.23,
+      "T3": 59.21
+    },
+    "max_start_s": 11.046,
+    "makespan_s": 21.705,
+    "vehicle_utilization": {
+      "V1": {
+        "busy_s": 8.65,
+        "idle_s": 13.055
+      },
+      "V2": {
+        "busy_s": 20.08,
+        "idle_s": 1.624
+      },
+      "V3": {
+        "busy_s": 18.093,
+        "idle_s": 3.612
+      },
+      "V4": {
+        "busy_s": 18.791,
+        "idle_s": 2.914
+      },
+      "V5": {
+        "busy_s": 8.436,
+        "idle_s": 13.269
+      }
+    },
+    "timelines": {
+      "V1": [
+        {
+          "kind": "depart",
+          "alert": "T3",
+          "t_start": 0.0,
+          "t_end": 0.0,
+          "detail": "自(15.0, 14.0)出发, 路径长 1.000 m"
+        },
+        {
+          "kind": "arrive",
+          "alert": "T3",
+          "t_start": 0.0,
+          "t_end": 0.333,
+          "detail": "到站 (15.0, 15.0)"
+        },
+        {
+          "kind": "slew",
+          "alert": "T3",
+          "t_start": 0.333,
+          "t_end": 1.992,
+          "detail": "pan=357.82° tilt=49.75°, 转位 1.658 s"
+        },
+        {
+          "kind": "wait",
+          "alert": "T3",
+          "t_start": 1.992,
+          "t_end": 11.046,
+          "detail": "等待联合观测同步"
+        },
+        {
+          "kind": "obs",
+          "alert": "T3",
+          "t_start": 11.046,
+          "t_end": 16.046,
+          "detail": "联合观测 5 s"
+        },
+        {
+          "kind": "reset",
+          "alert": "T3",
+          "t_start": 16.046,
+          "t_end": 17.705,
+          "detail": "复位 1.658 s"
+        }
+      ],
+      "V2": [
+        {
+          "kind": "depart",
+          "alert": "T2",
+          "t_start": 0.0,
+          "t_end": 0.0,
+          "detail": "自(88.0, 10.0)出发, 路径长 19.138 m"
+        },
+        {
+          "kind": "arrive",
+          "alert": "T2",
+          "t_start": 0.0,
+          "t_end": 6.379,
+          "detail": "到站 (70.0, 3.5)"
+        },
+        {
+          "kind": "slew",
+          "alert": "T2",
+          "t_start": 6.379,
+          "t_end": 10.73,
+          "detail": "pan=130.52° tilt=19.98°, 转位 4.351 s"
+        },
+        {
+          "kind": "obs",
+          "alert": "T2",
+          "t_start": 10.73,
+          "t_end": 15.73,
+          "detail": "联合观测 5 s"
+        },
+        {
+          "kind": "reset",
+          "alert": "T2",
+          "t_start": 15.73,
+          "t_end": 20.08,
+          "detail": "复位 4.351 s"
+        }
+      ],
+      "V3": [
+        {
+          "kind": "depart",
+          "alert": "T1",
+          "t_start": 0.0,
+          "t_end": 0.0,
+          "detail": "自(14.0, 86.0)出发, 路径长 5.657 m"
+        },
+        {
+          "kind": "arrive",
+          "alert": "T1",
+          "t_start": 0.0,
+          "t_end": 1.886,
+          "detail": "到站 (18.0, 90.0)"
+        },
+        {
+          "kind": "slew",
+          "alert": "T1",
+          "t_start": 1.886,
+          "t_end": 2.943,
+          "detail": "pan=343.29° tilt=31.72°, 转位 1.057 s"
+        },
+        {
+          "kind": "obs",
+          "alert": "T1",
+          "t_start": 2.943,
+          "t_end": 7.943,
+          "detail": "联合观测 5 s"
+        },
+        {
+          "kind": "reset",
+          "alert": "T1",
+          "t_start": 7.943,
+          "t_end": 9.0,
+          "detail": "复位 1.057 s"
+        },
+        {
+          "kind": "depart",
+          "alert": "T3",
+          "t_start": 9.0,
+          "t_end": 9.0,
+          "detail": "自(18.0, 90.0)出发, 路径长 0.000 m"
+        },
+        {
+          "kind": "arrive",
+          "alert": "T3",
+          "t_start": 9.0,
+          "t_end": 9.0,
+          "detail": "到站 (18.0, 90.0)"
+        },
+        {
+          "kind": "slew",
+          "alert": "T3",
+          "t_start": 9.0,
+          "t_end": 11.046,
+          "detail": "pan=298.61° tilt=31.24°, 转位 2.046 s"
+        },
+        {
+          "kind": "obs",
+          "alert": "T3",
+          "t_start": 11.046,
+          "t_end": 16.046,
+          "detail": "联合观测 5 s"
+        },
+        {
+          "kind": "reset",
+          "alert": "T3",
+          "t_start": 16.046,
+          "t_end": 18.093,
+          "detail": "复位 2.046 s"
+        }
+      ],
+      "V4": [
+        {
+          "kind": "depart",
+          "alert": "T2",
+          "t_start": 0.0,
+          "t_end": 0.0,
+          "detail": "自(88.0, 68.0)出发, 路径长 5.523 m"
+        },
+        {
+          "kind": "arrive",
+          "alert": "T2",
+          "t_start": 0.0,
+          "t_end": 1.841,
+          "detail": "到站 (87.5, 73.5)"
+        },
+        {
+          "kind": "slew",
+          "alert": "T2",
+          "t_start": 1.841,
+          "t_end": 7.816,
+          "detail": "pan=180.75° tilt=23.34°, 转位 5.975 s"
+        },
+        {
+          "kind": "wait",
+          "alert": "T2",
+          "t_start": 7.816,
+          "t_end": 10.73,
+          "detail": "等待联合观测同步"
+        },
+        {
+          "kind": "obs",
+          "alert": "T2",
+          "t_start": 10.73,
+          "t_end": 15.73,
+          "detail": "联合观测 5 s"
+        },
+        {
+          "kind": "reset",
+          "alert": "T2",
+          "t_start": 15.73,
+          "t_end": 21.705,
+          "detail": "复位 5.975 s"
+        }
+      ],
+      "V5": [
+        {
+          "kind": "depart",
+          "alert": "T1",
+          "t_start": 0.0,
+          "t_end": 0.0,
+          "detail": "自(50.0, 93.0)出发, 路径长 1.000 m"
+        },
+        {
+          "kind": "arrive",
+          "alert": "T1",
+          "t_start": 0.0,
+          "t_end": 0.333,
+          "detail": "到站 (51.0, 93.0)"
+        },
+        {
+          "kind": "slew",
+          "alert": "T1",
+          "t_start": 0.333,
+          "t_end": 1.885,
+          "detail": "pan=325.64° tilt=46.54°, 转位 1.551 s"
+        },
+        {
+          "kind": "wait",
+          "alert": "T1",
+          "t_start": 1.885,
+          "t_end": 2.943,
+          "detail": "等待联合观测同步"
+        },
+        {
+          "kind": "obs",
+          "alert": "T1",
+          "t_start": 2.943,
+          "t_end": 7.943,
+          "detail": "联合观测 5 s"
+        },
+        {
+          "kind": "reset",
+          "alert": "T1",
+          "t_start": 7.943,
+          "t_end": 9.494,
+          "detail": "复位 1.551 s"
+        }
+      ]
+    }
+  },
+  "doubling_vehicle_route_audit": {
+    "leg1": {
+      "sim_seconds": 1.885618083164127,
+      "audit": {
+        "valid_route": true,
+        "length_m": 5.656854249492381,
+        "travel_seconds": 1.885618083164127,
+        "min_field_gap_m": 10.0,
+        "min_building_gap_m": 10.0,
+        "violations": [],
+        "segments": [
+          {
+            "index": 1,
+            "length_m": 5.656854249492381,
+            "field_gap_m": 10.0,
+            "building_gap_m": 10.0,
+            "nearest_building": "B3"
+          }
+        ]
+      }
+    },
+    "leg2": {
+      "sim_seconds": 0.0,
+      "audit": {
+        "valid_route": true,
+        "length_m": 0.0,
+        "travel_seconds": 0.0,
+        "min_field_gap_m": 10.0,
+        "min_building_gap_m": 14.0,
+        "violations": [],
+        "segments": [
+          {
+            "index": 1,
+            "length_m": 0.0,
+            "field_gap_m": 10.0,
+            "building_gap_m": 14.0,
+            "nearest_building": "B3"
+          }
+        ]
+      }
+    }
+  },
+  "baseline": {
+    "definition": "逐警报独立minimax选站 + T1->T2->T3先到先得指派 + 复用车按边际延迟定序(两顺序取优)",
+    "double_veh": 1,
+    "first_alert_chosen": "T3",
+    "stations": {
+      "V3@T1": [
+        15.0,
+        87.0
+      ],
+      "V5@T1": [
+        51.0,
+        93.0
+      ],
+      "V1@T2": [
+        14.0,
+        14.0
+      ],
+      "V4@T2": [
+        87.5,
+        73.5
+      ],
+      "V1@T3": [
+        15.0,
+        15.0
+      ],
+      "V2@T3": [
+        87.0,
+        9.0
+      ]
+    },
+    "alert_start_s": {
+      "T1": 1.885,
+      "T2": 16.399,
+      "T3": 6.172
+    },
+    "max_start_s": 16.399,
+    "makespan_s": 27.374
+  },
+  "comparison": {
+    "max_start_delta_s": 5.352,
+    "per_alert_delta_s": {
+      "T1": -1.058,
+      "T2": 5.669,
+      "T3": -4.875
+    }
+  },
+  "lower_bound": {
+    "per_alert_s": {
+      "T1": 1.885,
+      "T2": 3.873,
+      "T3": 3.122
+    },
+    "max_lb_s": 3.873,
+    "note": "每警报不计车辆共享的最早可能开始(离散候选集上取min), 任意可行调度的 max start >= 该值"
+  },
+  "gap_s": 7.173,
+  "sensitivity": [
+    {
+      "case": "gimbal-10%",
+      "max_start_s": 11.509,
+      "makespan_s": 22.852
+    },
+    {
+      "case": "gimbal+10%",
+      "max_start_s": 10.668,
+      "makespan_s": 20.766
+    },
+    {
+      "case": "speed-10%",
+      "max_start_s": 11.439,
+      "makespan_s": 22.414
+    },
+    {
+      "case": "speed+10%",
+      "max_start_s": 10.875,
+      "makespan_s": 21.125
+    }
+  ],
+  "compliance": {
+    "stations_feasible": true,
+    "two_vehicles_per_alert": true
+  }
+}
