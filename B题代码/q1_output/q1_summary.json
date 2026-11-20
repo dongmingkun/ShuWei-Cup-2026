@@ -1,0 +1,146 @@
+{
+  "targets": {
+    "T1": {
+      "projection": [
+        84.641,
+        70.0
+      ],
+      "H_m": 45.0,
+      "r80_m": 7.5821,
+      "r80_circle_feasible": true,
+      "feasible_arcs_deg": [
+        [
+          -123.1,
+          160.74
+        ]
+      ],
+      "arc_endpoint_causes": [
+        {
+          "angle_deg": 236.89,
+          "blocked_by": [
+            "clearance"
+          ]
+        },
+        {
+          "angle_deg": 160.75,
+          "blocked_by": [
+            "clearance"
+          ]
+        }
+      ],
+      "optimal_station": {
+        "x": 80.5004,
+        "y": 63.6484,
+        "azimuth_on_circle_deg": 236.9,
+        "pan_deg": 56.9,
+        "tilt_deg": 80.0,
+        "elevation_angle_deg": 80.0,
+        "slew_s": 2.667,
+        "reset_s": 2.667,
+        "dist_to_O_m": 33.415
+      },
+      "area_m2_by_res": {
+        "0.2": 5607.8,
+        "0.1": 5628.7,
+        "0.05": 5619.6
+      },
+      "n_components_0.1m": 1,
+      "largest_component_area_m2": 5628.7
+    },
+    "T2": {
+      "projection": [
+        11.0289,
+        72.5
+      ],
+      "H_m": 35.0,
+      "r80_m": 5.8188,
+      "r80_circle_feasible": true,
+      "feasible_arcs_deg": [
+        [
+          59.66,
+          244.24
+        ]
+      ],
+      "arc_endpoint_causes": [
+        {
+          "angle_deg": 59.65,
+          "blocked_by": [
+            "los"
+          ]
+        },
+        {
+          "angle_deg": 244.25,
+          "blocked_by": [
+            "clearance"
+          ]
+        }
+      ],
+      "optimal_station": {
+        "x": 8.5,
+        "y": 67.2595,
+        "azimuth_on_circle_deg": 244.24,
+        "pan_deg": 64.24,
+        "tilt_deg": 80.0,
+        "elevation_angle_deg": 80.0,
+        "slew_s": 2.667,
+        "reset_s": 2.667,
+        "dist_to_O_m": 44.946
+      },
+      "area_m2_by_res": {
+        "0.2": 6411.7,
+        "0.1": 6432.5,
+        "0.05": 6422.9
+      },
+      "n_components_0.1m": 1,
+      "largest_component_area_m2": 6432.5
+    },
+    "T3": {
+      "projection": [
+        59.8351,
+        13.2948
+      ],
+      "H_m": 55.0,
+      "r80_m": 9.3453,
+      "r80_circle_feasible": true,
+      "feasible_arcs_deg": [
+        [
+          0.0,
+          359.99
+        ]
+      ],
+      "arc_endpoint_causes": [
+        {
+          "angle_deg": 359.99,
+          "blocked_by": []
+        },
+        {
+          "angle_deg": 0.0,
+          "blocked_by": []
+        }
+      ],
+      "optimal_station": {
+        "x": 57.4164,
+        "y": 22.3217,
+        "azimuth_on_circle_deg": 105.0,
+        "pan_deg": 285.0,
+        "tilt_deg": 80.0,
+        "elevation_angle_deg": 80.0,
+        "slew_s": 2.667,
+        "reset_s": 2.667,
+        "dist_to_O_m": 28.655
+      },
+      "area_m2_by_res": {
+        "0.2": 5461.4,
+        "0.1": 5484.8,
+        "0.05": 5472.5
+      },
+      "n_components_0.1m": 1,
+      "largest_component_area_m2": 5484.8
+    }
+  },
+  "validation": {
+    "T1": true,
+    "T2": true,
+    "T3": true
+  }
+}
