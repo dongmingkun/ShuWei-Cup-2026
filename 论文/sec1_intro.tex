@@ -1,0 +1,55 @@
+\section{Introduction}
+\subsection{Background}
+
+When a UAV alert is raised inside a $100\,\mathrm{m}\times100\,\mathrm{m}$ urban field,
+the target's position must be recovered \emph{rapidly} by passive sensors only. The
+2026 ShuWei Cup Problem B formalizes this task: five camera vehicles, each carrying a
+pan--tilt gimbal at height $2\,\mathrm{m}$, must drive to feasible stations and perform
+\emph{joint bearing-only observations}---two vehicles per alert, a $5$-s joint
+observation starting only when both have finished slewing. Feasibility couples three
+geometric constraints (vehicle-disc clearance from boundaries and buildings,
+line-of-sight occlusion by five buildings, gimbal elevation within $[-10^\circ,80^\circ]$),
+and timing couples driving ($3\,\mathrm{m}/\mathrm{s}$), slewing ($30^\circ/\mathrm{s}$)
+and reset rules. Because only bearings are measured, localization accuracy is governed by
+station geometry---baseline length and crossing angle---while the schedule is governed by
+who goes where and in which order
+\cite{torrieri1984,gerkey2004}. The four questions escalate along exactly this chain:
+characterize feasible stations (Q1), deploy for accuracy (Q2(1)), schedule for speed
+(Q2(2)), quantify pointing reliability (Q3), and remain operational under disturbances
+(Q4).
+
+\subsection{Work Overview}
+
+Our solution is a single framework, not four separate models: a \emph{geometry engine}
+(three feasibility constraints plus obstacle-avoiding shortest paths), an \emph{error
+model library}, and an \emph{event-timeline simulator} are shared by all questions
+(Fig.~\ref{fig:framework}); the modeling pipeline follows the standard
+assumption--model--solve--validate paradigm of mathematical modeling
+\cite{jiang2011}. Per question:
+
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item \textbf{Q1} characterizes T1's observable region on a $0.1$-m grid with an
+analytic audit; the optimum attains the provable minimum $r^{*}=7.5821\,\mathrm{m}$ on
+the elevation-bound circle, with a declared tie-break over the optimal arc
+(Section~\ref{sec:q1}).
+\item \textbf{Q2(1)} derives the Fisher-information accuracy law
+$\mathrm{RMSE}=\sigma_b\sqrt{d_1^2+d_2^2}/\sin\gamma$ with attainable lower bound
+$\sigma_b\sqrt{2}\,(H-2)/\tan80^\circ$; exhaustive pair optimization selects V3+V5 with
+$\mathrm{RMSE}=0.14362\,\mathrm{m}$, exactly the bound (Section~\ref{sec:q21}).
+\item \textbf{Q2(2)} formulates min--max scheduling over 360 assignment structures; the
+best schedule starts all alerts within $11.046\,\mathrm{s}$ ($32.6\%$ faster than the
+required nearest-assignment baseline) via a zero-travel shared-station double task
+(Section~\ref{sec:q22}).
+\item \textbf{Q3} propagates the three independent error sources into pointing error
+$\Delta\psi$ and returns the maximal safe travel $s_{\max}=66.9223\,\mathrm{m}$, an
+$(a,b)$ feasibility region for the error-growth law, and a variance-contribution
+decomposition (Section~\ref{sec:q3}).
+\item \textbf{Q4} evaluates 86 disturbance scenarios against retain ($P_0$),
+re-optimize ($P_1$) and rule-based ($P_2$) strategies; $P_1$ restores full completion
+$\eta=1$ everywhere, and a value-boundary analysis identifies when rescheduling is
+worthless (Section~\ref{sec:q4}).
+\end{itemize}
+
+Every question closes with its own validation paragraph; cross-question transfers (the
+region solver, the simulator, the travel-budget insight) are explicit, so the paper reads
+as one model system rather than four disconnected answers.

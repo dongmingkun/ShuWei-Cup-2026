@@ -1,0 +1,45 @@
+\section{Strengths and Weaknesses}\label{sec:sw}
+
+\subsection{Strengths}
+
+\begin{itemize}
+\item \textbf{One geometry engine, four answers.} All four questions consume the same
+closed-set predicate layer (clearance, tangent-blocked line of sight, elevation cone)
+and the same obstacle-aware router, so conventions are consistent and one 51-check
+regression suite certifies them.
+\item \textbf{Closed-form cores with certified numerics.} Q1's feasible arcs and Q2(1)'s
+RMSE law are exact; grids and Monte Carlo only \emph{verify}, and every random
+experiment is seed-fixed and reproducible.
+\item \textbf{Bounds reported honestly.} Q2(1) attains its Fisher lower bound exactly;
+Q2(2)'s optimality gap ($7.17\,\mathrm{s}$) is stated rather than disguised, and the
+restricted structure space is declared as a convention.
+\item \textbf{Bounded, replayable schedules.} Q2(2) and Q4 results are simulator
+replays, not paper arithmetic; route legality is certified by an independent
+segment-level auditor with explicit gap numbers.
+\item \textbf{Robustness as budgets, not anecdotes.} Sensitivity is expressed as full
+feasible regions (Q3's $(a,b)$ map) or swept parameters ($t_{rec}$, $\pm10\%$
+kinematics), each with a quantified margin.
+\end{itemize}
+
+\subsection{Weaknesses}
+
+\begin{itemize}
+\item \textbf{Restricted structure space (Q2(2)/Q4).} We search single-doubler
+structures with at most two task slots per vehicle (360 structures); a multi-doubler
+plan could in principle close part of the $7.17\,\mathrm{s}$ gap, though no explored
+structure beats the incumbent.
+\item \textbf{Visibility-graph conservatism.} Corner-vertex paths can exceed the true
+geodesic optimum by up to $0.643\,\mathrm{m}$ per corner, so all travel times are
+feasible upper bounds.
+\item \textbf{Linearized pointing error (Q3).} The small-angle chain is validated to
+$0.19\%$ relative error and $0.36\,\mathrm{m}$ in $s_{\max}$, but near $s_{\max}$ the
+exact reliability sits $0.07$ pp below $95\%$; operational use should adopt the
+recommended safety margin.
+\item \textbf{Independence assumptions.} The sensor errors are modeled as mutually
+independent Gaussians, as the problem states; correlated or heavy-tailed sensors would
+require the distribution-free route, which collapses the travel budget
+($2.45\,\mathrm{m}$ under Chebyshev).
+\item \textbf{Greedy P2 is a fallback, not a guarantee.} The rule-based dispatcher
+stays within $4.53\,\mathrm{s}$ of P1 on the tested families but carries no optimality
+certificate beyond that empirical range.
+\end{itemize}

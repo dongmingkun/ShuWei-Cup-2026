@@ -1,0 +1,185 @@
+\subsection{Question 4: Disturbance Rescheduling and Strategy Comparison}\label{sec:q4}
+
+\subsubsection{Event Model and State Capture}
+
+The Q2(2) optimum is the operating baseline. At $t=5\,\mathrm{s}$ a disturbance occurs;
+the evaluation window is $[0,60]\,\mathrm{s}$. Three primitive events, used alone or in
+combination, generate 86 test scenarios:
+\begin{itemize}
+\item \textbf{(a) New alert.} $T_4=O+R(\cos\theta,\sin\theta)$, $H=50\,\mathrm{m}$
+(same polar convention as $T_1$--$T_3$); $\theta$ swept over
+$15^\circ{:}30^\circ{:}345^\circ$, $R\in\{30,40,50\}\,\mathrm{m}$ (36 grid points).
+\item \textbf{(b) Vehicle failure.} One of V1--V5 exits the field (non-obstructing);
+any alert whose joint observation has \emph{not} started and whose assigned pair
+contains the failed vehicle is lost under a no-response policy.
+\item \textbf{(c) Communication outage.} Orders issued in $[5,t_{rec}]$ cannot reach
+the vehicles, which continue on the original plan; new orders take effect upon
+recovery, so the decision epoch is $\tau=t_{rec}$.
+\end{itemize}
+At the decision epoch $\tau$ the dispatcher captures the true state: alerts whose joint
+observation already started are \emph{locked} (non-reschedulable; $T_1$ is always
+locked since it started at $2.943\,\mathrm{s}<5\,\mathrm{s}$); vehicles are described
+by position, current pan/tilt attitude, and free time; reassigned vehicles travel from
+their \emph{current} position. No clairvoyance is allowed: neither P0 nor P1 knows the
+disturbance before it happens.
+
+\emph{Metrics.} With $N$ alerts to observe in the window (locked + open + new) and $k$
+alerts whose joint observation successfully starts, the lexicographic objective is
+\begin{equation}\label{eq:q4metric}
+\max\ \eta=\frac{k}{N},\qquad\text{then}\quad\min\ t_{\mathrm{last}}
+=\max_{\text{alert }a}\{\text{start time of }a\},
+\end{equation}
+and an alert that never starts within the window forces $t_{\mathrm{last}}=60\,\mathrm{s}$.
+
+\subsubsection{Strategies}
+
+\begin{itemize}
+\item \textbf{P0 (retain).} Execute the original plan unchanged. Analytic evaluation:
+locked alerts count as covered; an open alert paired with the failed vehicle is lost; the
+new alert, absent from the plan, stays pending ($t_{\mathrm{last}}=60$).
+\item \textbf{P1 (event-triggered re-optimization).} At epoch $\tau$, re-run the Q2(2)
+search machinery (structure enumeration $\to$ greedy screening $\to$ best-response
+refinement) on the captured states, with the same restricted search (each vehicle at most
+two task slots, obstacle-aware travel, azimuth gap $\ge1^\circ$), optimizing
+Eq.~\eqref{eq:q4metric} lexicographically.
+\item \textbf{P2 (rule-based greedy).} An interpretable dispatcher: each round selects the
+alert with the earliest achievable completion and assigns the best currently free vehicle
+pair by minimum joint readiness, iterating until no assignment improves.
+\end{itemize}
+
+The 86 scenarios (Table~\ref{tab:q4design}) combine the primitives: (a) 36; (b) 5; (c) 5
+outage lengths; (a+c) 24 grid points at $t_{rec}\in\{10,30\}$ plus 4 sweep refinements;
+(b+c) 5; (a+b) 5 with the \emph{per-vehicle worst-case} alert position; (a+b+c) 2. The
+grid quantifies geographic difficulty, the sweeps resolve the time dependence, and the
+combination families test whether penalties superpose.\footnote{AI-assistance
+annotation (2/3): the scenario batching, state capture and replay-evaluation code for
+this subsection was implemented with the help of an AI pair-programming assistant; the
+scenario design, the strategy definitions and all result interpretations are the
+team's own (see the Declaration before the References and Appendix~B).}
+
+\begin{table}[!htb]\centering
+\caption{Scenario design: 86 cases in 7 families ($\tau$ = decision epoch).}
+\label{tab:q4design}
+\begin{tabular}{llll}
+\toprule
+Family & Disturbance & $\tau$ & Count \\
+\midrule
+(a)  & new alert $T_4(\theta,R)$, $H=50$          & 5           & 36 \\
+(b)  & single vehicle failure (V1--V5)            & 5           & 5  \\
+(c)  & outage only, $t_{rec}\in\{10,15,20,25,30\}$& $t_{rec}$   & 5  \\
+(a+c)& new alert + outage                         & $t_{rec}$   & 28 \\
+(b+c)& failure + outage ($t_{rec}=10$)            & 10          & 5  \\
+(a+b)& new alert at per-vehicle worst $\theta$ + failure & 5    & 5  \\
+(a+b+c)& triple                                  & 10          & 2  \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{Results}
+
+\textbf{(a) New alert (Fig.~\ref{fig:q4agrid}a).} P0 is constant and bad:
+$T_4$ stays pending, $\eta=0.75$, $t_{\mathrm{last}}=60$. P1 achieves $\eta=1$ in
+\emph{all} 36 cells with $t_{\mathrm{last}}\in[14.19,\,16.61]\,\mathrm{s}$. The pattern
+is structural: the optimal template keeps the original $T_2/T_3$ pairs and dispatches
+the two $T_1$ vehicles V3, V5---freed at $t\approx9.0\,\mathrm{s}$ after reset---to
+$T_4$, giving $t_{\mathrm{last}}\approx 9.0+\text{travel}+\text{slew}$, an almost-flat
+$14.2$--$16.6\,\mathrm{s}$ band with the hardest sectors at
+$\theta\in\{15^\circ,45^\circ\}$ and $\{165^\circ,195^\circ,225^\circ\}$ (farthest from
+the freed pair) and the easiest at $\theta\in\{285^\circ,315^\circ\}$
+($14.19$--$14.49\,\mathrm{s}$). P2 also reaches $\eta=1$ everywhere but peaks at
+$18.49\,\mathrm{s}$ ($\theta=225^\circ$, $R=50$).
+
+\textbf{(b) Vehicle failure (Fig.~\ref{fig:q4agrid}b).} Failing V1--V4 destroys exactly
+one open pair ($T_2$ or $T_3$), so P0 drops to $\eta=2/3$; P1 restores $\eta=1$ at
+$t_{\mathrm{last}}=11.14\,\mathrm{s}$ \emph{identically for all four}---the re-solver
+substitutes an equivalent vehicle (e.g.\ the idle V1 at $(15,15)$ for a failed V2) at
+essentially zero marginal cost, the $0.09\,\mathrm{s}$ increase over the original
+$11.046\,\mathrm{s}$ being the repositioning price. Failing V5 is benign: V5 belongs to
+no open pair, so P0 already keeps $(1,\,11.046)$; re-optimization even improves
+$t_{\mathrm{last}}$ to $10.55\,\mathrm{s}$ by re-pairing V1 onto $T_2$.
+
+\begin{figure}[!htb]\centering
+\includegraphics[width=0.49\textwidth]{fig_q4_a_grid.png}\hfill
+\includegraphics[width=0.49\textwidth]{fig_q4_b_bars.png}
+\caption{Family (a) (left): P1 response time $t_{\mathrm{last}}$ over the new-alert grid
+(36 cells, $\eta=1$ everywhere; P0 constant at $\eta=0.75$, $t_{\mathrm{last}}=60$).
+Family (b) (right): $t_{\mathrm{last}}$ by strategy for each failed vehicle---V1--V4
+failures are interchangeable for P1 ($11.14\,\mathrm{s}$); V5 is the only failure the
+original plan absorbs by itself.}
+\label{fig:q4agrid}
+\end{figure}
+
+\textbf{(c) Pure outage: the value boundary.} For $t_{rec}\in\{10,15,20,25,30\}$,
+\emph{all three strategies coincide} at $(\eta,t_{\mathrm{last}})=(1,\,11.046)$: the
+original plan tolerates outages up to $10\,\mathrm{s}$ untouched, and for $\tau\ge20$
+every alert is already locked, leaving nothing to decide. This zero-gain family
+delimits \emph{when} rescheduling is worthless---a plan should not be disrupted while
+it still works.
+
+\textbf{(a+c) Outage + new alert (Fig.~\ref{fig:q4trec}, top right).} Once a decision must
+actually be made, delay becomes expensive: with $T_4$ at $R=40\,\mathrm{m}$,
+$t_{\mathrm{last}}$ grows from $16.61\,\mathrm{s}$ ($\tau=5$) to
+$19.16$--$21.27\,\mathrm{s}$ ($\tau=10$, worst $\theta=165^\circ$) and
+$31.46$--$33.75\,\mathrm{s}$ ($\tau=30$); the sweep at $\theta=15^\circ$ gives
+$17.83/19.38/19.38/26.46\,\mathrm{s}$ for $t_{rec}=7.5/12.5/15/25$, an average slope of
+$\approx0.49\,\mathrm{s}$ per second of outage with a plateau while vehicles idle.
+Outage hurts roughly twice as fast as it lasts, because it freezes both the information
+channel and the repositioning clock.
+
+\begin{figure}[!htb]\centering
+\includegraphics[width=0.49\textwidth]{fig_q4_trec.png}\hfill
+\includegraphics[width=0.42\textwidth]{fig_q4_value.png}
+\caption{Left: pure outage (c)---all strategies overlap at $11.046\,\mathrm{s}$ (zero
+gain)---and (a+c), $t_{\mathrm{last}}$ versus recovery time $t_{rec}$ at
+$\theta=15^\circ$, $R=40$, P0 at $60\,\mathrm{s}$ throughout. Right: value of
+re-optimization across all 86 scenarios, $\Delta\eta=\eta_{P1}-\eta_{P0}$ versus
+$\Delta t_{\mathrm{last}}$: every scenario gains coverage exactly when P0 drops below
+$\eta=1$.}
+\label{fig:q4trec}
+\end{figure}
+
+\textbf{(b+c) Failure + outage.} At $\tau=10$: V1/V3 failure $\to12.79\,\mathrm{s}$,
+V2/V4 $\to13.02\,\mathrm{s}$ (P2 $15.78$), V5 $\to11.05\,\mathrm{s}$ unchanged; the extra
+$5\,\mathrm{s}$ of silence costs $+1.7\,\mathrm{s}$ over family (b).
+
+\textbf{(a+b) New alert + failure, worst case.} The per-vehicle hardest alert positions
+are $\theta=225^\circ$ (V1, V2, V3, V5) and $\theta=135^\circ$ (V4) at $R=40\,\mathrm{m}$.
+P0 collapses to $\eta=0.5$ (V5-failure: $0.75$); P1 restores $\eta=1$ with
+$t_{\mathrm{last}}\in[20.72,\,24.84]\,\mathrm{s}$---a penalty of $4.9$--$8.8\,\mathrm{s}$
+over the failure-free worst cell, i.e.\ the two disturbances superpose approximately
+additively rather than multiplicatively. V5-failure plus new alert is the single most
+instructive case: P0 loses $T_4$ only ($\eta=0.75$), P1 covers all four alerts at
+$21.68\,\mathrm{s}$.
+
+\textbf{(a+b+c) Triple.} $V2$-failure: $21.35\,\mathrm{s}$; $V3$-failure:
+$24.84\,\mathrm{s}$ ($\tau=10$, $\theta=225^\circ$)---still $\eta=1$.
+
+\textbf{P1 versus P2 (the operational trade-off).} P2 attains $\eta=1$ in all 86
+scenarios---the restricted problem is forgiving enough that a greedy rule never loses
+an alert---but its $t_{\mathrm{last}}$ deficit reaches $4.53\,\mathrm{s}$
+($25.25$ vs.\ $20.72$ in a+b-77) and is systematic in failure families. P1 buys speed
+with a structure search that costs milliseconds; P2 buys explainability. Both dominate
+P0 everywhere except family (c); Fig.~\ref{fig:q4gantt} replays two representative
+P1 schedules from captured states.
+
+\begin{figure}[!htb]\centering
+\includegraphics[width=0.68\textwidth]{fig_q4_gantt_examples.png}
+\caption{Replayed P1 schedules from captured states (pre-$\tau$ execution dimmed, dotted
+line = decision epoch): top, new alert $\theta=195^\circ$, $R=50$ (a-21); bottom, V3
+failure (b-39). V3/V5's second wave after their $T_1$ reset at $9.0\,\mathrm{s}$ is
+visible in both.}
+\label{fig:q4gantt}
+\end{figure}
+
+\subsubsection{Validation}
+
+Every P1/P2 plan is evaluated by replaying the event-driven simulator from the captured
+states (the same simulator that produced the Q2(2) timeline), so reported start times
+are simulation outputs, not analytic estimates; all clearance, azimuth-gap, slot-limit
+and attitude-continuation constraints are re-checked inside the replay. Family (b)'s
+identity across V1--V4 failures was verified to arise from equal-cost substitutions.
+\emph{Conclusion: event-triggered re-optimization restores full alert coverage
+($\eta=1$) in every one of the 86 disturbed scenarios at a worst-case $t_{\mathrm{last}}$
+of $33.75\,\mathrm{s}$, while the original plan loses coverage in 79 of them; the
+rule-based fallback never loses an alert either and remains a certified
+$\le4.5\,\mathrm{s}$ slower.}

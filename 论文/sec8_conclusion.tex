@@ -1,0 +1,37 @@
+\section{Conclusion}\label{sec:conclusion}
+
+We developed a unified observe-deploy-reschedule framework for coordinated vehicle
+localization of UAV alerts over a built 100-m field, and answered all four questions
+with a shared geometry engine:
+
+\begin{itemize}
+\item \textbf{Q1.} The three-alert observable regions are $5628.7/6432.5/5484.8\,
+\mathrm{m}^2$ (T1/T2/T3, single components, $\le0.23\%$ refinement drift), with
+minimum-slew stations at $(80.50,63.65)$, $(8.50,67.26)$ and $(57.42,22.32)$, each with
+slew $=$ reset $=2.667\,\mathrm{s}$ (the $80^\circ$ tilt slew dominates at all three).
+\item \textbf{Q2(1).} Joint RMSE $=\sigma_b\sqrt{d_1^2+d_2^2}/\sin\gamma$ with exact
+lower bound $0.14362\,\mathrm{m}$, attained by six of the ten vehicle pairs; the
+travel-optimized deployment is V3+V5 ($52.47\,\mathrm{m}$ total travel, $0.04^\circ$
+inside the LOS boundary), validated at $0.0\%$ Monte-Carlo deviation.
+\item \textbf{Q2(2).} The min--max schedule starts all alerts by
+$11.046\,\mathrm{s}$ (makespan $21.705\,\mathrm{s}$) via one shared-station doubling
+(V3: $T_1\!\to\!T_3$, zero-travel second leg), beating the greedy baseline by
+$5.352\,\mathrm{s}$ ($32.6\%$); the honest gap to the per-alert lower bound is
+$7.17\,\mathrm{s}$.
+\item \textbf{Q3.} The pointing-error chain caps single-leg travel at
+$s_{\max}=66.92\,\mathrm{m}$ for $95\%$ reliability ($66.56\,\mathrm{m}$ by exact Monte
+Carlo); at the stated 80-m approach the reliability is only $91.54\%$, so reliability,
+not range, binds deployment.
+\item \textbf{Q4.} Event-triggered re-optimization restores full coverage in all 86
+disturbed scenarios (worst $t_{\mathrm{last}}=33.75\,\mathrm{s}$), the original plan
+absorbs only outages $\le10\,\mathrm{s}$ untouched, and the explainable greedy rule is
+a certified $\le4.53\,\mathrm{s}$ slower fallback.
+\end{itemize}
+
+Operationally, the framework converts into three field rules: place station pairs at
+right angles to the alert (Q2(1)'s $\gamma=90^\circ$ law); keep every vehicle's
+cumulative leg under $\approx67\,\mathrm{m}$ (Q3's reliability budget); and trigger a
+re-solve on every disturbance except a pure outage shorter than ten seconds (Q4's value
+boundary). The model layer is deliberately conservative---closed-set constraints,
+upper-bound travel, declared conventions---so every schedule reported here can be
+executed as printed.

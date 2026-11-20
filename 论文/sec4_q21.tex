@@ -1,0 +1,165 @@
+\subsection{Question 2(1): Accuracy Model and Optimal Vehicle--Station Pair}\label{sec:q21}
+
+\subsubsection{Model}
+
+Two vehicles $i=1,2$ at stations $s_i$ observe T2 (projection $T_p$, height $H$) with
+bearing errors $\varepsilon_i\sim N(0,\sigma_b^2)$, $\sigma_b=1^\circ$, independent---the
+textbook bearings-only measurement model \cite{torrieri1984,kay1993}:
+\begin{equation}\label{eq:meas}
+\phi_i=\operatorname{atan2}\bigl(T_y-s_{iy},\,T_x-s_{ix}\bigr)+\varepsilon_i .
+\end{equation}
+Linearizing Eq.~\eqref{eq:meas} at the true position, each bearing constrains the
+position along the unit normal $n_i$ of its sightline, with sensitivity $1/d_i$ where
+$d_i=\|s_i-T_p\|$:
+\begin{equation}\label{eq:fisher}
+I=\sigma_b^{-2}\sum_{i=1}^{2}\frac{n_i n_i^{\mathsf T}}{d_i^{2}},\qquad
+C=I^{-1} .
+\end{equation}
+For the $2\times2$ Gram matrix $G=\sum_i n_i n_i^{\mathsf T}/d_i^2$ one has
+$\operatorname{tr}G=d_1^{-2}+d_2^{-2}$ and $\det G=\sin^2\gamma/(d_1^2d_2^2)$, where
+$\gamma$ is the crossing angle of the two sightlines; hence
+\begin{equation}\label{eq:rmse}
+\operatorname{tr}C=\frac{\operatorname{tr}G}{\det G}\,\sigma_b^{2}
+=\sigma_b^{2}\,\frac{d_1^{2}+d_2^{2}}{\sin^{2}\gamma},
+\qquad
+\mathrm{RMSE}=\sqrt{\operatorname{tr}C}
+=\sigma_b\,\frac{\sqrt{d_1^{2}+d_2^{2}}}{\sin\gamma}.
+\end{equation}
+Equation~\eqref{eq:rmse} is the requested accuracy law in one line: the baseline $B$
+acts through the geometry linking $(d_1,d_2,\gamma)$
+($B^2=d_1^2+d_2^2-2d_1d_2\cos\gamma$), the crossing angle enters as $1/\sin\gamma$.
+Elevation Eq.~\eqref{eq:elev} forces $d_i\ge r_{80}=5.8188\,\mathrm{m}$ for T2, so
+\begin{equation}\label{eq:lb}
+\mathrm{RMSE}\;\ge\;\sigma_b\sqrt{2}\;r_{80}=0.14362\,\mathrm{m},
+\end{equation}
+with equality \emph{iff} $\gamma=90^\circ$ and $d_1=d_2=r_{80}$: both stations on the
+$r_{80}$-circle, diametrically opposed as seen from the target. We adopt
+$\mathrm{RMSE}=\sqrt{\operatorname{tr}C}$ (A-optimality, meters) as primary metric: it
+is proportional to $\sigma_b$, so the optimal pair is independent of $\sigma_b$;
+$\det C$ (D-optimality) and $\operatorname{cond}C$ are secondary diagnostics.
+
+Feasibility: station $s_i$ must lie in $\mathcal{F}_{T_2}\cap\mathcal{R}_i$, where
+$\mathcal{R}_i$ is the $90$-m geodesic disc of vehicle $i$ (30\,s $\times$
+$3\,\mathrm{m}/\mathrm{s}$, Assumption~2). The optimization is
+\begin{equation}\label{eq:q21opt}
+\min_{\{i,j\}\subset\{1..5\}}\;\min_{s_i\in\mathcal{F}_{T_2}\cap\mathcal{R}_i,\;
+s_j\in\mathcal{F}_{T_2}\cap\mathcal{R}_j}\;
+\sigma_b\frac{\sqrt{d_i^{2}+d_j^{2}}}{\sin\gamma(s_i,s_j)} .
+\end{equation}
+
+\subsubsection{Algorithm}
+
+Outer layer: all $\binom{5}{2}=10$ vehicle pairs. Inner layer, per pair: a coarse screen
+over the candidate grid (T2 has 623 grid-feasible cells; per-vehicle reachability counts
+range from $74{,}509$ to $95{,}103$ cells, Fig.~\ref{fig:q2reach}), followed by local
+refinement of the best candidate stations. When the lower bound Eq.~\eqref{eq:lb} is
+attained, the inner problem collapses to a \emph{one-parameter family}: stations at
+target-azimuth $\phi$ and $\phi+180^\circ$ on the $r_{80}$-circle, for feasible $\phi$.
+The family is scanned on a $0.05^\circ$ grid of $\phi$, and ties in RMSE (all equal) are
+broken by the declared secondary criterion: \emph{minimum total travel distance} of the
+two vehicles (schedule-oriented, consistent with Q2(2)). Pairs whose family scan is
+infeasible everywhere are marked infeasible.
+
+\begin{figure}[!htb]\centering
+\includegraphics[width=0.60\textwidth]{fig_q2_1_reachability.png}
+\caption{Reachable sets ($\le90$-m geodesic) intersected with $\mathcal{F}_{T_2}$ for the
+five vehicles. V2's intersection is by far the poorest, foreshadowing its exclusion from
+every competitive pair.}
+\label{fig:q2reach}
+\end{figure}
+
+\subsubsection{Results}
+
+\begin{table}[!htb]\centering\small
+\caption{Refined RMSE by vehicle pair (station-level refinement; travels within the
+30-s budget for all accepted pairs).}
+\label{tab:q21pairs}
+\begin{tabular}{cccccc}
+\toprule
+Pair & RMSE (m) & $\gamma$ ($^\circ$) & $B$ (m) & travels (m) & travels (s) \\
+\midrule
+(1,3) & 0.14362 & 90.00 & 8.229 & 62.9 / 19.5 & 20.98 / 6.52 \\
+(1,4) & 0.14362 & 90.00 & 8.229 & 55.1 / 82.7 & 18.36 / 27.56 \\
+(1,5) & 0.14362 & 90.00 & 8.229 & 62.9 / 53.7 & 20.98 / 17.91 \\
+(3,4) & 0.14362 & 90.00 & 8.229 & 19.3 / 82.7 & 6.44 / 27.56 \\
+(3,5) & 0.14402 & 87.54 & 8.065 & 20.4 / 48.2 & 6.79 / 16.07 \\
+(1,2) & 0.30231 & 88.37 & 17.128 & 55.7 / 85.7 & 18.58 / 28.56 \\
+(2,3) & 0.29625 & 90.29 & 17.001 & 85.5 / 18.4 & 28.49 / 6.14 \\
+(2,4) & 0.30741 & 77.27 & 15.844 & 85.2 / 86.6 & 28.41 / 28.88 \\
+(2,5) & 0.29625 & 90.29 & 17.001 & 85.5 / 52.6 & 28.49 / 17.53 \\
+(4,5) & 0.14362 & 90.00 & 8.229 & 83.1 / 53.7 & 27.69 / 17.91 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:q21pairs} shows a sharp stratification: five pairs (all excluding V2)
+attain the lower bound $0.14362\,\mathrm{m}$ exactly, while every pair containing V2
+stagnates near $0.30\,\mathrm{m}$---more than twice the bound---because V2's reachable
+intersection with $\mathcal{F}_{T_2}$ (Fig.~\ref{fig:q2reach}) forces it far from the
+$r_{80}$-circle. The (3,5) entry ($0.14402\,\mathrm{m}$, $\gamma=87.54^\circ$) is only
+the stall of its local refinement; its $r_{80}$-family is feasible, so the per-pair
+family scan admits a six-pair attaining set, on which the travel tie-break selects
+$\theta=59.7^\circ$ and \textbf{V3+V5} (total travel $52.47$ vs.\
+$66.62$--$137.60\,\mathrm{m}$ for the other five; the chosen five-fold output is
+consolidated in Table~\ref{tab:q21chosen}):
+
+\begin{table}[!htb]\centering\small
+\caption{Required five-fold output for the chosen vehicle--station pair.}
+\label{tab:q21chosen}
+\begin{tabular}{lc}
+\toprule
+Quantity & Value \\
+\midrule
+Vehicle pair & V3 $+$ V5 \\
+Station of V3 / travel & $(13.9646,\;77.5239)$ / $2.825\,\mathrm{s}$ ($8.48\,\mathrm{m}$) \\
+Station of V5 / travel & $(6.0049,\;75.4357)$ / $15.846\,\mathrm{s}$ ($47.54\,\mathrm{m}$) \\
+Baseline $B$ / crossing angle $\gamma$ & $8.229\,\mathrm{m}$ / $90.00^\circ$ \\
+RMSE $=\sqrt{\operatorname{tr}C}$ & $0.14362\,\mathrm{m}$ ($=$ analytic lower bound) \\
+$\det C$ / condition number & $1.064\times10^{-4}\,\mathrm{m}^4$ / $1.000$ \\
+$1\sigma$ error-ellipse axes & $0.10156\,\mathrm{m}$ (isotropic) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The conditional covariance $C$ is \emph{isotropic} ($\operatorname{cond}C=1.000$,
+circular $1\sigma$ ellipse of radius $0.1016$ m): at $\gamma=90^\circ$ with equal
+distances the two bearing constraints are orthogonal---precisely the geometric meaning
+of the bound. The chosen family point lies $0.04^\circ$ from the LOS-limited end of
+T2's feasible arc ($59.66^\circ$); being on the closed feasible set it is admissible,
+and its margin is analyzed in Section~\ref{sec:sens}.
+
+\textbf{Degenerate configurations.} Equation~\eqref{eq:rmse} quantifies the two
+degeneracies the problem asks about. As $\gamma\to0^\circ$ or $180^\circ$,
+$\mathrm{RMSE}\propto1/\sin\gamma$ diverges: the two sightlines become parallel, the
+position along the baseline direction is unconstrained, $\operatorname{cond}C\to\infty$
+and the error ellipse degenerates into a strip (Fig.~\ref{fig:q2gamma}a). The adopted
+mitigation is an azimuth guard $\gamma\ge1^\circ$ (hard feasibility) plus an operating
+recommendation of $30^\circ\le\gamma\le150^\circ$ read off the sweep. Stations at
+region-boundary tangency are handled by the closed-set convention; a margin of
+$\delta$ m costs at most $O(\delta)$ in $d_i$ (Section~\ref{sec:sens}).
+
+\begin{figure}[!htb]\centering
+\includegraphics[width=0.49\textwidth]{fig_q2_1_gamma_degeneracy.png}\hfill
+\includegraphics[width=0.49\textwidth]{fig_q2_1_mc_validation.png}
+\caption{(a) Degeneracy sweep: RMSE ($\propto1/\sin\gamma$) and $\operatorname{cond}C$
+explode as the crossing angle approaches $0^\circ$ or $180^\circ$; the flat band around
+$90^\circ$ is operationally safe. (b) Monte Carlo validation ($2\times10^{5}$ samples):
+the empirical error scatter (round red) is isotropic with empirical RMSE $0.14363$ m,
+matching the analytic covariance ellipse of Eq.~\eqref{eq:fisher} (blue).}
+\label{fig:q2gamma}
+\end{figure}
+
+\subsubsection{Validation}
+
+A Monte Carlo experiment with $2\times10^{5}$ samples (sampling the two bearing errors,
+intersecting the two bearing lines exactly) yields empirical RMSE $=0.14363\,\mathrm{m}$
+against the analytic $0.14362\,\mathrm{m}$---relative deviation $0.0\%$
+(Fig.~\ref{fig:q2gamma}b). The 30-s travel feasibility of both chosen stations was
+re-checked on the visibility graph ($8.48$ m and $47.54$ m, well within $90$ m), and
+both stations were re-verified inside $\mathcal{F}_{T_2}$ by the Q1 solver. Finally,
+because $C\propto\sigma_b^2$, re-running the optimization with
+$\sigma_b\in\{0.5^\circ,1^\circ,2^\circ\}$ rescales every pair's RMSE proportionally
+($0.07181/0.14362/0.28725$ m at the chosen pair) and leaves the argmin unchanged: the
+station-pair selection is structurally independent of the bearing-error magnitude. \emph{Conclusion: the analytic model and the empirical
+estimator agree to within Monte Carlo noise, and the selected pair is optimal for every
+$\sigma_b$.}

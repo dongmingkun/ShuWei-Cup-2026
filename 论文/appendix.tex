@@ -1,0 +1,237 @@
+% Appendix: core code + AI tool usage report
+\lstset{
+  language=Python,
+  basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\bfseries,
+  commentstyle=\itshape\color{gray},
+  stringstyle=\color{blue!60!black},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  breaklines=true,
+  showstringspaces=false,
+  frame=single,
+  framerule=0.3pt,
+  columns=fullflexible,
+  keepspaces=true,
+  xleftmargin=1.2em,
+}
+
+\section*{Appendix}
+\addcontentsline{toc}{section}{Appendix}
+
+\subsection*{A. Core Code}
+\addcontentsline{toc}{subsection}{A. Core Code}
+
+All code is Python~3. The listings below are the computational cores of each question,
+condensed from the full implementation (comments translated into English); the complete
+repository structure is summarized at the end of this appendix. Header comments mark
+where AI assistance was used in implementation.
+
+\begin{lstlisting}[caption={Shared geometry engine: closed-set three-constraint
+predicate (AI-assisted implementation, team-specified conventions).},label={lst:geom}]
+VEHICLE_RADIUS = 1.5; SPEED = 3.0; CAMERA_HEIGHT = 2.0
+ELEV_MIN, ELEV_MAX = -10.0, 80.0        # deg, closed interval
+EPS = 1e-9                              # closed-set tolerance
+
+def dist_point_to_rect(px, py, x0, x1, y0, y1):
+    dx = max(x0 - px, 0.0, px - x1)
+    dy = max(y0 - py, 0.0, py - y1)
+    return math.hypot(dx, dy)
+
+def clearance_ok(p, margin=VEHICLE_RADIUS):
+    # disc center feasible: 1.5 m from field edge and all buildings
+    # (exactly margin -> admissible, closed set)
+    x, y = p
+    if not (margin - EPS <= x <= 100 - margin + EPS
+            and margin - EPS <= y <= 100 - margin + EPS):
+        return False
+    for b in BUILDINGS:
+        if dist_point_to_rect(x, y, b.x0, b.x1, b.y0, b.y1) < margin - EPS:
+            return False
+    return True
+
+def segment_hits_box(p0, p1, box, eps=EPS):
+    # 3D slab test: sightline vs closed prism (tangency = blocked)
+    xmin, xmax, ymin, ymax, zmin, zmax = box
+    d = (p1[0]-p0[0], p1[1]-p0[1], p1[2]-p0[2])
+    tmin, tmax = 0.0, 1.0
+    for a, (lo, hi) in enumerate(((xmin,xmax),(ymin,ymax),(zmin,zmax))):
+        if abs(d[a]) < 1e-15:
+            if p0[a] < lo - eps or p0[a] > hi + eps: return False
+        else:
+            t1, t2 = (lo-p0[a])/d[a], (hi-p0[a])/d[a]
+            if t1 > t2: t1, t2 = t2, t1
+            tmin, tmax = max(tmin, t1), min(tmax, t2)
+            if tmin > tmax + eps: return False
+    return True
+
+def los_ok(p, target):                  # camera at disc center, height 2 m
+    p0 = (p[0], p[1], CAMERA_HEIGHT)
+    p1 = (target.x, target.y, target.H)
+    return not any(segment_hits_box(p0, p1,
+                   (b.x0, b.x1, b.y0, b.y1, 0.0, b.h)) for b in BUILDINGS)
+
+def elevation_ok(p, target):
+    r = math.hypot(target.x - p[0], target.y - p[1])
+    e = math.degrees(math.atan2(target.H - CAMERA_HEIGHT, r))
+    return ELEV_MIN - EPS <= e <= ELEV_MAX + EPS
+
+def is_station_feasible(p, target):
+    return clearance_ok(p) and elevation_ok(p, target) and los_ok(p, target)
+\end{lstlisting}
+
+\begin{lstlisting}[caption={Exact disc-clearance for a travel segment and the
+visibility-graph router (AI-assisted implementation).},label={lst:path}]
+def segment_rect_distance(p, q, x0, x1, y0, y1):
+    # exact min distance segment->rectangle (0 if entering);
+    # inflated rectangles would wrongly reject legal corner-grazing paths
+    if segment_crosses_rect_interior(p, q, (x0, x1, y0, y1)):
+        return 0.0
+    return min(dist_point_to_rect(*p, x0, x1, y0, y1),
+               dist_point_to_rect(*q, x0, x1, y0, y1),
+               *(dist_point_to_segment(cx, cy, p, q)
+                 for cx in (x0, x1) for cy in (y0, y1)))
+
+def shortest_path(start, goal, margin=VEHICLE_RADIUS):
+    # corner visibility graph over inflated buildings + Dijkstra
+    if not (clearance_ok(start, margin) and clearance_ok(goal, margin)):
+        raise ValueError("endpoint violates vehicle geometry")
+    rects = [inflate(b) for b in BUILDINGS]      # b grown by margin
+    nodes = [start, goal] + [corners(r) for r in rects]
+    adj = pairwise_edges(nodes)   # edge kept iff every
+    ...           # segment_rect_distance(node_i, node_j, b) >= margin
+    return dijkstra(adj, 0, 1)    # (length, path); None if unreachable
+\end{lstlisting}
+
+\begin{lstlisting}[caption={Q2(1): Fisher information, RMSE closed form and
+attainable lower bound (derivation by the team, implementation AI-assisted).},
+label={lst:fisher}]
+def fisher_rmse(s1, s2, Tp, sigma_b):
+    # I = sigma_b^-2 * sum(n_i n_i^T / d_i^2);  RMSE = sqrt(tr(C))
+    n = [(Tp - s) / norm(Tp - s) for s in (s1, s2)]
+    d = [norm(Tp - s) for s in (s1, s2)]
+    I = sum(np.outer(ni, ni) / di**2 for ni, di in zip(n, d)) / sigma_b**2
+    C = np.linalg.inv(I)
+    return math.sqrt(np.trace(C))          # = sigma_b*sqrt(d1^2+d2^2)/sin(gamma)
+
+def lower_bound(sigma_b, r80):
+    return math.sqrt(2.0) * sigma_b * r80  # attained iff gamma=90, d1=d2=r80
+\end{lstlisting}
+
+\begin{lstlisting}[caption={Q2(2)/Q4: event-timeline simulator core (joint start =
+max readiness; shared by both questions, replayed from captured states in Q4;
+AI-assisted implementation).},label={lst:sim}]
+def simulate(tasks, t0=0.0):
+    # tasks: per vehicle, ordered (alert, station) items
+    events = {v: [] for v in tasks}
+    ready = {}                              # alert -> [ready_1, ready_2]
+    for v, seq in tasks.items():
+        t = t0
+        pos, pan, tilt = INIT[v], 0.0, 0.0
+        for a, st in seq:
+            L, path = shortest_path(pos, st)        # feasible upper bound
+            events[v].append(("arrive", a, t, t + L / SPEED)); t += L / SPEED
+            s = slew_seconds(pan, tilt, pan_of(st, a), tilt_of(st, a))
+            events[v].append(("slew", a, t, t + s)); t += s
+            ready.setdefault(a, []).append(t)
+            obs_start = max(ready[a])               # joint start
+            events[v].append(("obs", a, obs_start, obs_start + 5.0))
+            t = obs_start + 5.0
+            r = reset_seconds(pan_of(st, a), tilt_of(st, a))
+            events[v].append(("reset", a, t, t + r)); t += r
+            pos, pan, tilt = st, pan_of(st, a), tilt_of(st, a)
+    return events
+\end{lstlisting}
+
+\begin{lstlisting}[caption={Q3: pointing-error propagation chain and the inverse
+$s_{\max}$ (AI-assisted implementation).},label={lst:q3}]
+def sigma_tot(s, a=0.3, b=0.02, r=40.0):
+    sigma_loc = a + b * s
+    sigma1  = (180.0/math.pi) * sigma_loc / r     # deg, small-angle
+    return math.sqrt(sigma1**2 + 0.8**2 + 0.6**2)
+
+def p_reliable(s):                                # P(|dpsi| <= 5 deg)
+    return 2.0 * Phi(5.0 / sigma_tot(s)) - 1.0
+
+def s_max():                                      # invert the 95% chain
+    z = 1.959964                                  # Phi^-1(0.975)
+    sigma_tot_cap = 5.0 / z                       # 2.551067 deg
+    sigma1_cap = math.sqrt(sigma_tot_cap**2 - 0.8**2 - 0.6**2)
+    sigma_loc_cap = sigma1_cap * 40.0 / (180.0/math.pi)   # 1.638446 m
+    return (sigma_loc_cap - 0.3) / 0.02           # 66.9223 m
+\end{lstlisting}
+
+\begin{lstlisting}[caption={Q4: rule-based strategy P2 (earliest-completion greedy;
+AI-assisted implementation, rule designed by the team).},label={lst:p2}]
+def strategy_P2(open_alerts, states, tau):
+    ready = {}                       # alert -> start time once both assigned
+    free  = {v: st for v, st in states.items()}   # pos, attitude, free_t
+    remaining = set(open_alerts)
+    while remaining:
+        best = None
+        for a in remaining:          # earliest achievable completion
+            for v1, v2 in combinations(free, 2):
+                if azimuth_gap_ok(v1, v2, a):
+                    t = joint_ready(v1, v2, a, free, tau)
+                    if best is None or t < best[0]:
+                        best = (t, a, v1, v2)
+        if best is None: return None          # no feasible assignment
+        t, a, v1, v2 = best
+        ready[a] = t; remaining.discard(a)
+        for v in (v1, v2): free.pop(v)        # busy until task done
+    return lexicographic_score(ready)         # (k, then -t_last)
+\end{lstlisting}
+
+\textbf{Repository structure.} \texttt{geometry.py} (shared engine, Listings~1--2),
+\texttt{q1\_observable\_domain.py} (Q1 grid + analytic arc audit),
+\texttt{q2\_1\_localization.py} (Q2(1) Fisher model, Listings~3),
+\texttt{q2\_2\_scheduler.py} (Q2(2) 360-structure search, Listing~4),
+\texttt{q3\_error\_propagation.py} (Q3 chain, Listing~5),
+\texttt{q4\_rescheduler.py} (Q4 scenarios and strategies, Listing~6),
+\texttt{simulator.py}, \texttt{route\_audit.py} (independent route legality audit),
+\texttt{test\_modules.py} (51-check regression suite) and figure scripts; all random
+components use fixed seed 2026 and every reported number and figure regenerates from
+them.
+
+\subsection*{B. AI Tool Usage Report}
+\addcontentsline{toc}{subsection}{B. AI Tool Usage Report}
+
+\noindent\textbf{Tool.} Qoder Desktop built-in AI pair-programming assistant
+(Qoder, \url{https://qoder.com}), used during 2026-11-20/21 in the team's development
+environment.
+
+\medskip
+\noindent\textbf{Scope of use.}
+\begin{enumerate}
+\item \textbf{Code implementation and debugging.} Translating the team's
+model specifications into Python (geometry predicates, visibility-graph routing,
+Fisher-information computation, 360-structure scheduler, error-propagation chain,
+86-scenario rescheduler), fixing numerical defects found by tests (e.g.\ a
+sharp-corner clearance over-approximation in the inflated-rectangle edge test), and
+running the 51-check regression suite.
+\item \textbf{Verification tooling.} Implementing the exact-geometry Monte Carlo
+replays (seed 2026), the independent route-leg auditor, and the scenario batch
+evaluation used in Q4.
+\item \textbf{Language and typesetting.} Polishing English wording of sections whose
+content, structure, derivations and numbers the team supplied; \LaTeX{} formatting
+against the official template.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{What the AI did not do.} The AI did not originate the modeling
+approach, the convention interpretations of the problem statement, the mathematical
+derivations (observable-region arcs, Fisher lower bound and its attainment condition,
+min--max structure enumeration, error-propagation chain), the optimality and
+validation arguments, or the conclusions. All such content was specified, verified
+numerically, and approved by the team; every reported number traces to a team-run
+script listed in Appendix~A.
+
+\medskip
+\noindent\textbf{Usage records.} Sessions are logged in the team's shared repository
+(commit history and analysis notes); three substantive in-text annotations appear at
+\S2.1 (footnote), \S4.5 (footnote), and the Appendix~A listing headers, consistent
+with this report and with the Declaration before the References.
+
+\medskip
+\noindent\textbf{Responsibility.} The team takes full responsibility for the validity
+of the models, the correctness of the code, and all conclusions of this paper.

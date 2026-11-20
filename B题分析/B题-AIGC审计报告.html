@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>BZD 数模论文 AI 痕迹审计报告 — 2026 数维杯秋季赛 B 题（main.pdf）</title>
+<style>
+  body{font-family:"Microsoft YaHei",Segoe UI,Arial,sans-serif;max-width:980px;margin:24px auto;color:#222;line-height:1.55;padding:0 16px}
+  h1{font-size:22px;border-bottom:3px solid #2c3e50;padding-bottom:8px}
+  h2{font-size:18px;margin-top:30px;border-left:5px solid #2c3e50;padding-left:10px}
+  table{border-collapse:collapse;width:100%;font-size:14px;margin:10px 0}
+  th,td{border:1px solid #bbb;padding:6px 8px;text-align:left;vertical-align:top}
+  th{background:#ecf0f1}
+  .card{border-radius:6px;padding:12px 16px;margin:10px 0}
+  .red{background:#fdecea;border:2px solid #c0392b}
+  .orange{background:#fef5e7;border-left:6px solid #e67e22}
+  .yellow{background:#fef9e7;border-left:6px solid #f39c12}
+  .green{background:#eafaf1;border-left:6px solid #27ae60}
+  .score{font-size:34px;font-weight:bold}
+  .bzd{color:#7f8c8d;font-size:12px;text-align:center;margin-top:30px}
+  .mono{font-family:Consolas,monospace;background:#f4f4f4;padding:1px 4px;border-radius:3px}
+</style>
+</head>
+<body>
+
+<h1>数学建模论文 AI 痕迹审计报告（完整审查版）</h1>
+<p><b>对象</b>：D:\数维杯\论文\main.pdf（2026 数维杯秋季赛 B 题，英文，29 页 = 摘要 1 + 目录 1 + 正文 23 + 附录 4）<br>
+<b>工具</b>：BZD 论文 AI 痕迹审计工具 v2.2（两层递进 + 9 维融合）<br>
+<b>输入材料</b>：论文 PDF + 赛题 + 代码仓库与求解器 JSON 输出 → 置信度 = 高（±5–8 分）<br>
+<b>审计日期</b>：2026-11-21</p>
+
+<h2>零、最终结论</h2>
+<div class="card green">
+  <div class="score">🟢 最终 AI 风险分 = 8 / 100（低风险，可直接接收）</div>
+  <p><b>第一层风险分</b> = 100 − 91.8 = 8.2　｜　<b>第二层风险分</b> = 100 − 92 = 8　｜　<b>最终</b> = (8.2+8)/2 ≈ 8</p>
+  <p>无任何一票否决项触发（文献全部真实、数值全部自洽、无虚构检验）。语言层面呈"人主导的渐进建模 + 高数值密度"特征：连接词密度 3.9%、拔高词密度 3.9% 且全部伴随数字。已按竞赛要求配置 3 处文内 AI 标注 + 附录 B 独立使用报告，披露与使用范围一致。</p>
+</div>
+
+<h2>一、第一层：9 维融合检测（语言 60% + 事实 40%）</h2>
+<p>说明：本论文为英文，维度 1/2/3/5/6 的词表与阈值按英文学术文本等价适配；维度 4 的被动句阈值同时对照英文学术写作基线（方法部分通常 25%–35%）。</p>
+
+<h3>语言层面（权重 60%）</h3>
+<table>
+<tr><th>维度</th><th>得分</th><th>权重</th><th>贡献</th><th>证据 / 测量值</th></tr>
+<tr style="background:#eafaf1"><td>1 高频连接词密度</td><td>100</td><td>20%</td><td>20.0</td><td>272 句中 11 处（therefore×2、hence×2、overall×2、additionally×1…），密度 <b>3.9%</b>（&lt;8% 阈值）</td></tr>
+<tr style="background:#eafaf1"><td>2 排比 / 同构句式</td><td>90</td><td>12%</td><td>10.8</td><td>12 处三项列举全部携带数据或具体对象（如 "clearance, line-of-sight (LOS) and gimbal-elevation constraints"）；(a)(b)(c)/(i)(ii)(iii) 为题面场景族与角色编号，非模板套用；First/Second/Finally 作组织词仅 2–3 处，未跨 ≥4 章机械复用</td></tr>
+<tr style="background:#fef9e7"><td>3 拔高词（5 级分类）</td><td>85</td><td>12%</td><td>10.2</td><td>密度 3.9%：robust×7（全部为"灵敏度稳健性"技术义且 7/7 同句含数字）、large×2（带数字）、essential×1（带数字）；<b>1 处 state-of-the-art（§1 背景，无数据）＝ 1 个 L2</b>，未达 2 个 L2 的标红触发线</td></tr>
+<tr style="background:#fef9e7"><td>4 被动句占比</td><td>70</td><td>9%</td><td>6.3</td><td>原始命中 24%（英文学术常态区间内）；机器标记的 3 个"连续 4 句被动"段落经人工复核：2 个为系表结构正则误报（"are exact / is replays"），1 个为竞赛强制要求的 AI 声明段（披露文体天然被动），无真实"生硬被动段"</td></tr>
+<tr style="background:#eafaf1"><td>5 段落/句首规律性</td><td>80</td><td>6%</td><td>4.8</td><td>句首词 top1 "The" = 21.0%（15–28% 绿区）；Figure/Table 开头为图表引出句，属文体常规</td></tr>
+<tr style="background:#fef9e7"><td>6 文本复杂度（TTR / 3-gram）</td><td>65</td><td>1%</td><td>0.65</td><td>3 个 1000 词纯净窗口 TTR = 0.446/0.506/0.459（均值 0.470，处于 0.45–0.55 黄区）；3-gram 重复 9.0% 受公式与标题抽取伪影抬高，真实高频短语 top1 仅 6 次（"the original plan"），无 AI 式数十次短语复读</td></tr>
+</table>
+<p>语言小计：<b>52.75 / 60</b></p>
+
+<h3>事实层面（权重 40%）</h3>
+<table>
+<tr><th>维度</th><th>得分</th><th>权重</th><th>贡献</th><th>证据 / 测量值</th></tr>
+<tr style="background:#eafaf1"><td>7 引文验证（L1–L3）</td><td>100</td><td>15%</td><td>15.0</td><td>17 条文献全部按出现顺序编号且正文均有引用（无凑数文献）；L1 格式（作者/刊名/年/卷期页）合规；L2/L3 在本项目前期"真实文献核验"环节已逐条通过：Torrieri 1984（被动定位统计理论，正文 RMSE/精度律的出处）、Wilson 1927 JASA 22(158):209–212（区间估计）、Saltelli 2008《Primer》（全局灵敏度）、Bar-Shalom 2001（跟踪估计，正文 [15] 误差分解表述与原文一致）均为该领域权威真实文献</td></tr>
+<tr style="background:#eafaf1"><td>8 数值一致性（参数溯源）</td><td>100（含披露加分）</td><td>15%</td><td>15.0</td><td>关键参数全部可溯源且算术自洽（见 §三 参数溯源表）；偏差处均主动披露：蒙特卡洛 0.14363 vs 解析 0.14362（声明为 MC 噪声）、(3,5) 局部细化 0.14402 vs 族扫描 0.14362（§4.2.3 调和句说明两种算法口径）——属人工复算的正面证据，不触发否决</td></tr>
+<tr style="background:#eafaf1"><td>9 术语一致性</td><td>90</td><td>10%</td><td>9.0</td><td>rescheduling(13)=任务名 / re-optimization(7)=P1 策略名，首次出现均定义、后文不混用；vehicle pair 与 station pair 为两类对象非同义词；locked(14)、bearing-only(4)、joint observation(6) 全文统一；"alert（事件）/ target（对象）"在摘要首段即声明约定</td></tr>
+</table>
+<p>事实小计：<b>39 / 40</b>　→　<b>第一层质量分 = 91.75 / 100</b>（风险分 8.25，🟢）</p>
+
+<h2>二、第二层：数学建模逻辑审查</h2>
+<table>
+<tr><th>检查项</th><th>得分</th><th>结论</th></tr>
+<tr><td>2.1 模型常用性</td><td>95</td><td>Q1 闭集约束交集 + 网格枚举（计算几何）；Q2(1) Fisher 信息（bearing-only 定位经典，Torrieri 谱系）；Q2(2) 小规模组合枚举 + 贪婪筛选 + 最优响应细化；Q3 高斯误差传播链解析式；Q4 事件触发重调度 + 字典序指标。全部为数模竞赛常见模型，<b>无深度学习/强化学习等 AI 高频"高大上"模型</b></td></tr>
+<tr><td>2.2 复杂度 vs 收益</td><td>90</td><td>问题规模极小（10 个车辆对、360 个调度结构、86 个场景），穷举 + 局部细化复杂度与规模匹配；MC 2×10⁵ 样本对 0.0% 偏差结论是必要而非过度；网格分辨率 0.1 m 有收敛性漂移量化（≤0.23%）</td></tr>
+<tr><td>2.3 华而不实识别</td><td>95</td><td>五特征逐查：① 模型名透明、实现见附录代码与 Listing；② 每问均有基线（nearest-assignment 基线 16.399 s、P0 保持策略、解析下界）；③ 无超参数调优；④ 无无边界泛化（每问结论限定在题设域内）；⑤ 无模型堆砌（一问一模型 + 共享引擎）</td></tr>
+<tr><td>2.4 模型选择"三问法"</td><td>90</td><td>每问三问均可在正文找到明确回答：为什么 Fisher（纯方位观测的解析 CRLB 结构）、为什么穷举（实例规模小、可证最优）、为什么解析链（三独立误差源可闭式合成）、为什么事件触发重调度（扰动离散到达 + 锁定态结构）</td></tr>
+<tr><td>2.5 建模路径风格</td><td>90</td><td>十项对照呈<b>人主导渐进特征</b>：Q1 可观测域 → Q2(1) 精度律 → Q2(2) 调度 → Q3 可靠性预算 → Q4 扰动，逐问复用同一几何引擎并显式声明接口；主动报告"诚实 gap"（11.046 vs 下界 3.873，7.17 s 不隐瞒）、声明平局裁决口径、披露保守上界读法——AI 式复杂化倾向未检出</td></tr>
+</table>
+<p><b>第二层质量分 = 92 / 100</b>（风险分 8，🟢）</p>
+
+<h2>三、参数溯源表（维度 8 抽验记录）</h2>
+<table>
+<tr><th>参数</th><th>论文位置</th><th>溯源层级</th><th>复算结果</th></tr>
+<tr><td>r* = 7.5821 m（T1 最小目标距离）</td><td>摘要 / §4.1</td><td>L3 物理约束：(45−2)/tan 80°</td><td>43/5.6712818 = 7.58206 ✓（与 q1_summary.json 一致）</td></tr>
+<tr><td>T2 r80 = 5.8188 m（H2=35）、T3 r80 = 9.3453 m（H3=55）</td><td>§4.1 图 3</td><td>L1 赛题高度 + L3 几何</td><td>(35−2)/tan80° = 5.819 ✓；(55−2)/tan80° = 9.345 ✓</td></tr>
+<tr><td>分辨率漂移 ≤0.23%</td><td>摘要</td><td>L2 求解器输出</td><td>三目标 0.1/0.05 m 网格面积差最大值 = T3 的 0.2248% → 0.23% ✓</td></tr>
+<tr><td>RMSE 下界 0.14362 m</td><td>摘要 / §4.2 / 结论</td><td>L3 解析：√2·σ_b·r80(T2)，σ_b=1°</td><td>1.4142×5.8188×0.0174533 = 0.143617 ✓</td></tr>
+<tr><td>32.6% 快于基线</td><td>摘要 / §4.3</td><td>L2 求解器输出</td><td>(16.399−11.046)/16.399 = 32.64% ✓</td></tr>
+<tr><td>诚实 gap 7.17 s</td><td>摘要 / §4.3</td><td>L2 + L3 下界</td><td>11.046 − 3.873 = 7.173 ✓</td></tr>
+<tr><td>slew = reset = 2.667 s</td><td>摘要 / 结论</td><td>L3：80° ÷ 30°/s</td><td>2.6667 ✓</td></tr>
+<tr><td>s_max = 66.9223 m、80 m 处 91.54%</td><td>摘要 / §4.4</td><td>L3 误差链推导（q3 输出复核）</td><td>前期求解与 Codex 交叉复核一致 ✓</td></tr>
+<tr><td>Q4 全套（86 场景、η=1、10.55–33.75 s）</td><td>§4.5 / 结论</td><td>L2 求解器输出（replay 校验）</td><td>与 q4 输出 JSON 一致；重放为仿真输出非算术估计 ✓</td></tr>
+</table>
+
+<h2>四、标红 / 注意项汇总（无红色项）</h2>
+<div class="card orange"><b>🟠 唯一值得处理的点（不扣报告分）</b>：§1 中 1 处 <span class="mono">state-of-the-art</span> 无量化支撑（L2 拔高词）。<b>改法</b>：改为具体指代（如 "existing tracking-grade estimators"）或补一句对比依据；若不动，按规则（1 个 L2）不触发标红。位置：正文第 1 页 §1 Background。</div>
+<div class="card yellow"><b>🟡 注意</b>：① 维度 6 的 TTR 0.470 处于黄区（英文长文 + 公式符号密集所致，短语无复读模式，判定为文体属性而非 AI 痕迹）；② 被动句 24%（英文学术常态，无生硬被动段）。两者均无需改稿。</div>
+
+<h2>五、AI 披露合规性核对（结合当届官方要求）</h2>
+<table>
+<tr><th>要求</th><th>状态</th><th>证据</th></tr>
+<tr><td>恰好在 AI 实质性使用处作 3 处文内标注</td><td>满足</td><td>§2（AI-assistance annotation 1/3）、§4.5（2/3，场景批量与重放评测代码）、附录 A 代码头注释（3/3，随 Listing 分布）</td></tr>
+<tr><td>独立《AI 工具使用情况报告》</td><td>满足</td><td>附录 B：工具（Qoder Desktop 内置助手 + 行内 URL，原参考文献 [18] 已按格式审计意见移除）、使用范围四类、隔离措施、责任声明</td></tr>
+<tr><td>AI 不作为普通参考文献</td><td>满足（本轮修复）</td><td>原 [18] 已删除，改为行内 URL</td></tr>
+<tr><td>使用边界声明（建模/推导/结论归属）</td><td>满足</td><td>附录 B + 声明段："All modeling ideas, mathematical derivations ... produced, checked and approved by the team"</td></tr>
+<tr><td>报告与正文标注一致性</td><td>满足</td><td>附录 B 所列使用范围与 3 处文内标注逐一对应</td></tr>
+</table>
+<p>⏳ 队伍侧待办：《AI 工具使用情况报告》按实际采用情况经全队确认后随提交材料打包（当前文本以 2026-11-20/21 实际使用记录为准）。</p>
+
+<h2>六、评分汇总</h2>
+<table>
+<tr><th>层</th><th>质量分</th><th>风险分（100−质量）</th></tr>
+<tr><td>第一层（9 维加权）</td><td>91.75</td><td>8.25</td></tr>
+<tr><td>第二层（建模逻辑）</td><td>92</td><td>8</td></tr>
+<tr><td><b>最终</b></td><td>—</td><td><b>≈ 8 → 🟢 低风险（0–15 区间）</b></td></tr>
+</table>
+<p><b>置信度</b>：高（论文 + 赛题 + 代码/结果三重输入）。<br>
+<b>声明</b>：本评分为写作痕迹启发式评分，不是作者身份概率，不能替代官方 AIGC 检测服务；已披露的 AI 使用（代码实现、英文润色、排版）按当届规则属合规使用。</p>
+
+<p class="bzd">BZD数模社制作 · bzd-paper-aigc-auditor v2.2 · 审计对象 main.pdf（修订版，2026-11-21 01:30 构建）</p>
+</body>
+</html>

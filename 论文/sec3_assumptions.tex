@@ -1,0 +1,77 @@
+\section{Assumptions and Justifications}
+
+\begin{itemize}\setlength{\itemsep}{4pt}
+\item \textbf{Assumption 1 (station--camera coincidence).} The station coordinate equals
+the horizontal position of the camera, which sits at the center of the vehicle disc at
+height $2\,\mathrm{m}$. \emph{Justification:} this is the problem's own convention; it
+makes the 3-D sightline start at $(x_s,y_s,2)$ and all geometry two-dimensional in the
+ground plane.
+\item \textbf{Assumption 2 (travel times are visibility-graph shortest paths).} Vehicles
+move at constant $3\,\mathrm{m}/\mathrm{s}$ along shortest paths in the corner-visibility
+graph of obstacles inflated by $1.5\,\mathrm{m}$; turning costs no time. Path lengths so
+computed are \emph{feasible upper bounds} of true geodesic minima, because a finite corner
+graph may miss shorter curved routes; all feasibility verdicts (e.g.\ the 30-s budget)
+are therefore conservative. \emph{Justification:} exact geodesics in a polygonal domain
+require edge-stacking; the upper-bound reading keeps every reported schedule executable.
+\item \textbf{Assumption 3 (error model and independence).} In Q2(1) the two bearing
+measurement errors are independent $N(0,1^{\circ^2})$; in Q3 the three pointing error
+sources (target position error with $\sigma_{loc}(s)=0.3+0.02s$ m per axis, gimbal zero
+bias $0.8^\circ$, control error $0.6^\circ$) are independent and independent of Q2(1)'s
+measurement error. \emph{Justification:} the distributions and parameters are given by
+the problem; independence across the three Q3 sources is stated there, and Q2(1)/Q3
+errors are different physical quantities (bearing measurement vs.\ pointing), used in
+different questions only.
+\item \textbf{Assumption 4 (small-angle linearization).} The position-induced pointing
+error is linearized as $\Delta\psi_{loc}\approx\delta_\perp/r$ (radians), and the
+$\pm180^\circ$ wrap never activates because $|\Delta\psi|\le5^\circ$ in the feasible
+region. \emph{Justification:} the linearization's theoretical relative error at one
+sigma is $5.6\times10^{-4}$, and the Monte Carlo validation of Section~\ref{sec:q3}
+measures a worst-case deviation of $0.18$ percentage points in probability; wrap
+probability is exactly zero at $s=80\,\mathrm{m}$.
+\item \textbf{Assumption 5 (at most two task slots per vehicle).} Each vehicle executes
+at most two alert tasks in Q2(2) and in every Q4 reschedule. \emph{Justification:} 6
+slots and 5 vehicles imply a doubling vehicle; the cap keeps the structure family
+finite (360 in the single-doubler core) and matches the found optimum, and in Q4 it
+bounds the reassignment search consistently with the baseline plan.
+\item \textbf{Assumption 6 (Q4 event conventions).} Disturbances occur at
+$t=5\,\mathrm{s}$; for type-c outages the first moment new commands can take effect is
+$t_{rec}$ (decision instant $t_{rec}$); an alert whose joint observation has
+\emph{started} before the disturbance is regarded as completed and locked; a failed
+vehicle leaves the field without obstructing others. \emph{Justification:} the locked
+rule is Q4-08 of the problem; the decision-instant reading resolves the problem's dual
+phrasing of outage length and recovery time, and is applied uniformly to all strategies.
+\end{itemize}
+
+\subsection{Notations}
+Table~\ref{tab:notation} lists the symbols shared by all four models; symbols specific
+to one question are defined at their first use in the text.
+
+\begin{table}[!htb]\centering\small
+\caption{Main symbols.}
+\label{tab:notation}
+\begin{tabular}{cl}
+\toprule
+Symbol & Meaning (unit) \\
+\midrule
+$\mathcal{F}_T$ & observable region: feasible camera positions for target $T$ (m) \\
+$r$, $d_i$ & horizontal target distance; distance from station $i$ to target (m) \\
+$r_{80}$ & $(H-2)/\tan80^\circ$: minimum admissible horizontal distance (m) \\
+$e$ & gimbal elevation angle ($^\circ$), feasible $\in[-10^\circ,80^\circ]$ \\
+$\theta$, $R$, $H$ & alert azimuth ($^\circ$), radius (m), height (m) \\
+$B$, $\gamma$ & baseline length between the two stations (m); crossing angle ($^\circ$) \\
+$\sigma_b$ & bearing measurement standard deviation ($^\circ$) \\
+$C$, $\operatorname{tr}C$ & position-estimate covariance ($\mathrm{m}^2$) and its trace \\
+$\mathrm{RMSE}$ & $\sqrt{\operatorname{tr}C}$: expected localization error (m) \\
+$\tau_{slew}$, $\tau_{reset}$ & slew and reset times,
+$\max(|\Delta\mathrm{pan}|,|\Delta\mathrm{tilt}|)/30^\circ\mathrm{/s}$ (s) \\
+$t^{start}_a$ & joint-observation start time of alert $a$ (s) \\
+$\tau$ & min--max epigraph variable / rescheduling decision instant (s) \\
+$s$ & cumulative travel distance of a vehicle since departure (m) \\
+$\sigma_{loc}(s)$ & per-axis target-position error std, $0.3+0.02s$ (m) \\
+$\Delta\psi$, $\sigma_{tot}$ & pointing error ($^\circ$) and its total std ($^\circ$) \\
+$k$, $N$, $\eta$ & observed alerts, total alerts, completion ratio $k/N$ \\
+$t_{last}$ & latest observation start, capped at $60\,\mathrm{s}$ (s) \\
+$P_0$, $P_1$, $P_2$ & retain / re-optimize / rule-based strategies in Q4 \\
+\bottomrule
+\end{tabular}
+\end{table}
