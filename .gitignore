@@ -6,6 +6,10 @@
 2026赛题/
 skill修复/
 
+# Python 缓存
+__pycache__/
+*.pyc
+
 # 系统垃圾文件
 Thumbs.db
 desktop.ini

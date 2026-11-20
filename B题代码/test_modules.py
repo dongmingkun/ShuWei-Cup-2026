@@ -7,7 +7,7 @@ from types import SimpleNamespace
 from geometry import (BUILDINGS, TARGETS, VEHICLE_INIT, clearance_ok,
                       dist_point_to_rect, elev_min_radius, elevation_ok,
                       is_station_feasible, los_ok, segment_hits_box,
-                      shortest_path, travel_time)
+                      segment_rect_distance, shortest_path, travel_time)
 from simulator import (OBS_DURATION, GIMBAL_RATE, Task, _topo_order,
                        rotate_duration, simulate)
 
@@ -65,19 +65,32 @@ d_straight = math.dist((88, 68), (95, 95))
 L, path = shortest_path((88, 68), (95, 95))
 check("直连无障: 长度=直线距", close(L, d_straight, 1e-6) and len(path) == 2)
 check("travel_time=(L/3)", close(travel_time((88, 68), (95, 95)), d_straight / 3, 1e-9))
-check("(15,14)->(50,93) 擦膨胀B1角部应绕行",
-      shortest_path((15, 14), (50, 93))[0] > math.dist((15, 14), (50, 93)) + 1e-6)
+L3, _ = shortest_path((15, 14), (50, 93))
+check("(15,14)->(50,93) 擦B1角但真实净距1.539>=1.5 直连可行",
+      close(L3, math.dist((15, 14), (50, 93)), 1e-6))
+check("(15,14)->(50,93) 对B1净距恰>=1.5(贴边口径)",
+      segment_rect_distance((15, 14), (50, 93), B1.x0, B1.x1, B1.y0, B1.y1)
+      >= 1.5 - 1e-9)
 
 straight2 = math.dist((15, 14), (38, 20))
 L2, path2 = shortest_path((15, 14), (38, 20))
 check("绕B1: 长度>直线", L2 > straight2 + 0.5)
 check("绕B1: 长度合理上界", L2 < straight2 + 30)
 check("绕B1: 各顶点满足净距", all(clearance_ok(p) for p in path2))
-from geometry import _seg_crosses_rect_interior, inflate_rect
-rects = [inflate_rect(b.x0, b.x1, b.y0, b.y1) for b in BUILDINGS]
-check("绕B1: 各段不穿禁区", all(
-    not _seg_crosses_rect_interior(path2[i], path2[i + 1], r)
-    for i in range(len(path2) - 1) for r in rects))
+check("绕B1: 各段真实净距>=1.5", all(
+    segment_rect_distance(path2[i], path2[i + 1],
+                          b.x0, b.x1, b.y0, b.y1) >= 1.5 - 1e-9
+    for i in range(len(path2) - 1) for b in BUILDINGS))
+
+Lc, _ = shortest_path((20.8, 14.8), (20, 14))
+check("B1西南角: 合法直连可达且=直线距",
+      Lc is not None and close(Lc, math.dist((20.8, 14.8), (20, 14)), 1e-9))
+Lf, pf = shortest_path((20.8, 14.8), (60, 60))
+check("B1西南角膨胀带内合法点可接入路网远行",
+      Lf is not None and all(clearance_ok(p) for p in pf)
+      and all(segment_rect_distance(pf[i], pf[i + 1],
+                                    b.x0, b.x1, b.y0, b.y1) >= 1.5 - 1e-9
+              for i in range(len(pf) - 1) for b in BUILDINGS))
 
 try:
     shortest_path((23, 21), (50, 50))

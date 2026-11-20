@@ -166,12 +166,40 @@ def _seg_crosses_rect_interior(p, q, rect) -> bool:
         eps=0.0)
 
 
+def _dist_point_to_segment(px, py, a, b) -> float:
+    vx, vy = b[0] - a[0], b[1] - a[1]
+    L2 = vx * vx + vy * vy
+    if L2 <= 1e-30:
+        return math.hypot(px - a[0], py - a[1])
+    t = ((px - a[0]) * vx + (py - a[1]) * vy) / L2
+    t = min(1.0, max(0.0, t))
+    return math.hypot(px - (a[0] + t * vx), py - (a[1] + t * vy))
+
+
+def segment_rect_distance(p, q, x0, x1, y0, y1) -> float:
+    """2D 线段 p->q 到矩形 [x0,x1]x[y0,y1] 的精确最小距离(相交/入内为 0).
+
+    圆盘净距的精确判定: 距离 >= 1.5 即整段合法(贴边允许). 膨胀矩形近似
+    在锐角处会把合法路线误判为不可达(B1 西南角回归见 audit_public_modules.py);
+    两凸集不相交时最近点对必为"线段端点-矩形"或"矩形角点-线段", 故取两类最小.
+    """
+    if _seg_crosses_rect_interior(p, q, (x0, x1, y0, y1)):
+        return 0.0
+    return min(
+        dist_point_to_rect(p[0], p[1], x0, x1, y0, y1),
+        dist_point_to_rect(q[0], q[1], x0, x1, y0, y1),
+        *(_dist_point_to_segment(cx, cy, p, q)
+          for cx in (x0, x1) for cy in (y0, y1)),
+    )
+
+
 def shortest_path(start, goal, margin: float = VEHICLE_RADIUS):
     """膨胀矩形角点可见性图 + Dijkstra.
 
     返回 (路径长度m, 路径点列); 不可达返回 None.
-    注: 采用锐角膨胀矩形, 路径长度对圆盘真实最优最多保守 0.643m/拐角
-    (圆角弧段可再省), 行程时间估计略偏保守, 不会违反约束.
+    边可行性按 segment_rect_distance 的精确净距 >= margin 判定(贴边允许),
+    合法起终点只要真实可达必能接入路网; 路径顶点仍取锐角膨胀矩形角点,
+    对圆盘真实最优最多保守 0.643m/拐角(圆角弧段可再省), 不会违反约束.
     """
     start = (float(start[0]), float(start[1]))
     goal = (float(goal[0]), float(goal[1]))
@@ -189,8 +217,9 @@ def shortest_path(start, goal, margin: float = VEHICLE_RADIUS):
     adj = [[] for _ in range(n)]
     for i in range(n):
         for j in range(i + 1, n):
-            if all(not _seg_crosses_rect_interior(nodes[i], nodes[j], r)
-                   for r in rects):
+            if all(segment_rect_distance(nodes[i], nodes[j],
+                                         b.x0, b.x1, b.y0, b.y1) >= margin - EPS
+                   for b in BUILDINGS):
                 d = math.dist(nodes[i], nodes[j])
                 adj[i].append((j, d))
                 adj[j].append((i, d))
