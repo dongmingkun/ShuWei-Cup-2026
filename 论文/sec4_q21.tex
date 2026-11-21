@@ -101,7 +101,10 @@ Table~\ref{tab:q21pairs} shows a sharp stratification: five pairs (all excluding
 attain the lower bound $0.14362\,\mathrm{m}$ exactly, while every pair containing V2
 stagnates near $0.30\,\mathrm{m}$---more than twice the bound---because V2's reachable
 intersection with $\mathcal{F}_{T_2}$ (Fig.~\ref{fig:q2reach}) forces it far from the
-$r_{80}$-circle. The (3,5) entry ($0.14402\,\mathrm{m}$, $\gamma=87.54^\circ$) is only
+$r_{80}$-circle. The per-pair travels quoted are each pair's \emph{screened} family
+point (Stage-A minimax), not the per-pair travel minimum; the final tie-break re-scan
+of the six attaining families is what yields the $52.47\,\mathrm{m}$ deployment. The
+(3,5) entry ($0.14402\,\mathrm{m}$, $\gamma=87.54^\circ$) is only
 the stall of its local refinement; its $r_{80}$-family is feasible, so the per-pair
 family scan admits a six-pair attaining set, on which the travel tie-break selects
 $\theta=59.7^\circ$ and \textbf{V3+V5} (total travel $52.47$ vs.\
@@ -165,8 +168,10 @@ matching the analytic covariance ellipse of Eq.~\eqref{eq:fisher} (blue).}
 A Monte Carlo experiment with $2\times10^{5}$ samples (sampling the two bearing errors,
 intersecting the two bearing lines exactly) yields empirical RMSE $=0.14363\,\mathrm{m}$
 against the analytic $0.14362\,\mathrm{m}$---relative deviation $0.0\%$
-(Fig.~\ref{fig:q2gamma}b). The 30-s travel feasibility of both chosen stations was
-re-checked on the visibility graph ($8.48$ m and $47.54$ m, well within $90$ m), and
+(Fig.~\ref{fig:q2gamma}b); the estimate's Monte-Carlo standard error,
+$\mathrm{RMSE}/\sqrt{2N}=2.3\times10^{-4}\,\mathrm{m}$ ($0.16\%$), bounds the deviation
+to within one standard error. The 30-s travel feasibility of both chosen stations was
+re-checked on the visibility graph ($13.25$ m and $39.22$ m, well within $90$ m), and
 both stations were re-verified inside $\mathcal{F}_{T_2}$ by the Q1 solver. Finally,
 because $C\propto\sigma_b^2$, re-running the optimization with
 $\sigma_b\in\{0.5^\circ,1^\circ,2^\circ\}$ rescales every pair's RMSE proportionally

@@ -150,3 +150,42 @@ Figure~\ref{fig:framework} shows the whole pipeline. The two arrows into Q4---on
 (baseline plan) and one dashed (deployment insight)---embody the framework's central
 claim: scheduling decisions and error mechanics are two views of the same geometry, and
 one shared simulator is what makes the Q4 comparison meaningful.
+
+\subsection{Method-Selection Summary}
+
+Table~\ref{tab:methodsel} consolidates, for each question, the candidate approaches
+weighed against the selected one; the decisive criterion is always the metric the
+problem statement itself asks for (feasible-region fidelity, localization accuracy,
+latest alert start, pointing reliability, and the lexicographic $(\eta,t_{last})$
+pair), and each selection is backed by evidence already reported in the corresponding
+section---no untested alternative is claimed superior or inferior beyond what the
+tables in Sections~\ref{sec:q1}--\ref{sec:q4} show.
+
+\begin{table}[!htb]\centering\footnotesize
+\setlength{\tabcolsep}{3.5pt}
+\caption{Candidate approaches considered per question and the selection criterion.}
+\label{tab:methodsel}
+\begin{tabular}{p{0.065\textwidth}p{0.36\textwidth}p{0.22\textwidth}p{0.27\textwidth}}
+\toprule
+Q & Candidates weighed & Selected & Decisive reason \\
+\midrule
+Q1 & full grid enumeration; analytic $r_{80}$-circle arc audit; random feasible-set
+sampling & grid map $+$ analytic arc audit & the map is required; the arc audit
+\emph{certifies} that the bound $r_{80}$ is attained, which sampling cannot \\
+Q2(1) & Fisher/CRLB metric; least-squares trilateration; weighted intersection
+estimator & Fisher $\mathrm{RMSE}=\sqrt{\operatorname{tr}C}$ & closed form, attainable
+lower bound, $\propto\sigma_b$ so the pair choice is noise-level free \\
+Q2(2) & min--max makespan; total-completion-time; list scheduling & min--max epigraph
+(Eq.~\eqref{eq:minmax}) & matches the required objective verbatim; total-time variants
+optimize a different (unasked) quantity \\
+Q3 & analytic linear chain; exact-geometry Monte Carlo only; distribution-free bounds
+& analytic chain $+$ MC validation $+$ Chebyshev/Cantelli contrast & only the chain is
+invertible to the $(a,b)$ region; MC quantifies its $0.18$-pp error; the free bounds
+price the normality assumption \\
+Q4 & $P_1$ enumeration $+$ coordinate descent; rule-based greedy ($P_2$); re-enumerate
+everything at every event & event-triggered $P_1$ with $P_2$ fallback vs.\ $P_0$ &
+lexicographic $(\eta,t_{last})$; the pairing attributes \emph{when} rescheduling pays
+(the value boundary) \\
+\bottomrule
+\end{tabular}
+\end{table}

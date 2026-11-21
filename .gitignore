@@ -20,3 +20,6 @@ desktop.ini
 *.log
 *.out
 *.toc
+issues_cache.json
+论文/render_*.png
+render_*.png

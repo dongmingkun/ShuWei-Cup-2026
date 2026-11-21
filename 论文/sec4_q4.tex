@@ -31,6 +31,14 @@ alerts whose joint observation successfully starts, the lexicographic objective 
 \end{equation}
 and an alert that never starts within the window forces $t_{\mathrm{last}}=60\,\mathrm{s}$.
 
+The rescheduling model in one block: \emph{given} the captured states at epoch $\tau$
+(vehicle positions, gimbal attitudes, free times; locked alerts removed), \emph{choose}
+for each open alert two distinct available vehicles and one station of each inside its
+observable region, with at most two task slots per vehicle and azimuth gap
+$\ge1^\circ$, \emph{to optimize} Eq.~\eqref{eq:q4metric} lexicographically---the same
+feasible set as Eq.~\eqref{eq:minmax} with the captured states as initial conditions,
+and $P_2$ constrained to the rule form stated below.
+
 \subsubsection{Strategies}
 
 \begin{itemize}

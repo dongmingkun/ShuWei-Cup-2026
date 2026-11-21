@@ -39,27 +39,41 @@ gaps of $10.0/10.0/14.0\,\mathrm{m}$ against the $1.5\,\mathrm{m}$ requirement.
 
 \subsection{Statistical Validation Summary}
 
+The statistical evidence is organized in four layers: \textbf{(L1)} analytic
+identities (closed forms evaluated independently), \textbf{(L2)} Monte-Carlo
+reproduction with sampling intervals, \textbf{(L3)} independent-implementation
+cross-checks (Section~\ref{sec:testing} last subsection), and \textbf{(L4)} sensitivity
+sweeps (Section~\ref{sec:sens}). Table~\ref{tab:mcsummary} maps each check to its
+layer; every random experiment uses the fixed seed 2026.
+
 \begin{table}[!htb]\centering
-\caption{Monte-Carlo and refinement validations across the paper (fixed seed 2026).}
+\caption{Monte-Carlo and refinement validations across the paper (fixed seed 2026;
+layer tags in parentheses).}
 \label{tab:mcsummary}
 \begin{tabular}{llll}
 \toprule
 Where & Method & Metric & Result \\
 \midrule
-Q1 (\S\ref{sec:q1}) & $0.02$ m boundary refinement & area drift & $\le0.23\%$ \\
-Q2(1) (\S\ref{sec:q21}) & exact-geometry MC, $2\times10^{5}$ & RMSE rel.\ diff & $0.0\%$ \\
-Q2(1) (\S\ref{sec:q21}) & $\sigma_b\in\{0.5^\circ,1^\circ,2^\circ\}$ & optimal pair & invariant \\
-Q2(2) (\S\ref{sec:q22}) & simulator replay & all starts & match \\
-Q3 (\S\ref{sec:q3}) & exact-geometry MC, $10^{5}$/point & max $|\Delta P|$ & $0.18$ pp \\
-Q3 (\S\ref{sec:q3}) & MC crossing vs.\ analytic & $s_{\max}$ & $\Delta=0.36$ m \\
-Q4 (\S\ref{sec:q4}) & replay from captured states & all starts & match \\
+Q1 (\S\ref{sec:q1}) & $0.02$ m boundary refinement (L1) & area drift & $\le0.23\%$ \\
+Q2(1) (\S\ref{sec:q21}) & exact-geometry MC, $2\times10^{5}$ (L2) & RMSE rel.\ diff & $0.0\%$ \\
+Q2(1) (\S\ref{sec:q21}) & $\sigma_b\in\{0.5^\circ,1^\circ,2^\circ\}$ (L4) & optimal pair & invariant \\
+Q2(2) (\S\ref{sec:q22}) & simulator replay (L3) & all starts & match \\
+Q3 (\S\ref{sec:q3}) & exact-geometry MC, $10^{5}$/point (L2) & max $|\Delta P|$ & $0.18$ pp \\
+Q3 (\S\ref{sec:q3}) & quadrature crossing vs.\ analytic (L1) & $s_{\max}$ & conservative $0.17$ m \\
+Q4 (\S\ref{sec:q4}) & replay from captured states (L3) & all starts & match \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 Table~\ref{tab:mcsummary} collects the statistical evidence: wherever an analytic curve
 exists (Q2(1) RMSE, Q3 reliability), the exact-geometry Monte Carlo agrees to within
-sampling error, and all random experiments use the fixed seed 2026.
+sampling error, and all random experiments use the fixed seed 2026. Sampling intervals
+are stated analytically rather than by re-running: the $2\times10^{5}$-sample RMSE
+estimate carries a standard error of $\mathrm{RMSE}/\sqrt{2N}=2.3\times10^{-4}\,\mathrm{m}$
+($0.16\%$), so the observed $0.007\%$ relative deviation is well inside one standard
+error; the Q3 per-point binomial standard errors are
+$\sqrt{p(1-p)/10^{5}}\le7.0\times10^{-4}$ ($0.07$ pp), consistent with the Wilson
+interval quoted at $s_{\max}$.
 
 \subsection{Optimality Evidence and Honest Gaps}
 
