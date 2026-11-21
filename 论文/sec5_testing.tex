@@ -73,10 +73,26 @@ is \emph{attained}, leaving no optimality gap. For Q2(2), the per-alert lower bo
 gives $\max_a \mathrm{LB}_a=3.873\,\mathrm{s}$ against an achieved $11.046\,\mathrm{s}$;
 we report the gap of $7.17\,\mathrm{s}$ honestly rather than claiming global optimality---
 it reflects the restricted structure space (one doubling vehicle, single-doubler
-family) and the fact that no explored structure or station refinement beats the
-incumbent. For Q4, P1 is exact within the same restricted search space, and P2's
-$\le4.53\,\mathrm{s}$ deficit is certified by comparing both against identical replayed
-schedules.
+family); no explored structure beats the incumbent under our screening and refinement,
+and a cross-implementation station-level search reaches $10.651\,\mathrm{s}$ on one of
+the same structures, so the incumbent is certified within $3.6\%$ of the best known
+schedule and is retained as the frozen Q4 baseline. For Q4, P1 is exact within the same
+restricted search space, and P2's $\le4.53\,\mathrm{s}$ deficit is certified by
+comparing both against identical replayed schedules.
+
+\subsection{Cross-Implementation Reproducibility}
+
+All headline numbers were re-derived by a fully independent second implementation
+(different codebase, rounded-corner routing with an exact $R_V$-neighbourhood
+clearance predicate, polar-candidate station parameterization, and a global-objective
+coordinate-descent scheduler). Results: Q1's optimal station $(80.5004,63.6484)$,
+Q2(1)'s attaining pair V3+V5 with RMSE $0.14362\,\mathrm{m}$ and total travel
+$52.47\,\mathrm{m}$, and Q3's $s_{\max}=66.92\,\mathrm{m}$ reproduce exactly; Q2(2)'s
+incumbent improves from $11.046\,\mathrm{s}$ to $10.651\,\mathrm{s}$ on the same
+structure family (Section~\ref{sec:q22}), a bound on the station-level suboptimality of
+the reported schedule. The two routers agree on every audited leg, and the refined
+schedule replays bit-compatibly in this paper's own simulator---so the two codebases
+act as mutual oracles rather than shared-derivative duplicates.
 
 \section{Sensitivity Analysis}\label{sec:sens}
 

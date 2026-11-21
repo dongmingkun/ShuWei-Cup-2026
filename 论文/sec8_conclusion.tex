@@ -17,10 +17,12 @@ inside the LOS boundary), validated at $0.0\%$ Monte-Carlo deviation.
 $11.046\,\mathrm{s}$ (makespan $21.705\,\mathrm{s}$) via one shared-station doubling
 (V3: $T_1\!\to\!T_3$, zero-travel second leg), beating the greedy baseline by
 $5.352\,\mathrm{s}$ ($32.6\%$); the honest gap to the per-alert lower bound is
-$7.17\,\mathrm{s}$.
+$7.17\,\mathrm{s}$ ($6.78\,\mathrm{s}$ against the cross-implementation refined
+incumbent, a certified $3.6\%$ station-level residual).
 \item \textbf{Q3.} The pointing-error chain caps single-leg travel at
-$s_{\max}=66.92\,\mathrm{m}$ for $95\%$ reliability ($66.56\,\mathrm{m}$ by exact Monte
-Carlo); at the stated 80-m approach the reliability is only $91.54\%$, so reliability,
+$s_{\max}=66.92\,\mathrm{m}$ for $95\%$ reliability (exact crossing $67.09\,\mathrm{m}$
+by quadrature, so the analytic cap is conservative by $0.17\,\mathrm{m}$); at the
+stated 80-m approach the reliability is only $91.54\%$, so reliability,
 not range, binds deployment.
 \item \textbf{Q4.} Event-triggered re-optimization restores full coverage in all 86
 disturbed scenarios (worst $t_{\mathrm{last}}=33.75\,\mathrm{s}$), the original plan

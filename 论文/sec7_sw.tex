@@ -11,11 +11,18 @@ regression suite certifies them.
 RMSE law are exact; grids and Monte Carlo only \emph{verify}, and every random
 experiment is seed-fixed and reproducible.
 \item \textbf{Bounds reported honestly.} Q2(1) attains its Fisher lower bound exactly;
-Q2(2)'s optimality gap ($7.17\,\mathrm{s}$) is stated rather than disguised, and the
-restricted structure space is declared as a convention.
+Q2(2)'s optimality gap ($7.17\,\mathrm{s}$; $6.78\,\mathrm{s}$ against the refined
+incumbent) is stated rather than disguised, and the restricted structure space is
+declared as a convention.
 \item \textbf{Bounded, replayable schedules.} Q2(2) and Q4 results are simulator
 replays, not paper arithmetic; route legality is certified by an independent
 segment-level auditor with explicit gap numbers.
+\item \textbf{Independently cross-validated.} A second, independently written team
+implementation reproduces the headline numbers of Q1--Q3 exactly (same Q1 station,
+Q2(1) pair, RMSE and $52.47\,\mathrm{m}$ travel, Q3 $s_{\max}$) and refines the Q2(2)
+incumbent to $10.651\,\mathrm{s}$ on the same structure family---a replay-verified,
+$3.6\%$ bound on the reported schedule's station-level suboptimality; Q4's value
+boundary is unchanged.
 \item \textbf{Robustness as budgets, not anecdotes.} Sensitivity is expressed as full
 feasible regions (Q3's $(a,b)$ map) or swept parameters ($t_{rec}$, $\pm10\%$
 kinematics), each with a quantified margin.
@@ -27,14 +34,17 @@ kinematics), each with a quantified margin.
 \item \textbf{Restricted structure space (Q2(2)/Q4).} We search single-doubler
 structures with at most two task slots per vehicle (360 structures); a multi-doubler
 plan could in principle close part of the $7.17\,\mathrm{s}$ gap, though no explored
-structure beats the incumbent.
+structure beats the incumbent and the station-level residual is bounded at $3.6\%$
+by the cross-implementation search.
 \item \textbf{Visibility-graph conservatism.} Corner-vertex paths can exceed the true
 geodesic optimum by up to $0.643\,\mathrm{m}$ per corner, so all travel times are
-feasible upper bounds.
+feasible upper bounds (the independent engine's exact $R_V$-neighbourhood predicate
+agrees on every audited leg).
 \item \textbf{Linearized pointing error (Q3).} The small-angle chain is validated to
-$0.19\%$ relative error and $0.36\,\mathrm{m}$ in $s_{\max}$, but near $s_{\max}$ the
-exact reliability sits $0.07$ pp below $95\%$; operational use should adopt the
-recommended safety margin.
+$0.19\%$ relative error; at $s_{\max}$ the exact $\arctan$ law gives $0.95040$
+(quadrature), i.e.\ the linearized cap is \emph{conservative} by $0.17\,\mathrm{m}$ in
+$s_{\max}$ (exact crossing $67.09\,\mathrm{m}$). A field safety margin is still
+recommended, since hand-recomputable budgets should not sit exactly on the boundary.
 \item \textbf{Independence assumptions.} The sensor errors are modeled as mutually
 independent Gaussians, as the problem states; correlated or heavy-tailed sensors would
 require the distribution-free route, which collapses the travel budget

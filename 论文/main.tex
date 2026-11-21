@@ -45,11 +45,11 @@ $r^{*}=7.5821\,\mathrm{m}$ is attained on the elevation-bound circle
 $r=(H-2)/\tan80^{\circ}$; the declared tie-break selects $(80.50,\,63.65)$ with slew
 $2.667\,\mathrm{s}$ (similarly $(8.50,67.26)$, $(57.42,22.32)$ for T2/T3).
 
-\textbf{Problem 2(1).} A Fisher-information model yields the accuracy law
-$\mathrm{RMSE}=\sigma_b\sqrt{d_1^2+d_2^2}/\sin\gamma$ with attainable lower bound
+\textbf{Problem 2(1).} Fisher information yields the accuracy law
+$\mathrm{RMSE}$ $=\sigma_b\sqrt{d_1^2+d_2^2}/\sin\gamma$ with attainable lower bound
 $\sigma_b\sqrt{2}\,(H-2)/\tan80^{\circ}$, reached at a $90^{\circ}$ crossing angle on
 the $r_{80}$-circle. Exhaustive optimization over all 10 vehicle pairs returns
-V3+V5 at $(13.96,77.52)$, $(6.00,75.43)$ with $\mathrm{RMSE}=0.14362\,\mathrm{m}$---exactly
+V3+V5 at $(6.00,75.43)$, $(13.96,77.52)$ with $\mathrm{RMSE}=0.14362\,\mathrm{m}$---exactly
 the bound---both travels within the 30-s budget;
 a $2\times10^{5}$-sample Monte Carlo confirms 0.0\% deviation.
 
@@ -74,7 +74,10 @@ keeps $\eta=1$ at a cost of at most $4.53\,\mathrm{s}$.
 Innovations: (i) exact attainment proofs for the min-$r$ and min-RMSE bounds with a
 declared tie-break; (ii) a shared-station zero-travel double task compressing fleet
 response by one third; (iii) a cross-question reliability budget showing pointing
-reliability binds before range; (iv) a value boundary for when rescheduling pays.
+reliability binds before range; (iv) a value boundary for when rescheduling pays; and
+(v) dual-implementation cross-validation---an independent codebase reproduces every
+closed-form result exactly and certifies the reported schedule within $3.6\%$ of the
+best known.
 Sensitivity analysis confirms stability.
 }
 

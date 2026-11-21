@@ -33,7 +33,8 @@ Elevation Eq.~\eqref{eq:elev} forces $d_i\ge r_{80}=5.8188\,\mathrm{m}$ for T2, 
 \mathrm{RMSE}\;\ge\;\sigma_b\sqrt{2}\;r_{80}=0.14362\,\mathrm{m},
 \end{equation}
 with equality \emph{iff} $\gamma=90^\circ$ and $d_1=d_2=r_{80}$: both stations on the
-$r_{80}$-circle, diametrically opposed as seen from the target. We adopt
+$r_{80}$-circle, separated by a $90^\circ$ arc as seen from the target (perpendicular
+sightlines). We adopt
 $\mathrm{RMSE}=\sqrt{\operatorname{tr}C}$ (A-optimality, meters) as primary metric: it
 is proportional to $\sigma_b$, so the optimal pair is independent of $\sigma_b$;
 $\det C$ (D-optimality) and $\operatorname{cond}C$ are secondary diagnostics.
@@ -54,10 +55,13 @@ over the candidate grid (T2 has 623 grid-feasible cells; per-vehicle reachabilit
 range from $74{,}509$ to $95{,}103$ cells, Fig.~\ref{fig:q2reach}), followed by local
 refinement of the best candidate stations. When the lower bound Eq.~\eqref{eq:lb} is
 attained, the inner problem collapses to a \emph{one-parameter family}: stations at
-target-azimuth $\phi$ and $\phi+180^\circ$ on the $r_{80}$-circle, for feasible $\phi$.
+target-azimuth $\phi$ and $\phi+90^\circ$ on the $r_{80}$-circle, for feasible $\phi$
+(perpendicular sightlines, cf.\ Eq.~\eqref{eq:rmse}; a $\phi+180^\circ$ pair would be
+collinear and degenerate).
 The family is scanned on a $0.05^\circ$ grid of $\phi$, and ties in RMSE (all equal) are
 broken by the declared secondary criterion: \emph{minimum total travel distance} of the
-two vehicles (schedule-oriented, consistent with Q2(2)). Pairs whose family scan is
+two vehicles (schedule-oriented, consistent with Q2(2)); for each $\phi$ both ways of
+assigning the two stations to $\{V_i,V_j\}$ are evaluated. Pairs whose family scan is
 infeasible everywhere are marked infeasible.
 
 \begin{figure}[!htb]\centering
@@ -71,6 +75,7 @@ every competitive pair.}
 \subsubsection{Results}
 
 \begin{table}[!htb]\centering\small
+\setlength{\tabcolsep}{4.5pt}
 \caption{Refined RMSE by vehicle pair (station-level refinement; travels within the
 30-s budget for all accepted pairs).}
 \label{tab:q21pairs}
@@ -111,8 +116,8 @@ consolidated in Table~\ref{tab:q21chosen}):
 Quantity & Value \\
 \midrule
 Vehicle pair & V3 $+$ V5 \\
-Station of V3 / travel & $(13.9646,\;77.5239)$ / $2.825\,\mathrm{s}$ ($8.48\,\mathrm{m}$) \\
-Station of V5 / travel & $(6.0049,\;75.4357)$ / $15.846\,\mathrm{s}$ ($47.54\,\mathrm{m}$) \\
+Station of V3 / travel & $(6.0049,\;75.4357)$ / $4.416\,\mathrm{s}$ ($13.25\,\mathrm{m}$) \\
+Station of V5 / travel & $(13.9646,\;77.5239)$ / $13.073\,\mathrm{s}$ ($39.22\,\mathrm{m}$) \\
 Baseline $B$ / crossing angle $\gamma$ & $8.229\,\mathrm{m}$ / $90.00^\circ$ \\
 RMSE $=\sqrt{\operatorname{tr}C}$ & $0.14362\,\mathrm{m}$ ($=$ analytic lower bound) \\
 $\det C$ / condition number & $1.064\times10^{-4}\,\mathrm{m}^4$ / $1.000$ \\
@@ -124,7 +129,10 @@ $1\sigma$ error-ellipse axes & $0.10156\,\mathrm{m}$ (isotropic) \\
 The conditional covariance $C$ is \emph{isotropic} ($\operatorname{cond}C=1.000$,
 circular $1\sigma$ ellipse of radius $0.1016$ m): at $\gamma=90^\circ$ with equal
 distances the two bearing constraints are orthogonal---precisely the geometric meaning
-of the bound. The chosen family point lies $0.04^\circ$ from the LOS-limited end of
+of the bound. The isotropic Gaussian also fixes the operational metric: the radial
+error is Rayleigh with median $\mathrm{CEP}_{50}=\sigma\sqrt{2\ln2}=0.1196\,\mathrm{m}$
+(MC $0.1195\,\mathrm{m}$)---half of all fixes land within $12$ cm. The chosen family
+point lies $0.04^\circ$ from the LOS-limited end of
 T2's feasible arc ($59.66^\circ$); being on the closed feasible set it is admissible,
 and its margin is analyzed in Section~\ref{sec:sens}.
 
@@ -136,7 +144,10 @@ and the error ellipse degenerates into a strip (Fig.~\ref{fig:q2gamma}a). The ad
 mitigation is an azimuth guard $\gamma\ge1^\circ$ (hard feasibility) plus an operating
 recommendation of $30^\circ\le\gamma\le150^\circ$ read off the sweep. Stations at
 region-boundary tangency are handled by the closed-set convention; a margin of
-$\delta$ m costs at most $O(\delta)$ in $d_i$ (Section~\ref{sec:sens}).
+$\delta$ m costs at most $O(\delta)$ in $d_i$. Concretely, moving both stations radially
+outward by $1$--$2$ m keeps $\gamma=90^\circ$, buys $1.7$--$3.3^\circ$ of elevation
+slack, and costs only $0.168$--$0.193$ m RMSE ($+17$--$34\%$)---cheap insurance near
+the $80^\circ$ limit (Section~\ref{sec:sens}).
 
 \begin{figure}[!htb]\centering
 \includegraphics[width=0.49\textwidth]{fig_q2_1_gamma_degeneracy.png}\hfill

@@ -83,11 +83,14 @@ Figure~\ref{fig:q3ps}a overlays the analytic curve and the Monte Carlo estimates
 $s\in[0,100]\,\mathrm{m}$: the maximum absolute probability deviation over the grid is
 $0.18$ percentage points, and the Monte-Carlo-interpolated crossing is
 $66.56\,\mathrm{m}$---within $0.36\,\mathrm{m}$ of the analytic $s_{\max}=66.9223\,\mathrm{m}$.
-At $s_{\max}$ itself the exact-geometry probability is $0.94932$ (Wilson 95\% CI
-\cite{wilson1927}
-$[0.9486,\,0.9500]$), i.e.\ $0.07$ pp below the linearized $0.95$: a second-order
-curvature effect that places the true crossing marginally below the analytic value and
-is itself an argument for the safety margin recommended below.
+At $s_{\max}$ itself, adaptive quadrature of the \emph{exact} $\arctan$ law (no
+linearization, no sampling error) gives $P=0.95040$, confirmed by a
+$5\times10^{6}$-sample exact-geometry simulation ($0.95028$); the $10^{5}$-sample
+estimate $0.94932$ (Wilson 95\% CI \cite{wilson1927} $[0.9486,\,0.9500]$) is $1.9$
+standard errors low. The $\arctan$ compression of large lateral offsets therefore makes
+the linearized chain slightly \emph{conservative}: the exact crossing is
+$s=67.09\,\mathrm{m}$, $0.17\,\mathrm{m}$ beyond the analytic cap, so the reported
+$s_{\max}=66.92\,\mathrm{m}$ is safe to use as printed.
 At the problem's operating point $s=80\,\mathrm{m}$ the baseline
 $(a,b)=(0.3,0.02)$ yields $P=91.54\%<95\%$---the parameters stated in the problem
 \emph{cannot} support an 80-m approach at the required reliability, which is exactly the
@@ -103,7 +106,9 @@ itself specifies Gaussian sources.
 The decomposition (Fig.~\ref{fig:q3ps}b) explains \emph{why} the reliability budget
 behaves like a hard travel cap: short trips fail mainly through gimbal bias (a constant
 $0.8^\circ$ floor), long trips through the growing $\sigma_{loc}(s)$, with crossovers at
-$5.94\,\mathrm{m}$ (vs.\ control error) and $12.93\,\mathrm{m}$ (vs.\ bias). Since
+$5.94\,\mathrm{m}$ (vs.\ control error) and $12.93\,\mathrm{m}$ (vs.\ bias); beyond
+$19.91\,\mathrm{m}$ the localization term owns more than half of the total variance
+($88.1\%$ at $80\,\mathrm{m}$). Since
 $\sigma_1$ grows linearly in $s$, no scheduling trick can beat the cap---only shorter
 approaches or fewer traveled meters.
 
