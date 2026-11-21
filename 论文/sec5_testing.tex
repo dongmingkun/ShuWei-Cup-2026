@@ -9,11 +9,9 @@ analytically derived, Monte-Carlo reproduced, or simulator-replayed from a fixed
 The shared geometry engine (three-constraint predicate + obstacle-aware shortest path +
 gimbal kinetics) is covered by a 51-check regression suite (Table~\ref{tab:testsuite}),
 all passing. The suite pins the exact target projections (to $10^{-4}\,\mathrm{m}$),
-exercises the closed-set boundary semantics (a point at \emph{exactly} $1.5\,\mathrm{m}$
-clearance is admissible, at $1.5-\epsilon$ is not; a tangent sightline blocks), and
-contains a dedicated regression for the sharp-corner inflation defect: near B1's
-south-west corner a legitimately clear straight segment must be admitted, which a
-coarse inflated-rectangle test would have rejected.
+exercises the closed-set boundary semantics (exactly-$1.5$-m clearance admissible,
+tangent sightline blocked), and contains the dedicated sharp-corner regression
+described in the table.
 
 \begin{table}[!htb]\centering
 \caption{Engine regression suite (51 checks, all passing).}
@@ -36,9 +34,8 @@ End-to-end & station feasibility + integrated schedule smoke & 16 \\
 
 Route legality is additionally certified by an independent segment-level auditor that
 re-derives, for every leg of every final plan, the exact minimum distance to the field
-boundary and to each building; the Q2(2) doubling vehicle's two legs, for instance, are
-certified at minimum gaps of $10.0\,\mathrm{m}$ (field) and $10.0/14.0\,\mathrm{m}$
-(buildings)---comfortably above the $1.5\,\mathrm{m}$ requirement.
+boundary and to each building---e.g.\ the Q2(2) doubling vehicle's two legs at minimum
+gaps of $10.0/10.0/14.0\,\mathrm{m}$ against the $1.5\,\mathrm{m}$ requirement.
 
 \subsection{Statistical Validation Summary}
 
@@ -60,39 +57,32 @@ Q4 (\S\ref{sec:q4}) & replay from captured states & all starts & match \\
 \end{tabular}
 \end{table}
 
-Table~\ref{tab:mcsummary} collects the statistical evidence. Wherever an analytic curve
+Table~\ref{tab:mcsummary} collects the statistical evidence: wherever an analytic curve
 exists (Q2(1) RMSE, Q3 reliability), the exact-geometry Monte Carlo agrees to within
-sampling error, so the linearizations introduced for speed never shift a decision; and
-all random experiments use the fixed seed 2026, so every reported figure is exactly
-reproducible.
+sampling error, and all random experiments use the fixed seed 2026.
 
 \subsection{Optimality Evidence and Honest Gaps}
 
-For Q2(1), the Fisher-matrix lower bound $\sigma_b\sqrt{2}\,r_{80}=0.14362\,\mathrm{m}$
-is \emph{attained}, leaving no optimality gap. For Q2(2), the per-alert lower bound
-gives $\max_a \mathrm{LB}_a=3.873\,\mathrm{s}$ against an achieved $11.046\,\mathrm{s}$;
-we report the gap of $7.17\,\mathrm{s}$ honestly rather than claiming global optimality---
-it reflects the restricted structure space (one doubling vehicle, single-doubler
-family); no explored structure beats the incumbent under our screening and refinement,
-and a cross-implementation station-level search reaches $10.651\,\mathrm{s}$ on one of
-the same structures, so the incumbent is certified within $3.6\%$ of the best known
-schedule and is retained as the frozen Q4 baseline. For Q4, P1 is exact within the same
-restricted search space, and P2's $\le4.53\,\mathrm{s}$ deficit is certified by
-comparing both against identical replayed schedules.
+For Q2(1), the Fisher-matrix lower bound is \emph{attained}, leaving no optimality gap.
+For Q2(2), the per-alert lower bound gives $\max_a \mathrm{LB}_a=3.873\,\mathrm{s}$
+against an achieved $11.046\,\mathrm{s}$: we report the honest $7.17\,\mathrm{s}$ gap
+($6.78\,\mathrm{s}$ against the cross-implementation incumbent, a certified $3.6\%$
+station-level residual, Section~\ref{sec:q22}) rather than claiming global optimality,
+and the conservative incumbent is retained as the frozen Q4 baseline. For Q4, P1 is
+exact within the same restricted search space, and P2's $\le4.53\,\mathrm{s}$ deficit
+is certified by comparing both against identical replayed schedules.
 
 \subsection{Cross-Implementation Reproducibility}
 
 All headline numbers were re-derived by a fully independent second implementation
 (different codebase, rounded-corner routing with an exact $R_V$-neighbourhood
-clearance predicate, polar-candidate station parameterization, and a global-objective
-coordinate-descent scheduler). Results: Q1's optimal station $(80.5004,63.6484)$,
-Q2(1)'s attaining pair V3+V5 with RMSE $0.14362\,\mathrm{m}$ and total travel
-$52.47\,\mathrm{m}$, and Q3's $s_{\max}=66.92\,\mathrm{m}$ reproduce exactly; Q2(2)'s
-incumbent improves from $11.046\,\mathrm{s}$ to $10.651\,\mathrm{s}$ on the same
-structure family (Section~\ref{sec:q22}), a bound on the station-level suboptimality of
-the reported schedule. The two routers agree on every audited leg, and the refined
-schedule replays bit-compatibly in this paper's own simulator---so the two codebases
-act as mutual oracles rather than shared-derivative duplicates.
+clearance predicate, polar-candidate stations, global-objective coordinate descent;
+cf.\ Section~\ref{sec:q22}, Validation~(4)). Results: Q1's optimal station
+$(80.5004,63.6484)$, Q2(1)'s attaining pair V3+V5 (RMSE $0.14362\,\mathrm{m}$, travel
+$52.47\,\mathrm{m}$) and Q3's $s_{\max}=66.92\,\mathrm{m}$ reproduce exactly; Q2(2)'s
+incumbent improves to $10.651\,\mathrm{s}$ on the same structure family. The two
+routers agree on every audited leg, and the refined schedule replays bit-compatibly in
+this paper's own simulator---mutual oracles, not shared-derivative duplicates.
 
 \section{Sensitivity Analysis}\label{sec:sens}
 
@@ -135,10 +125,10 @@ the $\gamma=90^\circ$ station geometry, and the travel tie-break are invariant. 
 deployment recommendation does not depend on knowing $\sigma_b$ precisely.
 
 \textbf{Boundary margins.} Q1's optimal stations sit at arc endpoints where either
-clearance or line-of-sight binds. Because all constraints are evaluated as \emph{closed}
-sets (touching allowed, entering forbidden), the reported points are feasible exactly as
-stated; the sensitivity is one-sided, and the $0.1$-m grid + $0.02$-m refinement bounds
-the possible drift at $0.23\%$ of area.
+clearance or line-of-sight binds; all constraints are evaluated as \emph{closed} sets
+(touching allowed, entering forbidden), so the reported points are feasible exactly as
+stated, and the $0.1$-m grid plus $0.02$-m refinement bounds the possible drift at
+$0.23\%$ of area.
 
 \textbf{Error-growth law (Q3).} The $(a,b)$ region of Fig.~\ref{fig:q3ab} is the
 \emph{full} robustness map at the 80-m operating point: any $(a,b)$ with

@@ -55,7 +55,7 @@ combination families test whether penalties superpose.\footnote{AI-assistance
 annotation (2/3): the scenario batching, state capture and replay-evaluation code for
 this subsection was implemented with the help of an AI pair-programming assistant; the
 scenario design, the strategy definitions and all result interpretations are the
-team's own (see the Declaration before the References and Appendix~B).}
+team's own (see the Declaration in the Appendix and Appendix~B).}
 
 \begin{table}[!htb]\centering
 \caption{Scenario design: 86 cases in 7 families ($\tau$ = decision epoch).}
@@ -99,8 +99,8 @@ no open pair, so P0 already keeps $(1,\,11.046)$; re-optimization even improves
 $t_{\mathrm{last}}$ to $10.55\,\mathrm{s}$ by re-pairing V1 onto $T_2$.
 
 \begin{figure}[!htb]\centering
-\includegraphics[width=0.49\textwidth]{fig_q4_a_grid.png}\hfill
-\includegraphics[width=0.49\textwidth]{fig_q4_b_bars.png}
+\includegraphics[width=0.46\textwidth]{fig_q4_a_grid.png}\hfill
+\includegraphics[width=0.46\textwidth]{fig_q4_b_bars.png}
 \caption{Family (a) (left): P1 response time $t_{\mathrm{last}}$ over the new-alert grid
 (36 cells, $\eta=1$ everywhere; P0 constant at $\eta=0.75$, $t_{\mathrm{last}}=60$).
 Family (b) (right): $t_{\mathrm{last}}$ by strategy for each failed vehicle---V1--V4
@@ -127,8 +127,8 @@ Outage hurts roughly twice as fast as it lasts, because it freezes both the info
 channel and the repositioning clock.
 
 \begin{figure}[!htb]\centering
-\includegraphics[width=0.49\textwidth]{fig_q4_trec.png}\hfill
-\includegraphics[width=0.42\textwidth]{fig_q4_value.png}
+\includegraphics[width=0.46\textwidth]{fig_q4_trec.png}\hfill
+\includegraphics[width=0.40\textwidth]{fig_q4_value.png}
 \caption{Left: pure outage (c)---all strategies overlap at $11.046\,\mathrm{s}$ (zero
 gain)---and (a+c), $t_{\mathrm{last}}$ versus recovery time $t_{rec}$ at
 $\theta=15^\circ$, $R=40$, P0 at $60\,\mathrm{s}$ throughout. Right: value of
@@ -163,7 +163,7 @@ P0 everywhere except family (c); Fig.~\ref{fig:q4gantt} replays two representati
 P1 schedules from captured states.
 
 \begin{figure}[!htb]\centering
-\includegraphics[width=0.68\textwidth]{fig_q4_gantt_examples.png}
+\includegraphics[width=0.62\textwidth]{fig_q4_gantt_examples.png}
 \caption{Replayed P1 schedules from captured states (pre-$\tau$ execution dimmed, dotted
 line = decision epoch): top, new alert $\theta=195^\circ$, $R=50$ (a-21); bottom, V3
 failure (b-39). V3/V5's second wave after their $T_1$ reset at $9.0\,\mathrm{s}$ is
