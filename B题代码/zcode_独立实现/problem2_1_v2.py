@@ -243,7 +243,7 @@ for (x0, x1, y0, y1, h), name in zip(S.BUILDINGS, S.BUILD_NAMES):
 theta = np.linspace(0, 2 * np.pi, 720)
 ax.plot(tx + r_best * np.cos(theta), ty + r_best * np.sin(theta),
         color="0.55", ls="--", lw=1.0, zorder=4,
-        label=f"operating circle ($r_{{\min}}+0.10$ m = {r_best:.3f} m)")
+        label=f"operating circle ($r_{{\\min}}+0.10$ m = {r_best:.3f} m)")
 
 # bearing lines (horizontal projection; actual LOS passes over B3)
 ax.plot([s1[0], tx], [s1[1], ty], color="k", ls="--", lw=1.0, zorder=5,
