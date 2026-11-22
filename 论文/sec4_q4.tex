@@ -88,10 +88,12 @@ Family & Disturbance & $\tau$ & Count \\
 \textbf{(a) New alert (Fig.~\ref{fig:q4agrid}a).} P0 is constant and bad:
 $T_4$ stays pending, $\eta=0.75$, $t_{\mathrm{last}}=60$. P1 achieves $\eta=1$ in
 \emph{all} 36 cells with $t_{\mathrm{last}}\in[14.19,\,16.61]\,\mathrm{s}$. The pattern
-is structural: the optimal template keeps the original $T_2/T_3$ pairs and dispatches
-the two $T_1$ vehicles V3, V5---freed at $t\approx9.0\,\mathrm{s}$ after reset---to
-$T_4$, giving $t_{\mathrm{last}}\approx 9.0+\text{travel}+\text{slew}$, an almost-flat
-$14.2$--$16.6\,\mathrm{s}$ band with the hardest sectors at
+is structural and decomposes exactly: the two $T_1$ vehicles V3, V5 are freed at
+$t\approx9.0$--$9.5\,\mathrm{s}$ (observation end $7.94\,\mathrm{s}$ plus reset
+$1.0$--$1.5\,\mathrm{s}$), then contribute a short repositioning leg and a $T_4$ slew
+of $\approx1.1$--$4.7\,\mathrm{s}$---giving
+$t_{\mathrm{last}}\approx 9.0+\text{travel}+\text{slew}$,
+an almost-flat $14.2$--$16.6\,\mathrm{s}$ band with the hardest sectors at
 $\theta\in\{15^\circ,45^\circ\}$ and $\{165^\circ,195^\circ,225^\circ\}$ (farthest from
 the freed pair) and the easiest at $\theta\in\{285^\circ,315^\circ\}$
 ($14.19$--$14.49\,\mathrm{s}$). P2 also reaches $\eta=1$ everywhere but peaks at
@@ -128,9 +130,8 @@ it still works.
 actually be made, delay becomes expensive: with $T_4$ at $R=40\,\mathrm{m}$,
 $t_{\mathrm{last}}$ grows from $16.61\,\mathrm{s}$ ($\tau=5$) to
 $19.16$--$21.27\,\mathrm{s}$ ($\tau=10$, worst $\theta=165^\circ$) and
-$31.46$--$33.75\,\mathrm{s}$ ($\tau=30$); the sweep at $\theta=15^\circ$ gives
-$17.83/19.38/19.38/26.46\,\mathrm{s}$ for $t_{rec}=7.5/12.5/15/25$, an average slope of
-$\approx0.49\,\mathrm{s}$ per second of outage with a plateau while vehicles idle.
+$31.46$--$33.75\,\mathrm{s}$ ($\tau=30$); the $\theta=15^\circ$ sweep gives an average
+slope of $\approx0.49\,\mathrm{s}$ per second of outage, plateauing while vehicles idle.
 Outage hurts roughly twice as fast as it lasts, because it freezes both the information
 channel and the repositioning clock.
 

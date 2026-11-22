@@ -1,0 +1,4057 @@
+{
+  "NA worst  (θ=225,R=50)": {
+    "nominal": {
+      "keep": {
+        "eta": 0.75,
+        "t_last": 60.0,
+        "starts": {
+          "T1": 2.39,
+          "T2": 7.5,
+          "T3": 10.65,
+          "T4": null
+        }
+      },
+      "res": {
+        "eta": 1.0,
+        "t_last": 19.97,
+        "starts": {
+          "T1": 2.39,
+          "T2": 11.86,
+          "T3": 8.8,
+          "T4": 19.97
+        },
+        "assignment": {
+          "V1": [
+            "T3",
+            "T4"
+          ],
+          "V2": [
+            "T3"
+          ],
+          "V3": [
+            "T2"
+          ],
+          "V4": [
+            "T2"
+          ],
+          "V5": [
+            "T4"
+          ]
+        },
+        "stations": {
+          "V1-T3": [
+            14.52,
+            11.71
+          ],
+          "V1-T4": [
+            13.17,
+            6.31
+          ],
+          "V2-T3": [
+            88.03,
+            10.33
+          ],
+          "V3-T2": [
+            14.73,
+            89.93
+          ],
+          "V4-T2": [
+            87.85,
+            72.5
+          ],
+          "V5-T4": [
+            49.81,
+            93.63
+          ]
+        },
+        "timeline": {
+          "V1": [
+            {
+              "t": 5.0,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 5.0,
+              "kind": "depart",
+              "alert": "T3"
+            },
+            {
+              "t": 5.73,
+              "kind": "arrive",
+              "alert": "T3"
+            },
+            {
+              "t": 8.8,
+              "kind": "ready",
+              "alert": "T3"
+            },
+            {
+              "t": 8.8,
+              "kind": "obs_start",
+              "alert": "T3"
+            },
+            {
+              "t": 13.8,
+              "kind": "obs_end",
+              "alert": "T3"
+            },
+            {
+              "t": 15.45,
+              "kind": "reset_done",
+              "alert": "T3"
+            },
+            {
+              "t": 15.45,
+              "kind": "depart",
+              "alert": "T4"
+            },
+            {
+              "t": 17.3,
+              "kind": "arrive",
+              "alert": "T4"
+            },
+            {
+              "t": 19.97,
+              "kind": "ready",
+              "alert": "T4"
+            },
+            {
+              "t": 19.97,
+              "kind": "obs_start",
+              "alert": "T4"
+            },
+            {
+              "t": 24.97,
+              "kind": "obs_end",
+              "alert": "T4"
+            },
+            {
+              "t": 27.64,
+              "kind": "reset_done",
+              "alert": "T4"
+            }
+          ],
+          "V2": [
+            {
+              "t": 5.0,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 5.0,
+              "kind": "depart",
+              "alert": "T3"
+            },
+            {
+              "t": 5.0,
+              "kind": "arrive",
+              "alert": "T3"
+            },
+            {
+              "t": 5.91,
+              "kind": "ready",
+              "alert": "T3"
+            },
+            {
+              "t": 8.8,
+              "kind": "obs_start",
+              "alert": "T3"
+            },
+            {
+              "t": 13.8,
+              "kind": "obs_end",
+              "alert": "T3"
+            },
+            {
+              "t": 19.6,
+              "kind": "reset_done",
+              "alert": "T3"
+            }
+          ],
+          "V3": [
+            {
+              "t": 8.41,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 8.41,
+              "kind": "depart",
+              "alert": "T2"
+            },
+            {
+              "t": 8.46,
+              "kind": "arrive",
+              "alert": "T2"
+            },
+            {
+              "t": 11.86,
+              "kind": "ready",
+              "alert": "T2"
+            },
+            {
+              "t": 11.86,
+              "kind": "obs_start",
+              "alert": "T2"
+            },
+            {
+              "t": 16.86,
+              "kind": "obs_end",
+              "alert": "T2"
+            },
+            {
+              "t": 20.26,
+              "kind": "reset_done",
+              "alert": "T2"
+            }
+          ],
+          "V4": [
+            {
+              "t": 5.0,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 5.0,
+              "kind": "depart",
+              "alert": "T2"
+            },
+            {
+              "t": 5.0,
+              "kind": "arrive",
+              "alert": "T2"
+            },
+            {
+              "t": 7.5,
+              "kind": "ready",
+              "alert": "T2"
+            },
+            {
+              "t": 11.86,
+              "kind": "obs_start",
+              "alert": "T2"
+            },
+            {
+              "t": 16.86,
+              "kind": "obs_end",
+              "alert": "T2"
+            },
+            {
+              "t": 22.86,
+              "kind": "reset_done",
+              "alert": "T2"
+            }
+          ],
+          "V5": [
+            {
+              "t": 8.92,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 8.92,
+              "kind": "depart",
+              "alert": "T4"
+            },
+            {
+              "t": 9.09,
+              "kind": "arrive",
+              "alert": "T4"
+            },
+            {
+              "t": 12.89,
+              "kind": "ready",
+              "alert": "T4"
+            },
+            {
+              "t": 19.97,
+              "kind": "obs_start",
+              "alert": "T4"
+            },
+            {
+              "t": 24.97,
+              "kind": "obs_end",
+              "alert": "T4"
+            },
+            {
+              "t": 28.77,
+              "kind": "reset_done",
+              "alert": "T4"
+            }
+          ]
+        }
+      },
+      "res_eta": 1.0,
+      "res_tlast": 19.97,
+      "keep_eta": 0.75,
+      "keep_tlast": 60.0
+    },
+    "speed −10%": {
+      "keep": {
+        "eta": 0.75,
+        "t_last": 60.0,
+        "starts": {
+          "T1": 2.39,
+          "T2": 7.67,
+          "T3": 10.68,
+          "T4": null
+        }
+      },
+      "res": {
+        "eta": 1.0,
+        "t_last": 20.26,
+        "starts": {
+          "T1": 2.39,
+          "T2": 11.87,
+          "T3": 8.88,
+          "T4": 20.26
+        },
+        "assignment": {
+          "V1": [
+            "T3",
+            "T4"
+          ],
+          "V2": [
+            "T3"
+          ],
+          "V3": [
+            "T2"
+          ],
+          "V4": [
+            "T2"
+          ],
+          "V5": [
+            "T4"
+          ]
+        },
+        "stations": {
+          "V1-T3": [
+            14.52,
+            11.71
+          ],
+          "V1-T4": [
+            13.17,
+            6.31
+          ],
+          "V2-T3": [
+            88.03,
+            10.33
+          ],
+          "V3-T2": [
+            14.73,
+            89.93
+          ],
+          "V4-T2": [
+            87.85,
+            72.5
+          ],
+          "V5-T4": [
+            49.81,
+            93.63
+          ]
+        },
+        "timeline": {
+          "V1": [
+            {
+              "t": 5.0,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 5.0,
+              "kind": "depart",
+              "alert": "T3"
+            },
+            {
+              "t": 5.81,
+              "kind": "arrive",
+              "alert": "T3"
+            },
+            {
+              "t": 8.88,
+              "kind": "ready",
+              "alert": "T3"
+            },
+            {
+              "t": 8.88,
+              "kind": "obs_start",
+              "alert": "T3"
+            },
+            {
+              "t": 13.88,
+              "kind": "obs_end",
+              "alert": "T3"
+            },
+            {
+              "t": 15.53,
+              "kind": "reset_done",
+              "alert": "T3"
+            },
+            {
+              "t": 15.53,
+              "kind": "depart",
+              "alert": "T4"
+            },
+            {
+              "t": 17.59,
+              "kind": "arrive",
+              "alert": "T4"
+            },
+            {
+              "t": 20.26,
+              "kind": "ready",
+              "alert": "T4"
+            },
+            {
+              "t": 20.26,
+              "kind": "obs_start",
+              "alert": "T4"
+            },
+            {
+              "t": 25.26,
+              "kind": "obs_end",
+              "alert": "T4"
+            },
+            {
+              "t": 27.92,
+              "kind": "reset_done",
+              "alert": "T4"
+            }
+          ],
+          "V2": [
+            {
+              "t": 5.0,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 5.0,
+              "kind": "depart",
+              "alert": "T3"
+            },
+            {
+              "t": 5.0,
+              "kind": "arrive",
+              "alert": "T3"
+            },
+            {
+              "t": 5.92,
+              "kind": "ready",
+              "alert": "T3"
+            },
+            {
+              "t": 8.88,
+              "kind": "obs_start",
+              "alert": "T3"
+            },
+            {
+              "t": 13.88,
+              "kind": "obs_end",
+              "alert": "T3"
+            },
+            {
+              "t": 19.68,
+              "kind": "reset_done",
+              "alert": "T3"
+            }
+          ],
+          "V3": [
+            {
+              "t": 8.41,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 8.41,
+              "kind": "depart",
+              "alert": "T2"
+            },
+            {
+              "t": 8.47,
+              "kind": "arrive",
+              "alert": "T2"
+            },
+            {
+              "t": 11.87,
+              "kind": "ready",
+              "alert": "T2"
+            },
+            {
+              "t": 11.87,
+              "kind": "obs_start",
+              "alert": "T2"
+            },
+            {
+              "t": 16.87,
+              "kind": "obs_end",
+              "alert": "T2"
+            },
+            {
+              "t": 20.27,
+              "kind": "reset_done",
+              "alert": "T2"
+            }
+          ],
+          "V4": [
+            {
+              "t": 5.0,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 5.0,
+              "kind": "depart",
+              "alert": "T2"
+            },
+            {
+              "t": 5.0,
+              "kind": "arrive",
+              "alert": "T2"
+            },
+            {
+              "t": 7.67,
+              "kind": "ready",
+              "alert": "T2"
+            },
+            {
+              "t": 11.87,
+              "kind": "obs_start",
+              "alert": "T2"
+            },
+            {
+              "t": 16.87,
+              "kind": "obs_end",
+              "alert": "T2"
+            },
+            {
+              "t": 22.87,
+              "kind": "reset_done",
+              "alert": "T2"
+            }
+          ],
+          "V5": [
+            {
+              "t": 8.92,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 8.92,
+              "kind": "depart",
+              "alert": "T4"
+            },
+            {
+              "t": 9.11,
+              "kind": "arrive",
+              "alert": "T4"
+            },
+            {
+              "t": 12.91,
+              "kind": "ready",
+              "alert": "T4"
+            },
+            {
+              "t": 20.26,
+              "kind": "obs_start",
+              "alert": "T4"
+            },
+            {
+              "t": 25.26,
+              "kind": "obs_end",
+              "alert": "T4"
+            },
+            {
+              "t": 29.06,
+              "kind": "reset_done",
+              "alert": "T4"
+            }
+          ]
+        }
+      },
+      "res_eta": 1.0,
+      "res_tlast": 20.26,
+      "keep_eta": 0.75,
+      "keep_tlast": 60.0
+    },
+    "speed +10%": {
+      "keep": {
+        "eta": 0.75,
+        "t_last": 60.0,
+        "starts": {
+          "T1": 2.39,
+          "T2": 7.36,
+          "T3": 10.63,
+          "T4": null
+        }
+      },
+      "res": {
+        "eta": 1.0,
+        "t_last": 19.74,
+        "starts": {
+          "T1": 2.39,
+          "T2": 11.86,
+          "T3": 8.73,
+          "T4": 19.74
+        },
+        "assignment": {
+          "V1": [
+            "T3",
+            "T4"
+          ],
+          "V2": [
+            "T3"
+          ],
+          "V3": [
+            "T2"
+          ],
+          "V4": [
+            "T2"
+          ],
+          "V5": [
+            "T4"
+          ]
+        },
+        "stations": {
+          "V1-T3": [
+            14.52,
+            11.71
+          ],
+          "V1-T4": [
+            13.17,
+            6.31
+          ],
+          "V2-T3": [
+            88.03,
+            10.33
+          ],
+          "V3-T2": [
+            14.73,
+            89.93
+          ],
+          "V4-T2": [
+            87.85,
+            72.5
+          ],
+          "V5-T4": [
+            49.81,
+            93.63
+          ]
+        },
+        "timeline": {
+          "V1": [
+            {
+              "t": 5.0,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 5.0,
+              "kind": "depart",
+              "alert": "T3"
+            },
+            {
+              "t": 5.67,
+              "kind": "arrive",
+              "alert": "T3"
+            },
+            {
+              "t": 8.73,
+              "kind": "ready",
+              "alert": "T3"
+            },
+            {
+              "t": 8.73,
+              "kind": "obs_start",
+              "alert": "T3"
+            },
+            {
+              "t": 13.73,
+              "kind": "obs_end",
+              "alert": "T3"
+            },
+            {
+              "t": 15.38,
+              "kind": "reset_done",
+              "alert": "T3"
+            },
+            {
+              "t": 15.38,
+              "kind": "depart",
+              "alert": "T4"
+            },
+            {
+              "t": 17.07,
+              "kind": "arrive",
+              "alert": "T4"
+            },
+            {
+              "t": 19.74,
+              "kind": "ready",
+              "alert": "T4"
+            },
+            {
+              "t": 19.74,
+              "kind": "obs_start",
+              "alert": "T4"
+            },
+            {
+              "t": 24.74,
+              "kind": "obs_end",
+              "alert": "T4"
+            },
+            {
+              "t": 27.4,
+              "kind": "reset_done",
+              "alert": "T4"
+            }
+          ],
+          "V2": [
+            {
+              "t": 5.0,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 5.0,
+              "kind": "depart",
+              "alert": "T3"
+            },
+            {
+              "t": 5.0,
+              "kind": "arrive",
+              "alert": "T3"
+            },
+            {
+              "t": 5.9,
+              "kind": "ready",
+              "alert": "T3"
+            },
+            {
+              "t": 8.73,
+              "kind": "obs_start",
+              "alert": "T3"
+            },
+            {
+              "t": 13.73,
+              "kind": "obs_end",
+              "alert": "T3"
+            },
+            {
+              "t": 19.53,
+              "kind": "reset_done",
+              "alert": "T3"
+            }
+          ],
+          "V3": [
+            {
+              "t": 8.41,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 8.41,
+              "kind": "depart",
+              "alert": "T2"
+            },
+            {
+              "t": 8.46,
+              "kind": "arrive",
+              "alert": "T2"
+            },
+            {
+              "t": 11.86,
+              "kind": "ready",
+              "alert": "T2"
+            },
+            {
+              "t": 11.86,
+              "kind": "obs_start",
+              "alert": "T2"
+            },
+            {
+              "t": 16.86,
+              "kind": "obs_end",
+              "alert": "T2"
+            },
+            {
+              "t": 20.26,
+              "kind": "reset_done",
+              "alert": "T2"
+            }
+          ],
+          "V4": [
+            {
+              "t": 5.0,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 5.0,
+              "kind": "depart",
+              "alert": "T2"
+            },
+            {
+              "t": 5.0,
+              "kind": "arrive",
+              "alert": "T2"
+            },
+            {
+              "t": 7.36,
+              "kind": "ready",
+              "alert": "T2"
+            },
+            {
+              "t": 11.86,
+              "kind": "obs_start",
+              "alert": "T2"
+            },
+            {
+              "t": 16.86,
+              "kind": "obs_end",
+              "alert": "T2"
+            },
+            {
+              "t": 22.86,
+              "kind": "reset_done",
+              "alert": "T2"
+            }
+          ],
+          "V5": [
+            {
+              "t": 8.92,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 8.92,
+              "kind": "depart",
+              "alert": "T4"
+            },
+            {
+              "t": 9.08,
+              "kind": "arrive",
+              "alert": "T4"
+            },
+            {
+              "t": 12.88,
+              "kind": "ready",
+              "alert": "T4"
+            },
+            {
+              "t": 19.74,
+              "kind": "obs_start",
+              "alert": "T4"
+            },
+            {
+              "t": 24.74,
+              "kind": "obs_end",
+              "alert": "T4"
+            },
+            {
+              "t": 28.54,
+              "kind": "reset_done",
+              "alert": "T4"
+            }
+          ]
+        }
+      },
+      "res_eta": 1.0,
+      "res_tlast": 19.74,
+      "keep_eta": 0.75,
+      "keep_tlast": 60.0
+    },
+    "slew −10%": {
+      "keep": {
+        "eta": 0.75,
+        "t_last": 60.0,
+        "starts": {
+          "T1": 2.39,
+          "T2": 8.17,
+          "T3": 10.87,
+          "T4": null
+        }
+      },
+      "res": {
+        "eta": 1.0,
+        "t_last": 20.79,
+        "starts": {
+          "T1": 2.39,
+          "T2": 12.24,
+          "T3": 9.14,
+          "T4": 20.79
+        },
+        "assignment": {
+          "V1": [
+            "T3",
+            "T4"
+          ],
+          "V2": [
+            "T3"
+          ],
+          "V3": [
+            "T2"
+          ],
+          "V4": [
+            "T2"
+          ],
+          "V5": [
+            "T4"
+          ]
+        },
+        "stations": {
+          "V1-T3": [
+            14.52,
+            11.71
+          ],
+          "V1-T4": [
+            13.17,
+            6.31
+          ],
+          "V2-T3": [
+            88.03,
+            10.33
+          ],
+          "V3-T2": [
+            14.73,
+            89.93
+          ],
+          "V4-T2": [
+            87.85,
+            72.5
+          ],
+          "V5-T4": [
+            49.81,
+            93.63
+          ]
+        },
+        "timeline": {
+          "V1": [
+            {
+              "t": 5.0,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 5.0,
+              "kind": "depart",
+              "alert": "T3"
+            },
+            {
+              "t": 5.73,
+              "kind": "arrive",
+              "alert": "T3"
+            },
+            {
+              "t": 9.14,
+              "kind": "ready",
+              "alert": "T3"
+            },
+            {
+              "t": 9.14,
+              "kind": "obs_start",
+              "alert": "T3"
+            },
+            {
+              "t": 14.14,
+              "kind": "obs_end",
+              "alert": "T3"
+            },
+            {
+              "t": 15.97,
+              "kind": "reset_done",
+              "alert": "T3"
+            },
+            {
+              "t": 15.97,
+              "kind": "depart",
+              "alert": "T4"
+            },
+            {
+              "t": 17.83,
+              "kind": "arrive",
+              "alert": "T4"
+            },
+            {
+              "t": 20.79,
+              "kind": "ready",
+              "alert": "T4"
+            },
+            {
+              "t": 20.79,
+              "kind": "obs_start",
+              "alert": "T4"
+            },
+            {
+              "t": 25.79,
+              "kind": "obs_end",
+              "alert": "T4"
+            },
+            {
+              "t": 28.75,
+              "kind": "reset_done",
+              "alert": "T4"
+            }
+          ],
+          "V2": [
+            {
+              "t": 5.0,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 5.0,
+              "kind": "depart",
+              "alert": "T3"
+            },
+            {
+              "t": 5.0,
+              "kind": "arrive",
+              "alert": "T3"
+            },
+            {
+              "t": 6.56,
+              "kind": "ready",
+              "alert": "T3"
+            },
+            {
+              "t": 9.14,
+              "kind": "obs_start",
+              "alert": "T3"
+            },
+            {
+              "t": 14.14,
+              "kind": "obs_end",
+              "alert": "T3"
+            },
+            {
+              "t": 20.59,
+              "kind": "reset_done",
+              "alert": "T3"
+            }
+          ],
+          "V3": [
+            {
+              "t": 8.41,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 8.41,
+              "kind": "depart",
+              "alert": "T2"
+            },
+            {
+              "t": 8.46,
+              "kind": "arrive",
+              "alert": "T2"
+            },
+            {
+              "t": 12.24,
+              "kind": "ready",
+              "alert": "T2"
+            },
+            {
+              "t": 12.24,
+              "kind": "obs_start",
+              "alert": "T2"
+            },
+            {
+              "t": 17.24,
+              "kind": "obs_end",
+              "alert": "T2"
+            },
+            {
+              "t": 21.02,
+              "kind": "reset_done",
+              "alert": "T2"
+            }
+          ],
+          "V4": [
+            {
+              "t": 5.0,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 5.0,
+              "kind": "depart",
+              "alert": "T2"
+            },
+            {
+              "t": 5.0,
+              "kind": "arrive",
+              "alert": "T2"
+            },
+            {
+              "t": 8.17,
+              "kind": "ready",
+              "alert": "T2"
+            },
+            {
+              "t": 12.24,
+              "kind": "obs_start",
+              "alert": "T2"
+            },
+            {
+              "t": 17.24,
+              "kind": "obs_end",
+              "alert": "T2"
+            },
+            {
+              "t": 23.91,
+              "kind": "reset_done",
+              "alert": "T2"
+            }
+          ],
+          "V5": [
+            {
+              "t": 8.92,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 8.92,
+              "kind": "depart",
+              "alert": "T4"
+            },
+            {
+              "t": 9.09,
+              "kind": "arrive",
+              "alert": "T4"
+            },
+            {
+              "t": 13.32,
+              "kind": "ready",
+              "alert": "T4"
+            },
+            {
+              "t": 20.79,
+              "kind": "obs_start",
+              "alert": "T4"
+            },
+            {
+              "t": 25.79,
+              "kind": "obs_end",
+              "alert": "T4"
+            },
+            {
+              "t": 30.01,
+              "kind": "reset_done",
+              "alert": "T4"
+            }
+          ]
+        }
+      },
+      "res_eta": 1.0,
+      "res_tlast": 20.79,
+      "keep_eta": 0.75,
+      "keep_tlast": 60.0
+    },
+    "slew +10%": {
+      "keep": {
+        "eta": 0.75,
+        "t_last": 60.0,
+        "starts": {
+          "T1": 2.39,
+          "T2": 6.96,
+          "T3": 10.47,
+          "T4": null
+        }
+      },
+      "res": {
+        "eta": 1.0,
+        "t_last": 19.3,
+        "starts": {
+          "T1": 2.39,
+          "T2": 11.55,
+          "T3": 8.52,
+          "T4": 19.3
+        },
+        "assignment": {
+          "V1": [
+            "T3",
+            "T4"
+          ],
+          "V2": [
+            "T3"
+          ],
+          "V3": [
+            "T2"
+          ],
+          "V4": [
+            "T2"
+          ],
+          "V5": [
+            "T4"
+          ]
+        },
+        "stations": {
+          "V1-T3": [
+            14.52,
+            11.71
+          ],
+          "V1-T4": [
+            13.17,
+            6.31
+          ],
+          "V2-T3": [
+            88.03,
+            10.33
+          ],
+          "V3-T2": [
+            14.73,
+            89.93
+          ],
+          "V4-T2": [
+            87.85,
+            72.5
+          ],
+          "V5-T4": [
+            49.81,
+            93.63
+          ]
+        },
+        "timeline": {
+          "V1": [
+            {
+              "t": 5.0,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 5.0,
+              "kind": "depart",
+              "alert": "T3"
+            },
+            {
+              "t": 5.73,
+              "kind": "arrive",
+              "alert": "T3"
+            },
+            {
+              "t": 8.52,
+              "kind": "ready",
+              "alert": "T3"
+            },
+            {
+              "t": 8.52,
+              "kind": "obs_start",
+              "alert": "T3"
+            },
+            {
+              "t": 13.52,
+              "kind": "obs_end",
+              "alert": "T3"
+            },
+            {
+              "t": 15.02,
+              "kind": "reset_done",
+              "alert": "T3"
+            },
+            {
+              "t": 15.02,
+              "kind": "depart",
+              "alert": "T4"
+            },
+            {
+              "t": 16.88,
+              "kind": "arrive",
+              "alert": "T4"
+            },
+            {
+              "t": 19.3,
+              "kind": "ready",
+              "alert": "T4"
+            },
+            {
+              "t": 19.3,
+              "kind": "obs_start",
+              "alert": "T4"
+            },
+            {
+              "t": 24.3,
+              "kind": "obs_end",
+              "alert": "T4"
+            },
+            {
+              "t": 26.72,
+              "kind": "reset_done",
+              "alert": "T4"
+            }
+          ],
+          "V2": [
+            {
+              "t": 5.0,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 5.0,
+              "kind": "depart",
+              "alert": "T3"
+            },
+            {
+              "t": 5.0,
+              "kind": "arrive",
+              "alert": "T3"
+            },
+            {
+              "t": 5.38,
+              "kind": "ready",
+              "alert": "T3"
+            },
+            {
+              "t": 8.52,
+              "kind": "obs_start",
+              "alert": "T3"
+            },
+            {
+              "t": 13.52,
+              "kind": "obs_end",
+              "alert": "T3"
+            },
+            {
+              "t": 18.79,
+              "kind": "reset_done",
+              "alert": "T3"
+            }
+          ],
+          "V3": [
+            {
+              "t": 8.41,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 8.41,
+              "kind": "depart",
+              "alert": "T2"
+            },
+            {
+              "t": 8.46,
+              "kind": "arrive",
+              "alert": "T2"
+            },
+            {
+              "t": 11.55,
+              "kind": "ready",
+              "alert": "T2"
+            },
+            {
+              "t": 11.55,
+              "kind": "obs_start",
+              "alert": "T2"
+            },
+            {
+              "t": 16.55,
+              "kind": "obs_end",
+              "alert": "T2"
+            },
+            {
+              "t": 19.64,
+              "kind": "reset_done",
+              "alert": "T2"
+            }
+          ],
+          "V4": [
+            {
+              "t": 5.0,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 5.0,
+              "kind": "depart",
+              "alert": "T2"
+            },
+            {
+              "t": 5.0,
+              "kind": "arrive",
+              "alert": "T2"
+            },
+            {
+              "t": 6.96,
+              "kind": "ready",
+              "alert": "T2"
+            },
+            {
+              "t": 11.55,
+              "kind": "obs_start",
+              "alert": "T2"
+            },
+            {
+              "t": 16.55,
+              "kind": "obs_end",
+              "alert": "T2"
+            },
+            {
+              "t": 22.01,
+              "kind": "reset_done",
+              "alert": "T2"
+            }
+          ],
+          "V5": [
+            {
+              "t": 8.92,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 8.92,
+              "kind": "depart",
+              "alert": "T4"
+            },
+            {
+              "t": 9.09,
+              "kind": "arrive",
+              "alert": "T4"
+            },
+            {
+              "t": 12.55,
+              "kind": "ready",
+              "alert": "T4"
+            },
+            {
+              "t": 19.3,
+              "kind": "obs_start",
+              "alert": "T4"
+            },
+            {
+              "t": 24.3,
+              "kind": "obs_end",
+              "alert": "T4"
+            },
+            {
+              "t": 27.75,
+              "kind": "reset_done",
+              "alert": "T4"
+            }
+          ]
+        }
+      },
+      "res_eta": 1.0,
+      "res_tlast": 19.3,
+      "keep_eta": 0.75,
+      "keep_tlast": 60.0
+    },
+    "nominal_recheck": {
+      "res_tlast": 19.97
+    }
+  },
+  "NA easy   (θ=90, R=50)": {
+    "nominal": {
+      "keep": {
+        "eta": 0.75,
+        "t_last": 60.0,
+        "starts": {
+          "T1": 2.39,
+          "T2": 7.5,
+          "T3": 10.65,
+          "T4": null
+        }
+      },
+      "res": {
+        "eta": 1.0,
+        "t_last": 15.44,
+        "starts": {
+          "T1": 2.39,
+          "T2": 14.15,
+          "T3": 15.44,
+          "T4": 6.31
+        },
+        "assignment": {
+          "V1": [
+            "T4",
+            "T3"
+          ],
+          "V2": [
+            "T3"
+          ],
+          "V3": [
+            "T2"
+          ],
+          "V4": [
+            "T4"
+          ],
+          "V5": [
+            "T2"
+          ]
+        },
+        "stations": {
+          "V1-T4": [
+            15.36,
+            14.27
+          ],
+          "V1-T3": [
+            15.52,
+            14.84
+          ],
+          "V2-T3": [
+            88.03,
+            10.33
+          ],
+          "V3-T2": [
+            14.73,
+            89.93
+          ],
+          "V4-T4": [
+            87.59,
+            72.69
+          ],
+          "V5-T2": [
+            49.72,
+            93.07
+          ]
+        },
+        "timeline": {
+          "V1": [
+            {
+              "t": 5.0,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 5.0,
+              "kind": "depart",
+              "alert": "T4"
+            },
+            {
+              "t": 5.17,
+              "kind": "arrive",
+              "alert": "T4"
+            },
+            {
+              "t": 6.03,
+              "kind": "ready",
+              "alert": "T4"
+            },
+            {
+              "t": 6.31,
+              "kind": "obs_start",
+              "alert": "T4"
+            },
+            {
+              "t": 11.31,
+              "kind": "obs_end",
+              "alert": "T4"
+            },
+            {
+              "t": 13.57,
+              "kind": "reset_done",
+              "alert": "T4"
+            },
+            {
+              "t": 13.57,
+              "kind": "depart",
+              "alert": "T3"
+            },
+            {
+              "t": 13.77,
+              "kind": "arrive",
+              "alert": "T3"
+            },
+            {
+              "t": 15.44,
+              "kind": "ready",
+              "alert": "T3"
+            },
+            {
+              "t": 15.44,
+              "kind": "obs_start",
+              "alert": "T3"
+            },
+            {
+              "t": 20.44,
+              "kind": "obs_end",
+              "alert": "T3"
+            },
+            {
+              "t": 22.11,
+              "kind": "reset_done",
+              "alert": "T3"
+            }
+          ],
+          "V2": [
+            {
+              "t": 5.0,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 5.0,
+              "kind": "depart",
+              "alert": "T3"
+            },
+            {
+              "t": 5.0,
+              "kind": "arrive",
+              "alert": "T3"
+            },
+            {
+              "t": 5.91,
+              "kind": "ready",
+              "alert": "T3"
+            },
+            {
+              "t": 15.44,
+              "kind": "obs_start",
+              "alert": "T3"
+            },
+            {
+              "t": 20.44,
+              "kind": "obs_end",
+              "alert": "T3"
+            },
+            {
+              "t": 26.24,
+              "kind": "reset_done",
+              "alert": "T3"
+            }
+          ],
+          "V3": [
+            {
+              "t": 8.41,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 8.41,
+              "kind": "depart",
+              "alert": "T2"
+            },
+            {
+              "t": 8.46,
+              "kind": "arrive",
+              "alert": "T2"
+            },
+            {
+              "t": 11.86,
+              "kind": "ready",
+              "alert": "T2"
+            },
+            {
+              "t": 14.15,
+              "kind": "obs_start",
+              "alert": "T2"
+            },
+            {
+              "t": 19.15,
+              "kind": "obs_end",
+              "alert": "T2"
+            },
+            {
+              "t": 22.55,
+              "kind": "reset_done",
+              "alert": "T2"
+            }
+          ],
+          "V4": [
+            {
+              "t": 5.0,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 5.0,
+              "kind": "depart",
+              "alert": "T4"
+            },
+            {
+              "t": 5.11,
+              "kind": "arrive",
+              "alert": "T4"
+            },
+            {
+              "t": 6.31,
+              "kind": "ready",
+              "alert": "T4"
+            },
+            {
+              "t": 6.31,
+              "kind": "obs_start",
+              "alert": "T4"
+            },
+            {
+              "t": 11.31,
+              "kind": "obs_end",
+              "alert": "T4"
+            },
+            {
+              "t": 16.11,
+              "kind": "reset_done",
+              "alert": "T4"
+            }
+          ],
+          "V5": [
+            {
+              "t": 8.92,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 8.92,
+              "kind": "depart",
+              "alert": "T2"
+            },
+            {
+              "t": 9.08,
+              "kind": "arrive",
+              "alert": "T2"
+            },
+            {
+              "t": 14.15,
+              "kind": "ready",
+              "alert": "T2"
+            },
+            {
+              "t": 14.15,
+              "kind": "obs_start",
+              "alert": "T2"
+            },
+            {
+              "t": 19.15,
+              "kind": "obs_end",
+              "alert": "T2"
+            },
+            {
+              "t": 24.21,
+              "kind": "reset_done",
+              "alert": "T2"
+            }
+          ]
+        }
+      },
+      "res_eta": 1.0,
+      "res_tlast": 15.44,
+      "keep_eta": 0.75,
+      "keep_tlast": 60.0
+    },
+    "speed −10%": {
+      "keep": {
+        "eta": 0.75,
+        "t_last": 60.0,
+        "starts": {
+          "T1": 2.39,
+          "T2": 7.67,
+          "T3": 10.68,
+          "T4": null
+        }
+      },
+      "res": {
+        "eta": 1.0,
+        "t_last": 15.47,
+        "starts": {
+          "T1": 2.39,
+          "T2": 14.17,
+          "T3": 15.47,
+          "T4": 6.32
+        },
+        "assignment": {
+          "V1": [
+            "T4",
+            "T3"
+          ],
+          "V2": [
+            "T3"
+          ],
+          "V3": [
+            "T2"
+          ],
+          "V4": [
+            "T4"
+          ],
+          "V5": [
+            "T2"
+          ]
+        },
+        "stations": {
+          "V1-T4": [
+            15.36,
+            14.27
+          ],
+          "V1-T3": [
+            15.52,
+            14.84
+          ],
+          "V2-T3": [
+            88.03,
+            10.33
+          ],
+          "V3-T2": [
+            14.73,
+            89.93
+          ],
+          "V4-T4": [
+            87.59,
+            72.69
+          ],
+          "V5-T2": [
+            49.72,
+            93.07
+          ]
+        },
+        "timeline": {
+          "V1": [
+            {
+              "t": 5.0,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 5.0,
+              "kind": "depart",
+              "alert": "T4"
+            },
+            {
+              "t": 5.19,
+              "kind": "arrive",
+              "alert": "T4"
+            },
+            {
+              "t": 6.05,
+              "kind": "ready",
+              "alert": "T4"
+            },
+            {
+              "t": 6.32,
+              "kind": "obs_start",
+              "alert": "T4"
+            },
+            {
+              "t": 11.32,
+              "kind": "obs_end",
+              "alert": "T4"
+            },
+            {
+              "t": 13.59,
+              "kind": "reset_done",
+              "alert": "T4"
+            },
+            {
+              "t": 13.59,
+              "kind": "depart",
+              "alert": "T3"
+            },
+            {
+              "t": 13.8,
+              "kind": "arrive",
+              "alert": "T3"
+            },
+            {
+              "t": 15.47,
+              "kind": "ready",
+              "alert": "T3"
+            },
+            {
+              "t": 15.47,
+              "kind": "obs_start",
+              "alert": "T3"
+            },
+            {
+              "t": 20.47,
+              "kind": "obs_end",
+              "alert": "T3"
+            },
+            {
+              "t": 22.14,
+              "kind": "reset_done",
+              "alert": "T3"
+            }
+          ],
+          "V2": [
+            {
+              "t": 5.0,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 5.0,
+              "kind": "depart",
+              "alert": "T3"
+            },
+            {
+              "t": 5.0,
+              "kind": "arrive",
+              "alert": "T3"
+            },
+            {
+              "t": 5.92,
+              "kind": "ready",
+              "alert": "T3"
+            },
+            {
+              "t": 15.47,
+              "kind": "obs_start",
+              "alert": "T3"
+            },
+            {
+              "t": 20.47,
+              "kind": "obs_end",
+              "alert": "T3"
+            },
+            {
+              "t": 26.27,
+              "kind": "reset_done",
+              "alert": "T3"
+            }
+          ],
+          "V3": [
+            {
+              "t": 8.41,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 8.41,
+              "kind": "depart",
+              "alert": "T2"
+            },
+            {
+              "t": 8.47,
+              "kind": "arrive",
+              "alert": "T2"
+            },
+            {
+              "t": 11.87,
+              "kind": "ready",
+              "alert": "T2"
+            },
+            {
+              "t": 14.17,
+              "kind": "obs_start",
+              "alert": "T2"
+            },
+            {
+              "t": 19.17,
+              "kind": "obs_end",
+              "alert": "T2"
+            },
+            {
+              "t": 22.57,
+              "kind": "reset_done",
+              "alert": "T2"
+            }
+          ],
+          "V4": [
+            {
+              "t": 5.0,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 5.0,
+              "kind": "depart",
+              "alert": "T4"
+            },
+            {
+              "t": 5.12,
+              "kind": "arrive",
+              "alert": "T4"
+            },
+            {
+              "t": 6.32,
+              "kind": "ready",
+              "alert": "T4"
+            },
+            {
+              "t": 6.32,
+              "kind": "obs_start",
+              "alert": "T4"
+            },
+            {
+              "t": 11.32,
+              "kind": "obs_end",
+              "alert": "T4"
+            },
+            {
+              "t": 16.12,
+              "kind": "reset_done",
+              "alert": "T4"
+            }
+          ],
+          "V5": [
+            {
+              "t": 8.92,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 8.92,
+              "kind": "depart",
+              "alert": "T2"
+            },
+            {
+              "t": 9.1,
+              "kind": "arrive",
+              "alert": "T2"
+            },
+            {
+              "t": 14.17,
+              "kind": "ready",
+              "alert": "T2"
+            },
+            {
+              "t": 14.17,
+              "kind": "obs_start",
+              "alert": "T2"
+            },
+            {
+              "t": 19.17,
+              "kind": "obs_end",
+              "alert": "T2"
+            },
+            {
+              "t": 24.23,
+              "kind": "reset_done",
+              "alert": "T2"
+            }
+          ]
+        }
+      },
+      "res_eta": 1.0,
+      "res_tlast": 15.47,
+      "keep_eta": 0.75,
+      "keep_tlast": 60.0
+    },
+    "speed +10%": {
+      "keep": {
+        "eta": 0.75,
+        "t_last": 60.0,
+        "starts": {
+          "T1": 2.39,
+          "T2": 7.36,
+          "T3": 10.63,
+          "T4": null
+        }
+      },
+      "res": {
+        "eta": 1.0,
+        "t_last": 15.38,
+        "starts": {
+          "T1": 2.39,
+          "T2": 14.13,
+          "T3": 15.38,
+          "T4": 6.32
+        },
+        "assignment": {
+          "V1": [
+            "T4",
+            "T3"
+          ],
+          "V2": [
+            "T3"
+          ],
+          "V3": [
+            "T2"
+          ],
+          "V4": [
+            "T4"
+          ],
+          "V5": [
+            "T2"
+          ]
+        },
+        "stations": {
+          "V1-T4": [
+            15.74,
+            15.2
+          ],
+          "V1-T3": [
+            15.52,
+            14.84
+          ],
+          "V2-T3": [
+            88.03,
+            10.33
+          ],
+          "V3-T2": [
+            14.73,
+            89.93
+          ],
+          "V4-T4": [
+            87.59,
+            72.69
+          ],
+          "V5-T2": [
+            49.72,
+            93.07
+          ]
+        },
+        "timeline": {
+          "V1": [
+            {
+              "t": 5.0,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 5.0,
+              "kind": "depart",
+              "alert": "T4"
+            },
+            {
+              "t": 5.45,
+              "kind": "arrive",
+              "alert": "T4"
+            },
+            {
+              "t": 6.32,
+              "kind": "ready",
+              "alert": "T4"
+            },
+            {
+              "t": 6.32,
+              "kind": "obs_start",
+              "alert": "T4"
+            },
+            {
+              "t": 11.32,
+              "kind": "obs_end",
+              "alert": "T4"
+            },
+            {
+              "t": 13.59,
+              "kind": "reset_done",
+              "alert": "T4"
+            },
+            {
+              "t": 13.59,
+              "kind": "depart",
+              "alert": "T3"
+            },
+            {
+              "t": 13.71,
+              "kind": "arrive",
+              "alert": "T3"
+            },
+            {
+              "t": 15.38,
+              "kind": "ready",
+              "alert": "T3"
+            },
+            {
+              "t": 15.38,
+              "kind": "obs_start",
+              "alert": "T3"
+            },
+            {
+              "t": 20.38,
+              "kind": "obs_end",
+              "alert": "T3"
+            },
+            {
+              "t": 22.05,
+              "kind": "reset_done",
+              "alert": "T3"
+            }
+          ],
+          "V2": [
+            {
+              "t": 5.0,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 5.0,
+              "kind": "depart",
+              "alert": "T3"
+            },
+            {
+              "t": 5.0,
+              "kind": "arrive",
+              "alert": "T3"
+            },
+            {
+              "t": 5.9,
+              "kind": "ready",
+              "alert": "T3"
+            },
+            {
+              "t": 15.38,
+              "kind": "obs_start",
+              "alert": "T3"
+            },
+            {
+              "t": 20.38,
+              "kind": "obs_end",
+              "alert": "T3"
+            },
+            {
+              "t": 26.18,
+              "kind": "reset_done",
+              "alert": "T3"
+            }
+          ],
+          "V3": [
+            {
+              "t": 8.41,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 8.41,
+              "kind": "depart",
+              "alert": "T2"
+            },
+            {
+              "t": 8.46,
+              "kind": "arrive",
+              "alert": "T2"
+            },
+            {
+              "t": 11.86,
+              "kind": "ready",
+              "alert": "T2"
+            },
+            {
+              "t": 14.13,
+              "kind": "obs_start",
+              "alert": "T2"
+            },
+            {
+              "t": 19.13,
+              "kind": "obs_end",
+              "alert": "T2"
+            },
+            {
+              "t": 22.53,
+              "kind": "reset_done",
+              "alert": "T2"
+            }
+          ],
+          "V4": [
+            {
+              "t": 5.0,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 5.0,
+              "kind": "depart",
+              "alert": "T4"
+            },
+            {
+              "t": 5.1,
+              "kind": "arrive",
+              "alert": "T4"
+            },
+            {
+              "t": 6.3,
+              "kind": "ready",
+              "alert": "T4"
+            },
+            {
+              "t": 6.32,
+              "kind": "obs_start",
+              "alert": "T4"
+            },
+            {
+              "t": 11.32,
+              "kind": "obs_end",
+              "alert": "T4"
+            },
+            {
+              "t": 16.12,
+              "kind": "reset_done",
+              "alert": "T4"
+            }
+          ],
+          "V5": [
+            {
+              "t": 8.92,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 8.92,
+              "kind": "depart",
+              "alert": "T2"
+            },
+            {
+              "t": 9.07,
+              "kind": "arrive",
+              "alert": "T2"
+            },
+            {
+              "t": 14.13,
+              "kind": "ready",
+              "alert": "T2"
+            },
+            {
+              "t": 14.13,
+              "kind": "obs_start",
+              "alert": "T2"
+            },
+            {
+              "t": 19.13,
+              "kind": "obs_end",
+              "alert": "T2"
+            },
+            {
+              "t": 24.2,
+              "kind": "reset_done",
+              "alert": "T2"
+            }
+          ]
+        }
+      },
+      "res_eta": 1.0,
+      "res_tlast": 15.38,
+      "keep_eta": 0.75,
+      "keep_tlast": 60.0
+    },
+    "slew −10%": {
+      "keep": {
+        "eta": 0.75,
+        "t_last": 60.0,
+        "starts": {
+          "T1": 2.39,
+          "T2": 8.17,
+          "T3": 10.87,
+          "T4": null
+        }
+      },
+      "res": {
+        "eta": 1.0,
+        "t_last": 15.98,
+        "starts": {
+          "T1": 2.39,
+          "T2": 14.71,
+          "T3": 15.98,
+          "T4": 6.46
+        },
+        "assignment": {
+          "V1": [
+            "T4",
+            "T3"
+          ],
+          "V2": [
+            "T3"
+          ],
+          "V3": [
+            "T2"
+          ],
+          "V4": [
+            "T4"
+          ],
+          "V5": [
+            "T2"
+          ]
+        },
+        "stations": {
+          "V1-T4": [
+            15.74,
+            15.2
+          ],
+          "V1-T3": [
+            15.52,
+            14.84
+          ],
+          "V2-T3": [
+            88.03,
+            10.33
+          ],
+          "V3-T2": [
+            14.73,
+            89.93
+          ],
+          "V4-T4": [
+            87.59,
+            72.69
+          ],
+          "V5-T2": [
+            49.72,
+            93.07
+          ]
+        },
+        "timeline": {
+          "V1": [
+            {
+              "t": 5.0,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 5.0,
+              "kind": "depart",
+              "alert": "T4"
+            },
+            {
+              "t": 5.5,
+              "kind": "arrive",
+              "alert": "T4"
+            },
+            {
+              "t": 6.46,
+              "kind": "ready",
+              "alert": "T4"
+            },
+            {
+              "t": 6.46,
+              "kind": "obs_start",
+              "alert": "T4"
+            },
+            {
+              "t": 11.46,
+              "kind": "obs_end",
+              "alert": "T4"
+            },
+            {
+              "t": 13.98,
+              "kind": "reset_done",
+              "alert": "T4"
+            },
+            {
+              "t": 13.98,
+              "kind": "depart",
+              "alert": "T3"
+            },
+            {
+              "t": 14.12,
+              "kind": "arrive",
+              "alert": "T3"
+            },
+            {
+              "t": 15.98,
+              "kind": "ready",
+              "alert": "T3"
+            },
+            {
+              "t": 15.98,
+              "kind": "obs_start",
+              "alert": "T3"
+            },
+            {
+              "t": 20.98,
+              "kind": "obs_end",
+              "alert": "T3"
+            },
+            {
+              "t": 22.83,
+              "kind": "reset_done",
+              "alert": "T3"
+            }
+          ],
+          "V2": [
+            {
+              "t": 5.0,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 5.0,
+              "kind": "depart",
+              "alert": "T3"
+            },
+            {
+              "t": 5.0,
+              "kind": "arrive",
+              "alert": "T3"
+            },
+            {
+              "t": 6.56,
+              "kind": "ready",
+              "alert": "T3"
+            },
+            {
+              "t": 15.98,
+              "kind": "obs_start",
+              "alert": "T3"
+            },
+            {
+              "t": 20.98,
+              "kind": "obs_end",
+              "alert": "T3"
+            },
+            {
+              "t": 27.42,
+              "kind": "reset_done",
+              "alert": "T3"
+            }
+          ],
+          "V3": [
+            {
+              "t": 8.41,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 8.41,
+              "kind": "depart",
+              "alert": "T2"
+            },
+            {
+              "t": 8.46,
+              "kind": "arrive",
+              "alert": "T2"
+            },
+            {
+              "t": 12.24,
+              "kind": "ready",
+              "alert": "T2"
+            },
+            {
+              "t": 14.71,
+              "kind": "obs_start",
+              "alert": "T2"
+            },
+            {
+              "t": 19.71,
+              "kind": "obs_end",
+              "alert": "T2"
+            },
+            {
+              "t": 23.49,
+              "kind": "reset_done",
+              "alert": "T2"
+            }
+          ],
+          "V4": [
+            {
+              "t": 5.0,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 5.0,
+              "kind": "depart",
+              "alert": "T4"
+            },
+            {
+              "t": 5.11,
+              "kind": "arrive",
+              "alert": "T4"
+            },
+            {
+              "t": 6.44,
+              "kind": "ready",
+              "alert": "T4"
+            },
+            {
+              "t": 6.46,
+              "kind": "obs_start",
+              "alert": "T4"
+            },
+            {
+              "t": 11.46,
+              "kind": "obs_end",
+              "alert": "T4"
+            },
+            {
+              "t": 16.8,
+              "kind": "reset_done",
+              "alert": "T4"
+            }
+          ],
+          "V5": [
+            {
+              "t": 8.92,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 8.92,
+              "kind": "depart",
+              "alert": "T2"
+            },
+            {
+              "t": 9.08,
+              "kind": "arrive",
+              "alert": "T2"
+            },
+            {
+              "t": 14.71,
+              "kind": "ready",
+              "alert": "T2"
+            },
+            {
+              "t": 14.71,
+              "kind": "obs_start",
+              "alert": "T2"
+            },
+            {
+              "t": 19.71,
+              "kind": "obs_end",
+              "alert": "T2"
+            },
+            {
+              "t": 25.34,
+              "kind": "reset_done",
+              "alert": "T2"
+            }
+          ]
+        }
+      },
+      "res_eta": 1.0,
+      "res_tlast": 15.98,
+      "keep_eta": 0.75,
+      "keep_tlast": 60.0
+    },
+    "slew +10%": {
+      "keep": {
+        "eta": 0.75,
+        "t_last": 60.0,
+        "starts": {
+          "T1": 2.39,
+          "T2": 6.96,
+          "T3": 10.47,
+          "T4": null
+        }
+      },
+      "res": {
+        "eta": 1.0,
+        "t_last": 14.97,
+        "starts": {
+          "T1": 2.39,
+          "T2": 13.69,
+          "T3": 14.97,
+          "T4": 6.2
+        },
+        "assignment": {
+          "V1": [
+            "T4",
+            "T3"
+          ],
+          "V2": [
+            "T3"
+          ],
+          "V3": [
+            "T2"
+          ],
+          "V4": [
+            "T4"
+          ],
+          "V5": [
+            "T2"
+          ]
+        },
+        "stations": {
+          "V1-T4": [
+            15.36,
+            14.27
+          ],
+          "V1-T3": [
+            15.52,
+            14.84
+          ],
+          "V2-T3": [
+            88.03,
+            10.33
+          ],
+          "V3-T2": [
+            14.73,
+            89.93
+          ],
+          "V4-T4": [
+            87.59,
+            72.69
+          ],
+          "V5-T2": [
+            49.72,
+            93.07
+          ]
+        },
+        "timeline": {
+          "V1": [
+            {
+              "t": 5.0,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 5.0,
+              "kind": "depart",
+              "alert": "T4"
+            },
+            {
+              "t": 5.17,
+              "kind": "arrive",
+              "alert": "T4"
+            },
+            {
+              "t": 5.95,
+              "kind": "ready",
+              "alert": "T4"
+            },
+            {
+              "t": 6.2,
+              "kind": "obs_start",
+              "alert": "T4"
+            },
+            {
+              "t": 11.2,
+              "kind": "obs_end",
+              "alert": "T4"
+            },
+            {
+              "t": 13.26,
+              "kind": "reset_done",
+              "alert": "T4"
+            },
+            {
+              "t": 13.26,
+              "kind": "depart",
+              "alert": "T3"
+            },
+            {
+              "t": 13.46,
+              "kind": "arrive",
+              "alert": "T3"
+            },
+            {
+              "t": 14.97,
+              "kind": "ready",
+              "alert": "T3"
+            },
+            {
+              "t": 14.97,
+              "kind": "obs_start",
+              "alert": "T3"
+            },
+            {
+              "t": 19.97,
+              "kind": "obs_end",
+              "alert": "T3"
+            },
+            {
+              "t": 21.49,
+              "kind": "reset_done",
+              "alert": "T3"
+            }
+          ],
+          "V2": [
+            {
+              "t": 5.0,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 5.0,
+              "kind": "depart",
+              "alert": "T3"
+            },
+            {
+              "t": 5.0,
+              "kind": "arrive",
+              "alert": "T3"
+            },
+            {
+              "t": 5.38,
+              "kind": "ready",
+              "alert": "T3"
+            },
+            {
+              "t": 14.97,
+              "kind": "obs_start",
+              "alert": "T3"
+            },
+            {
+              "t": 19.97,
+              "kind": "obs_end",
+              "alert": "T3"
+            },
+            {
+              "t": 25.25,
+              "kind": "reset_done",
+              "alert": "T3"
+            }
+          ],
+          "V3": [
+            {
+              "t": 8.41,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 8.41,
+              "kind": "depart",
+              "alert": "T2"
+            },
+            {
+              "t": 8.46,
+              "kind": "arrive",
+              "alert": "T2"
+            },
+            {
+              "t": 11.55,
+              "kind": "ready",
+              "alert": "T2"
+            },
+            {
+              "t": 13.69,
+              "kind": "obs_start",
+              "alert": "T2"
+            },
+            {
+              "t": 18.69,
+              "kind": "obs_end",
+              "alert": "T2"
+            },
+            {
+              "t": 21.78,
+              "kind": "reset_done",
+              "alert": "T2"
+            }
+          ],
+          "V4": [
+            {
+              "t": 5.0,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 5.0,
+              "kind": "depart",
+              "alert": "T4"
+            },
+            {
+              "t": 5.11,
+              "kind": "arrive",
+              "alert": "T4"
+            },
+            {
+              "t": 6.2,
+              "kind": "ready",
+              "alert": "T4"
+            },
+            {
+              "t": 6.2,
+              "kind": "obs_start",
+              "alert": "T4"
+            },
+            {
+              "t": 11.2,
+              "kind": "obs_end",
+              "alert": "T4"
+            },
+            {
+              "t": 15.56,
+              "kind": "reset_done",
+              "alert": "T4"
+            }
+          ],
+          "V5": [
+            {
+              "t": 8.92,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 8.92,
+              "kind": "depart",
+              "alert": "T2"
+            },
+            {
+              "t": 9.08,
+              "kind": "arrive",
+              "alert": "T2"
+            },
+            {
+              "t": 13.69,
+              "kind": "ready",
+              "alert": "T2"
+            },
+            {
+              "t": 13.69,
+              "kind": "obs_start",
+              "alert": "T2"
+            },
+            {
+              "t": 18.69,
+              "kind": "obs_end",
+              "alert": "T2"
+            },
+            {
+              "t": 23.29,
+              "kind": "reset_done",
+              "alert": "T2"
+            }
+          ]
+        }
+      },
+      "res_eta": 1.0,
+      "res_tlast": 14.97,
+      "keep_eta": 0.75,
+      "keep_tlast": 60.0
+    },
+    "nominal_recheck": {
+      "res_tlast": 15.44
+    }
+  },
+  "FA V3": {
+    "nominal": {
+      "keep": {
+        "eta": 0.6667,
+        "t_last": 60.0,
+        "starts": {
+          "T1": 2.39,
+          "T2": 7.5,
+          "T3": null
+        }
+      },
+      "res": {
+        "eta": 1.0,
+        "t_last": 12.14,
+        "starts": {
+          "T1": 2.39,
+          "T2": 7.5,
+          "T3": 12.14
+        },
+        "assignment": {
+          "V1": [
+            "T2"
+          ],
+          "V2": [
+            "T3"
+          ],
+          "V4": [
+            "T2"
+          ],
+          "V5": [
+            "T3"
+          ]
+        },
+        "stations": {
+          "V1-T2": [
+            15.13,
+            13.82
+          ],
+          "V2-T3": [
+            88.03,
+            10.33
+          ],
+          "V4-T2": [
+            87.85,
+            72.5
+          ],
+          "V5-T3": [
+            51.44,
+            93.2
+          ]
+        },
+        "timeline": {
+          "V1": [
+            {
+              "t": 5.0,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 5.0,
+              "kind": "depart",
+              "alert": "T2"
+            },
+            {
+              "t": 3.21,
+              "kind": "arrive",
+              "alert": "T2"
+            },
+            {
+              "t": 5.0,
+              "kind": "ready",
+              "alert": "T2"
+            },
+            {
+              "t": 7.5,
+              "kind": "obs_start",
+              "alert": "T2"
+            },
+            {
+              "t": 12.5,
+              "kind": "obs_end",
+              "alert": "T2"
+            },
+            {
+              "t": 15.63,
+              "kind": "reset_done",
+              "alert": "T2"
+            }
+          ],
+          "V2": [
+            {
+              "t": 5.0,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 5.0,
+              "kind": "depart",
+              "alert": "T3"
+            },
+            {
+              "t": 5.0,
+              "kind": "arrive",
+              "alert": "T3"
+            },
+            {
+              "t": 5.91,
+              "kind": "ready",
+              "alert": "T3"
+            },
+            {
+              "t": 12.14,
+              "kind": "obs_start",
+              "alert": "T3"
+            },
+            {
+              "t": 17.14,
+              "kind": "obs_end",
+              "alert": "T3"
+            },
+            {
+              "t": 22.94,
+              "kind": "reset_done",
+              "alert": "T3"
+            }
+          ],
+          "V4": [
+            {
+              "t": 5.0,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 5.0,
+              "kind": "depart",
+              "alert": "T2"
+            },
+            {
+              "t": 5.0,
+              "kind": "arrive",
+              "alert": "T2"
+            },
+            {
+              "t": 7.5,
+              "kind": "ready",
+              "alert": "T2"
+            },
+            {
+              "t": 7.5,
+              "kind": "obs_start",
+              "alert": "T2"
+            },
+            {
+              "t": 12.5,
+              "kind": "obs_end",
+              "alert": "T2"
+            },
+            {
+              "t": 18.5,
+              "kind": "reset_done",
+              "alert": "T2"
+            }
+          ],
+          "V5": [
+            {
+              "t": 8.92,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 8.92,
+              "kind": "depart",
+              "alert": "T3"
+            },
+            {
+              "t": 9.34,
+              "kind": "arrive",
+              "alert": "T3"
+            },
+            {
+              "t": 12.14,
+              "kind": "ready",
+              "alert": "T3"
+            },
+            {
+              "t": 12.14,
+              "kind": "obs_start",
+              "alert": "T3"
+            },
+            {
+              "t": 17.14,
+              "kind": "obs_end",
+              "alert": "T3"
+            },
+            {
+              "t": 19.94,
+              "kind": "reset_done",
+              "alert": "T3"
+            }
+          ]
+        }
+      },
+      "res_eta": 1.0,
+      "res_tlast": 12.14,
+      "keep_eta": 0.6667,
+      "keep_tlast": 60.0
+    },
+    "speed −10%": {
+      "keep": {
+        "eta": 0.6667,
+        "t_last": 60.0,
+        "starts": {
+          "T1": 2.39,
+          "T2": 7.67,
+          "T3": null
+        }
+      },
+      "res": {
+        "eta": 1.0,
+        "t_last": 12.19,
+        "starts": {
+          "T1": 2.39,
+          "T2": 7.67,
+          "T3": 12.19
+        },
+        "assignment": {
+          "V1": [
+            "T2"
+          ],
+          "V2": [
+            "T3"
+          ],
+          "V4": [
+            "T2"
+          ],
+          "V5": [
+            "T3"
+          ]
+        },
+        "stations": {
+          "V1-T2": [
+            15.13,
+            13.82
+          ],
+          "V2-T3": [
+            88.03,
+            10.33
+          ],
+          "V4-T2": [
+            87.85,
+            72.5
+          ],
+          "V5-T3": [
+            51.44,
+            93.2
+          ]
+        },
+        "timeline": {
+          "V1": [
+            {
+              "t": 5.0,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 5.0,
+              "kind": "depart",
+              "alert": "T2"
+            },
+            {
+              "t": 3.21,
+              "kind": "arrive",
+              "alert": "T2"
+            },
+            {
+              "t": 5.0,
+              "kind": "ready",
+              "alert": "T2"
+            },
+            {
+              "t": 7.67,
+              "kind": "obs_start",
+              "alert": "T2"
+            },
+            {
+              "t": 12.67,
+              "kind": "obs_end",
+              "alert": "T2"
+            },
+            {
+              "t": 15.8,
+              "kind": "reset_done",
+              "alert": "T2"
+            }
+          ],
+          "V2": [
+            {
+              "t": 5.0,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 5.0,
+              "kind": "depart",
+              "alert": "T3"
+            },
+            {
+              "t": 5.0,
+              "kind": "arrive",
+              "alert": "T3"
+            },
+            {
+              "t": 5.92,
+              "kind": "ready",
+              "alert": "T3"
+            },
+            {
+              "t": 12.19,
+              "kind": "obs_start",
+              "alert": "T3"
+            },
+            {
+              "t": 17.19,
+              "kind": "obs_end",
+              "alert": "T3"
+            },
+            {
+              "t": 22.99,
+              "kind": "reset_done",
+              "alert": "T3"
+            }
+          ],
+          "V4": [
+            {
+              "t": 5.0,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 5.0,
+              "kind": "depart",
+              "alert": "T2"
+            },
+            {
+              "t": 5.0,
+              "kind": "arrive",
+              "alert": "T2"
+            },
+            {
+              "t": 7.67,
+              "kind": "ready",
+              "alert": "T2"
+            },
+            {
+              "t": 7.67,
+              "kind": "obs_start",
+              "alert": "T2"
+            },
+            {
+              "t": 12.67,
+              "kind": "obs_end",
+              "alert": "T2"
+            },
+            {
+              "t": 18.67,
+              "kind": "reset_done",
+              "alert": "T2"
+            }
+          ],
+          "V5": [
+            {
+              "t": 8.92,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 8.92,
+              "kind": "depart",
+              "alert": "T3"
+            },
+            {
+              "t": 9.39,
+              "kind": "arrive",
+              "alert": "T3"
+            },
+            {
+              "t": 12.19,
+              "kind": "ready",
+              "alert": "T3"
+            },
+            {
+              "t": 12.19,
+              "kind": "obs_start",
+              "alert": "T3"
+            },
+            {
+              "t": 17.19,
+              "kind": "obs_end",
+              "alert": "T3"
+            },
+            {
+              "t": 19.99,
+              "kind": "reset_done",
+              "alert": "T3"
+            }
+          ]
+        }
+      },
+      "res_eta": 1.0,
+      "res_tlast": 12.19,
+      "keep_eta": 0.6667,
+      "keep_tlast": 60.0
+    },
+    "speed +10%": {
+      "keep": {
+        "eta": 0.6667,
+        "t_last": 60.0,
+        "starts": {
+          "T1": 2.39,
+          "T2": 7.36,
+          "T3": null
+        }
+      },
+      "res": {
+        "eta": 1.0,
+        "t_last": 12.1,
+        "starts": {
+          "T1": 2.39,
+          "T2": 7.36,
+          "T3": 12.1
+        },
+        "assignment": {
+          "V1": [
+            "T2"
+          ],
+          "V2": [
+            "T3"
+          ],
+          "V4": [
+            "T2"
+          ],
+          "V5": [
+            "T3"
+          ]
+        },
+        "stations": {
+          "V1-T2": [
+            15.13,
+            13.82
+          ],
+          "V2-T3": [
+            88.03,
+            10.33
+          ],
+          "V4-T2": [
+            87.85,
+            72.5
+          ],
+          "V5-T3": [
+            51.44,
+            93.2
+          ]
+        },
+        "timeline": {
+          "V1": [
+            {
+              "t": 5.0,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 5.0,
+              "kind": "depart",
+              "alert": "T2"
+            },
+            {
+              "t": 3.2,
+              "kind": "arrive",
+              "alert": "T2"
+            },
+            {
+              "t": 5.0,
+              "kind": "ready",
+              "alert": "T2"
+            },
+            {
+              "t": 7.36,
+              "kind": "obs_start",
+              "alert": "T2"
+            },
+            {
+              "t": 12.36,
+              "kind": "obs_end",
+              "alert": "T2"
+            },
+            {
+              "t": 15.5,
+              "kind": "reset_done",
+              "alert": "T2"
+            }
+          ],
+          "V2": [
+            {
+              "t": 5.0,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 5.0,
+              "kind": "depart",
+              "alert": "T3"
+            },
+            {
+              "t": 5.0,
+              "kind": "arrive",
+              "alert": "T3"
+            },
+            {
+              "t": 5.9,
+              "kind": "ready",
+              "alert": "T3"
+            },
+            {
+              "t": 12.1,
+              "kind": "obs_start",
+              "alert": "T3"
+            },
+            {
+              "t": 17.1,
+              "kind": "obs_end",
+              "alert": "T3"
+            },
+            {
+              "t": 22.9,
+              "kind": "reset_done",
+              "alert": "T3"
+            }
+          ],
+          "V4": [
+            {
+              "t": 5.0,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 5.0,
+              "kind": "depart",
+              "alert": "T2"
+            },
+            {
+              "t": 5.0,
+              "kind": "arrive",
+              "alert": "T2"
+            },
+            {
+              "t": 7.36,
+              "kind": "ready",
+              "alert": "T2"
+            },
+            {
+              "t": 7.36,
+              "kind": "obs_start",
+              "alert": "T2"
+            },
+            {
+              "t": 12.36,
+              "kind": "obs_end",
+              "alert": "T2"
+            },
+            {
+              "t": 18.36,
+              "kind": "reset_done",
+              "alert": "T2"
+            }
+          ],
+          "V5": [
+            {
+              "t": 8.92,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 8.92,
+              "kind": "depart",
+              "alert": "T3"
+            },
+            {
+              "t": 9.3,
+              "kind": "arrive",
+              "alert": "T3"
+            },
+            {
+              "t": 12.1,
+              "kind": "ready",
+              "alert": "T3"
+            },
+            {
+              "t": 12.1,
+              "kind": "obs_start",
+              "alert": "T3"
+            },
+            {
+              "t": 17.1,
+              "kind": "obs_end",
+              "alert": "T3"
+            },
+            {
+              "t": 19.9,
+              "kind": "reset_done",
+              "alert": "T3"
+            }
+          ]
+        }
+      },
+      "res_eta": 1.0,
+      "res_tlast": 12.1,
+      "keep_eta": 0.6667,
+      "keep_tlast": 60.0
+    },
+    "slew −10%": {
+      "keep": {
+        "eta": 0.6667,
+        "t_last": 60.0,
+        "starts": {
+          "T1": 2.39,
+          "T2": 8.17,
+          "T3": null
+        }
+      },
+      "res": {
+        "eta": 1.0,
+        "t_last": 12.45,
+        "starts": {
+          "T1": 2.39,
+          "T2": 8.17,
+          "T3": 12.45
+        },
+        "assignment": {
+          "V1": [
+            "T2"
+          ],
+          "V2": [
+            "T3"
+          ],
+          "V4": [
+            "T2"
+          ],
+          "V5": [
+            "T3"
+          ]
+        },
+        "stations": {
+          "V1-T2": [
+            15.13,
+            13.82
+          ],
+          "V2-T3": [
+            88.03,
+            10.33
+          ],
+          "V4-T2": [
+            87.85,
+            72.5
+          ],
+          "V5-T3": [
+            51.44,
+            93.2
+          ]
+        },
+        "timeline": {
+          "V1": [
+            {
+              "t": 5.0,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 5.0,
+              "kind": "depart",
+              "alert": "T2"
+            },
+            {
+              "t": 3.55,
+              "kind": "arrive",
+              "alert": "T2"
+            },
+            {
+              "t": 5.0,
+              "kind": "ready",
+              "alert": "T2"
+            },
+            {
+              "t": 8.17,
+              "kind": "obs_start",
+              "alert": "T2"
+            },
+            {
+              "t": 13.17,
+              "kind": "obs_end",
+              "alert": "T2"
+            },
+            {
+              "t": 16.65,
+              "kind": "reset_done",
+              "alert": "T2"
+            }
+          ],
+          "V2": [
+            {
+              "t": 5.0,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 5.0,
+              "kind": "depart",
+              "alert": "T3"
+            },
+            {
+              "t": 5.0,
+              "kind": "arrive",
+              "alert": "T3"
+            },
+            {
+              "t": 6.56,
+              "kind": "ready",
+              "alert": "T3"
+            },
+            {
+              "t": 12.45,
+              "kind": "obs_start",
+              "alert": "T3"
+            },
+            {
+              "t": 17.45,
+              "kind": "obs_end",
+              "alert": "T3"
+            },
+            {
+              "t": 23.9,
+              "kind": "reset_done",
+              "alert": "T3"
+            }
+          ],
+          "V4": [
+            {
+              "t": 5.0,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 5.0,
+              "kind": "depart",
+              "alert": "T2"
+            },
+            {
+              "t": 5.0,
+              "kind": "arrive",
+              "alert": "T2"
+            },
+            {
+              "t": 8.17,
+              "kind": "ready",
+              "alert": "T2"
+            },
+            {
+              "t": 8.17,
+              "kind": "obs_start",
+              "alert": "T2"
+            },
+            {
+              "t": 13.17,
+              "kind": "obs_end",
+              "alert": "T2"
+            },
+            {
+              "t": 19.83,
+              "kind": "reset_done",
+              "alert": "T2"
+            }
+          ],
+          "V5": [
+            {
+              "t": 8.92,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 8.92,
+              "kind": "depart",
+              "alert": "T3"
+            },
+            {
+              "t": 9.34,
+              "kind": "arrive",
+              "alert": "T3"
+            },
+            {
+              "t": 12.45,
+              "kind": "ready",
+              "alert": "T3"
+            },
+            {
+              "t": 12.45,
+              "kind": "obs_start",
+              "alert": "T3"
+            },
+            {
+              "t": 17.45,
+              "kind": "obs_end",
+              "alert": "T3"
+            },
+            {
+              "t": 20.57,
+              "kind": "reset_done",
+              "alert": "T3"
+            }
+          ]
+        }
+      },
+      "res_eta": 1.0,
+      "res_tlast": 12.45,
+      "keep_eta": 0.6667,
+      "keep_tlast": 60.0
+    },
+    "slew +10%": {
+      "keep": {
+        "eta": 0.6667,
+        "t_last": 60.0,
+        "starts": {
+          "T1": 2.39,
+          "T2": 6.96,
+          "T3": null
+        }
+      },
+      "res": {
+        "eta": 1.0,
+        "t_last": 11.89,
+        "starts": {
+          "T1": 2.39,
+          "T2": 6.96,
+          "T3": 11.89
+        },
+        "assignment": {
+          "V1": [
+            "T2"
+          ],
+          "V2": [
+            "T3"
+          ],
+          "V4": [
+            "T2"
+          ],
+          "V5": [
+            "T3"
+          ]
+        },
+        "stations": {
+          "V1-T2": [
+            15.13,
+            13.82
+          ],
+          "V2-T3": [
+            88.03,
+            10.33
+          ],
+          "V4-T2": [
+            87.85,
+            72.5
+          ],
+          "V5-T3": [
+            51.44,
+            93.2
+          ]
+        },
+        "timeline": {
+          "V1": [
+            {
+              "t": 5.0,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 5.0,
+              "kind": "depart",
+              "alert": "T2"
+            },
+            {
+              "t": 2.92,
+              "kind": "arrive",
+              "alert": "T2"
+            },
+            {
+              "t": 5.0,
+              "kind": "ready",
+              "alert": "T2"
+            },
+            {
+              "t": 6.96,
+              "kind": "obs_start",
+              "alert": "T2"
+            },
+            {
+              "t": 11.96,
+              "kind": "obs_end",
+              "alert": "T2"
+            },
+            {
+              "t": 14.8,
+              "kind": "reset_done",
+              "alert": "T2"
+            }
+          ],
+          "V2": [
+            {
+              "t": 5.0,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 5.0,
+              "kind": "depart",
+              "alert": "T3"
+            },
+            {
+              "t": 5.0,
+              "kind": "arrive",
+              "alert": "T3"
+            },
+            {
+              "t": 5.38,
+              "kind": "ready",
+              "alert": "T3"
+            },
+            {
+              "t": 11.89,
+              "kind": "obs_start",
+              "alert": "T3"
+            },
+            {
+              "t": 16.89,
+              "kind": "obs_end",
+              "alert": "T3"
+            },
+            {
+              "t": 22.16,
+              "kind": "reset_done",
+              "alert": "T3"
+            }
+          ],
+          "V4": [
+            {
+              "t": 5.0,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 5.0,
+              "kind": "depart",
+              "alert": "T2"
+            },
+            {
+              "t": 5.0,
+              "kind": "arrive",
+              "alert": "T2"
+            },
+            {
+              "t": 6.96,
+              "kind": "ready",
+              "alert": "T2"
+            },
+            {
+              "t": 6.96,
+              "kind": "obs_start",
+              "alert": "T2"
+            },
+            {
+              "t": 11.96,
+              "kind": "obs_end",
+              "alert": "T2"
+            },
+            {
+              "t": 17.41,
+              "kind": "reset_done",
+              "alert": "T2"
+            }
+          ],
+          "V5": [
+            {
+              "t": 8.92,
+              "kind": "available",
+              "alert": null
+            },
+            {
+              "t": 8.92,
+              "kind": "depart",
+              "alert": "T3"
+            },
+            {
+              "t": 9.34,
+              "kind": "arrive",
+              "alert": "T3"
+            },
+            {
+              "t": 11.89,
+              "kind": "ready",
+              "alert": "T3"
+            },
+            {
+              "t": 11.89,
+              "kind": "obs_start",
+              "alert": "T3"
+            },
+            {
+              "t": 16.89,
+              "kind": "obs_end",
+              "alert": "T3"
+            },
+            {
+              "t": 19.43,
+              "kind": "reset_done",
+              "alert": "T3"
+            }
+          ]
+        }
+      },
+      "res_eta": 1.0,
+      "res_tlast": 11.89,
+      "keep_eta": 0.6667,
+      "keep_tlast": 60.0
+    },
+    "nominal_recheck": {
+      "res_tlast": 12.14
+    }
+  },
+  "CO t_rec=20": {
+    "nominal": {
+      "keep": {
+        "eta": 1.0,
+        "t_last": 10.65,
+        "starts": {
+          "T1": 2.39,
+          "T2": 7.5,
+          "T3": 10.65
+        }
+      },
+      "res": {
+        "eta": 1.0,
+        "t_last": 10.65,
+        "starts": {
+          "T1": 2.39,
+          "T2": 7.5,
+          "T3": 10.65
+        },
+        "assignment": {},
+        "stations": {},
+        "timeline": {}
+      },
+      "res_eta": 1.0,
+      "res_tlast": 10.65,
+      "keep_eta": 1.0,
+      "keep_tlast": 10.65
+    },
+    "speed −10%": {
+      "keep": {
+        "eta": 1.0,
+        "t_last": 10.68,
+        "starts": {
+          "T1": 2.39,
+          "T2": 7.67,
+          "T3": 10.68
+        }
+      },
+      "res": {
+        "eta": 1.0,
+        "t_last": 10.68,
+        "starts": {
+          "T1": 2.39,
+          "T2": 7.67,
+          "T3": 10.68
+        },
+        "assignment": {},
+        "stations": {},
+        "timeline": {}
+      },
+      "res_eta": 1.0,
+      "res_tlast": 10.68,
+      "keep_eta": 1.0,
+      "keep_tlast": 10.68
+    },
+    "speed +10%": {
+      "keep": {
+        "eta": 1.0,
+        "t_last": 10.63,
+        "starts": {
+          "T1": 2.39,
+          "T2": 7.36,
+          "T3": 10.63
+        }
+      },
+      "res": {
+        "eta": 1.0,
+        "t_last": 10.63,
+        "starts": {
+          "T1": 2.39,
+          "T2": 7.36,
+          "T3": 10.63
+        },
+        "assignment": {},
+        "stations": {},
+        "timeline": {}
+      },
+      "res_eta": 1.0,
+      "res_tlast": 10.63,
+      "keep_eta": 1.0,
+      "keep_tlast": 10.63
+    },
+    "slew −10%": {
+      "keep": {
+        "eta": 1.0,
+        "t_last": 10.87,
+        "starts": {
+          "T1": 2.39,
+          "T2": 8.17,
+          "T3": 10.87
+        }
+      },
+      "res": {
+        "eta": 1.0,
+        "t_last": 10.87,
+        "starts": {
+          "T1": 2.39,
+          "T2": 8.17,
+          "T3": 10.87
+        },
+        "assignment": {},
+        "stations": {},
+        "timeline": {}
+      },
+      "res_eta": 1.0,
+      "res_tlast": 10.87,
+      "keep_eta": 1.0,
+      "keep_tlast": 10.87
+    },
+    "slew +10%": {
+      "keep": {
+        "eta": 1.0,
+        "t_last": 10.47,
+        "starts": {
+          "T1": 2.39,
+          "T2": 6.96,
+          "T3": 10.47
+        }
+      },
+      "res": {
+        "eta": 1.0,
+        "t_last": 10.47,
+        "starts": {
+          "T1": 2.39,
+          "T2": 6.96,
+          "T3": 10.47
+        },
+        "assignment": {},
+        "stations": {},
+        "timeline": {}
+      },
+      "res_eta": 1.0,
+      "res_tlast": 10.47,
+      "keep_eta": 1.0,
+      "keep_tlast": 10.47
+    },
+    "nominal_recheck": {
+      "res_tlast": 10.65
+    }
+  }
+}

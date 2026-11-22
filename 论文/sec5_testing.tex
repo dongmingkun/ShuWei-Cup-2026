@@ -168,6 +168,16 @@ $\approx0.49\,\mathrm{s}$ per second of outage (plateauing while vehicles idle),
 threshold effect beyond the $t_{rec}\le10\,\mathrm{s}$ zero-gain band of pure family
 (c).
 
+\textbf{Policy robustness under kinematic error (Q4).} The event-triggered response
+was re-derived under $\pm10\%$ perturbations of speed and slew rate on four
+representative disturbed scenarios (hardest/easiest new-alert cells, a V3 failure, a
+pure outage). $\eta=1$ is \emph{invariant} in all $20$ configurations; $t_{\mathrm{last}}$
+drifts by at most $4.1\%$ (slew rate $-10\%$ on the hardest new-alert cell,
+$19.97\to20.79\,\mathrm{s}$; speed is milder at $\pm1.5\%$), the re-optimized
+\emph{structure} is unchanged, and the nominal re-runs reproduce the committed values
+exactly (deterministic machinery). The restored-coverage guarantee is thus robust to
+moderate kinematic uncertainty.
+
 \emph{Overall: every model's decision survives $\pm10\%$ kinematic perturbation and
 wide noise-level variation; the only sharp sensitivities are directional ones (Q3's
 error budget, Q4's outage duration), both of which are reported as explicit budgets
