@@ -167,17 +167,7 @@ scenarios---the restricted problem is forgiving enough that a greedy rule never 
 an alert---but its $t_{\mathrm{last}}$ deficit reaches $4.53\,\mathrm{s}$
 ($25.25$ vs.\ $20.72$ in a+b-77) and is systematic in failure families. P1 buys speed
 with a structure search that costs milliseconds; P2 buys explainability. Both dominate
-P0 everywhere except family (c); Fig.~\ref{fig:q4gantt} replays two representative
-P1 schedules from captured states.
-
-\begin{figure}[!htb]\centering
-\includegraphics[width=0.62\textwidth]{fig_q4_gantt_examples.png}
-\caption{Replayed P1 schedules from captured states (pre-$\tau$ execution dimmed, dotted
-line = decision epoch): top, new alert $\theta=195^\circ$, $R=50$ (a-21); bottom, V3
-failure (b-39). V3/V5's second wave after their $T_1$ reset at $9.0\,\mathrm{s}$ is
-visible in both.}
-\label{fig:q4gantt}
-\end{figure}
+P0 everywhere except family (c).
 
 \subsubsection{Validation}
 
@@ -186,8 +176,23 @@ states (the same simulator that produced the Q2(2) timeline), so reported start 
 are simulation outputs, not analytic estimates; all clearance, azimuth-gap, slot-limit
 and attitude-continuation constraints are re-checked inside the replay. Family (b)'s
 identity across V1--V4 failures was verified to arise from equal-cost substitutions.
+
+\emph{Cross-study robustness (L3).} A fully independent re-study of the same question
+was conducted with a \emph{different baseline} (the station-level-refined $10.651\,\mathrm{s}$
+schedule of Section~\ref{sec:q22}), a \emph{different scenario family} (45 scenarios:
+new-alert grid at $45^\circ$ steps with $R\in\{30,50\}$ m, all five failures, three
+outage lengths, and combined/triple cases) and a \emph{different rescheduling engine}
+(global-objective coordinate descent). It reproduces all four qualitative conclusions:
+(i) $P_1$ restores $\eta=1$ in every triggered scenario; (ii) a pure outage has zero
+rescheduling value; (iii) a failure of V5---whose observation is already locked---is
+absorbed by the original plan; (iv) combined disturbances superpose approximately
+additively. The longest leg observed in either study's replayed schedules is
+$19.1\,\mathrm{m}$ (V2's baseline repositioning)---an order of magnitude below the
+$66.92$-m pointing-reliability budget of Q3, so reliability never binds inside the
+evaluation window.
 \emph{Conclusion: event-triggered re-optimization restores full alert coverage
 ($\eta=1$) in every one of the 86 disturbed scenarios at a worst-case $t_{\mathrm{last}}$
 of $33.75\,\mathrm{s}$, while the original plan loses coverage in 79 of them; the
 rule-based fallback never loses an alert either and remains a certified
-$\le4.5\,\mathrm{s}$ slower.}
+$\le4.5\,\mathrm{s}$ slower. The two independent studies agree on every qualitative
+boundary despite disjoint scenario sets and different baselines.}

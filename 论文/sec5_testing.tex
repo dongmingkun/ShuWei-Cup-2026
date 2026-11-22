@@ -59,7 +59,7 @@ Q2(1) (\S\ref{sec:q21}) & exact-geometry MC, $2\times10^{5}$ (L2) & RMSE rel.\ d
 Q2(1) (\S\ref{sec:q21}) & $\sigma_b\in\{0.5^\circ,1^\circ,2^\circ\}$ (L4) & optimal pair & invariant \\
 Q2(2) (\S\ref{sec:q22}) & simulator replay (L3) & all starts & match \\
 Q3 (\S\ref{sec:q3}) & exact-geometry MC, $10^{5}$/point (L2) & max $|\Delta P|$ & $0.18$ pp \\
-Q3 (\S\ref{sec:q3}) & quadrature crossing vs.\ analytic (L1) & $s_{\max}$ & conservative $0.17$ m \\
+Q3 (\S\ref{sec:q3}) & exact quadrature (L1) & $s_{\max}$ & $66.8373$ m \\
 Q4 (\S\ref{sec:q4}) & replay from captured states (L3) & all starts & match \\
 \bottomrule
 \end{tabular}
@@ -71,9 +71,10 @@ sampling error, and all random experiments use the fixed seed 2026. Sampling int
 are stated analytically rather than by re-running: the $2\times10^{5}$-sample RMSE
 estimate carries a standard error of $\mathrm{RMSE}/\sqrt{2N}=2.3\times10^{-4}\,\mathrm{m}$
 ($0.16\%$), so the observed $0.007\%$ relative deviation is well inside one standard
-error; the Q3 per-point binomial standard errors are
-$\sqrt{p(1-p)/10^{5}}\le7.0\times10^{-4}$ ($0.07$ pp), consistent with the Wilson
-interval quoted at $s_{\max}$.
+error; the Q3 sweep's per-point binomial standard errors are
+$\sqrt{p(1-p)/10^{5}}\le7.0\times10^{-4}$ ($0.07$ pp). The two Q3 critical points are
+additionally checked with $5\times10^{6}$ samples each; both Wilson intervals in
+Section~\ref{sec:q3} contain their corresponding quadrature probabilities.
 
 \subsection{Optimality Evidence and Honest Gaps}
 
@@ -99,7 +100,13 @@ convention (Section~\ref{sec:q21}) supersedes the unconstrained numbers as the
 reported answer ($\mathrm{RMSE}=0.1461\,\mathrm{m}$, $+1.73\%$), and Q2(2)'s
 incumbent improves to $10.651\,\mathrm{s}$ on the same structure family. The two
 routers agree on every audited leg, and the refined schedule replays bit-compatibly in
-this paper's own simulator---mutual oracles, not shared-derivative duplicates.
+this paper's own simulator---mutual oracles, not shared-derivative duplicates. The same
+second implementation also re-studied Q4 on an \emph{independent} disturbance family
+(45 scenarios, different baseline schedule, different rescheduling engine) and
+reproduced every qualitative boundary of Section~\ref{sec:q4}: full $\eta=1$ recovery
+under event-triggered re-optimization, the zero value of a pure outage, the benign
+V5-failure case, and approximately additive combination penalties (Section~\ref{sec:q4},
+Validation).
 
 \section{Sensitivity Analysis}\label{sec:sens}
 
@@ -148,11 +155,12 @@ stated, and the $0.1$-m grid plus $0.02$-m refinement bounds the possible drift 
 $0.23\%$ of area.
 
 \textbf{Error-growth law (Q3).} The $(a,b)$ region of Fig.~\ref{fig:q3ab} is the
-\emph{full} robustness map at the 80-m operating point: any $(a,b)$ with
+linearized robustness map at the 80-m operating point: any $(a,b)$ with
 $a+80b\le1.6384$ (intercept up to $1.64\,\mathrm{m}$ or slope up to
-$0.0205\,\mathrm{m/m}$) sustains $95\%$ reliability, while the baseline $(0.3,0.02)$
-needs $a+80b=1.9$, a $16\%$ budget overrun---a quantified, directional statement of how
-far the stated sensor model is from compliance.
+$0.0205\,\mathrm{m/m}$) sustains $95\%$ reliability in the analytic model; full-geometry
+quadrature tightens the boundary to $a+80b\le1.636745$. The baseline $(0.3,0.02)$ needs
+$a+80b=1.9$, a $16\%$ budget overrun---a quantified, directional statement of how far the
+stated sensor model is from compliance.
 
 \textbf{Recovery-time sweep (Q4).} The $t_{rec}$ sweep in Fig.~\ref{fig:q4trec} acts as
 a sensitivity analysis on the communication parameter: performance degrades at
