@@ -23,6 +23,9 @@ import json
 import math
 
 import numpy as np
+from scipy.integrate import quad
+from scipy.optimize import brentq
+from scipy.special import ndtr
 from scipy.stats import norm
 
 import matplotlib
@@ -42,7 +45,8 @@ Z975 = float(norm.ppf(0.975))
 DEG = 180.0 / math.pi
 S_GRID = np.arange(0.0, 100.0 + 1e-9, 1.0)
 N_SWEEP_MC = 100_000
-N_HEADLINE_MC = 400_000
+N_HEADLINE_MC = 5_000_000
+MC_BATCH = 250_000
 RNG_SEED = 2026
 
 
@@ -61,6 +65,56 @@ def sigma_tot(s):
 
 def p_analytic(s):
     return 2.0 * norm.cdf(PSI_TOL / sigma_tot(s)) - 1.0
+
+
+def projected_normal_angle_density(theta, lam):
+    c = math.cos(theta)
+    return (math.exp(-lam * lam / 2.0) / (2.0 * math.pi)
+            + lam * c * math.exp(-lam * lam * math.sin(theta) ** 2 / 2.0)
+            * ndtr(lam * c) / math.sqrt(2.0 * math.pi))
+
+
+def p_exact(s):
+    lam = R_HORIZ / sigma_loc(s)
+    sigma_gimbal = math.hypot(SIGMA_BIAS, SIGMA_CTRL)
+
+    def integrand(theta):
+        theta_deg = math.degrees(theta)
+        central = (ndtr((PSI_TOL - theta_deg) / sigma_gimbal)
+                   - ndtr((-PSI_TOL - theta_deg) / sigma_gimbal))
+        return projected_normal_angle_density(theta, lam) * central
+
+    value = quad(integrand, -math.pi, math.pi, points=[0.0],
+                 epsabs=2e-11, epsrel=2e-11, limit=300)[0]
+    return float(value)
+
+
+def mc_common_points(s_values, n_total, seed):
+    rng = np.random.default_rng(seed)
+    hits = np.zeros(len(s_values), dtype=np.int64)
+    rel_parts = []
+    geom_max = 0.0
+    done = 0
+    while done < n_total:
+        n = min(MC_BATCH, n_total - done)
+        zdx = rng.standard_normal(n)
+        zdy = rng.standard_normal(n)
+        e0 = rng.normal(0.0, SIGMA_BIAS, n)
+        ec = rng.normal(0.0, SIGMA_CTRL, n)
+        for i, s in enumerate(s_values):
+            sloc = sigma_loc(s)
+            dx, dy = zdx * sloc, zdy * sloc
+            exact = np.degrees(np.arctan2(-dy, R_HORIZ - dx))
+            total = (exact + e0 + ec + 180.0) % 360.0 - 180.0
+            hits[i] += int(np.count_nonzero(np.abs(total) <= PSI_TOL))
+            if i == 0:
+                lin = -dy / R_HORIZ * DEG
+                geom_max = max(geom_max, float(np.abs(exact - lin).max()))
+                big = np.abs(exact) >= 1.0
+                rel_parts.append(np.abs(exact[big] - lin[big])
+                                 / np.abs(exact[big]))
+        done += n
+    return hits / n_total, np.concatenate(rel_parts), geom_max
 
 
 def s_max_analytic():
@@ -157,7 +211,7 @@ def contribution(s):
             "gimbal_ctrl": SIGMA_CTRL ** 2 / st2}
 
 
-def crossover(g1, g2):
+def crossover(g1):
     """σ₁(s)² = g² 的行程交点(定位项方差追上固定项)."""
     sloc = g1 * R_HORIZ / DEG
     return (sloc - SIGMA_LOC0) / SIGMA_LOC_K
@@ -169,43 +223,61 @@ def main():
     print(f"z0.975 = {Z975:.6f}")
     print(f"sigma_tot_max = {stot_max:.6f} deg")
     print(f"sigma1_max = {s1_max:.6f} deg, sigma_loc_max = {sloc_max:.6f} m")
-    print(f"s_max = {s_max:.4f} m")
+    print(f"s_max(linearized) = {s_max:.4f} m")
 
-    # 线性化相对误差上界: |atan x − x|/|x| ≈ x²/3, x = σ₁_max 弧度
     x_rad = s1_max / DEG
     lin_rel = x_rad ** 2 / 3.0
+    denom_rel = sloc_max / R_HORIZ
 
     ps_mc, ps_lin = mc_sweep(rng)
     mc_sm = mc_smax_interp(ps_mc)
-    print(f"MC sweep: max|P_mc − P_ana| = "
-          f"{np.max(np.abs(ps_mc - p_analytic(S_GRID))):.5f}")
-    print(f"MC s_max(插值) = {mc_sm:.3f} m")
+    sweep_diff = float(np.max(np.abs(ps_mc - p_analytic(S_GRID))))
+    print(f"MC sweep: max|P_mc - P_ana| = {sweep_diff:.5f}")
+    print(f"MC s_max(interp) = {mc_sm:.3f} m")
 
-    # 主验证点 s = s_max: 大样本 + Wilson CI
-    b = mc_batch(s_max, N_HEADLINE_MC, rng)
-    p_head = float(b["hit_exact"].mean())
+    lam_cap = R_HORIZ / sloc_max
+    density_norm = quad(lambda th: projected_normal_angle_density(th, lam_cap),
+                        -math.pi, math.pi, points=[0.0],
+                        epsabs=2e-11, epsrel=2e-11, limit=300)[0]
+    assert abs(density_norm - 1.0) < 1e-9
+    p_cap_exact = p_exact(s_max)
+    sloc_exact_max = brentq(
+        lambda v: p_exact((v - SIGMA_LOC0) / SIGMA_LOC_K) - RELIABILITY,
+        SIGMA_LOC0, 2.0, xtol=1e-12)
+    s_exact = (sloc_exact_max - SIGMA_LOC0) / SIGMA_LOC_K
+    p_exact_cross = p_exact(s_exact)
+    p80_lin = float(p_analytic(80.0))
+    p80_exact = p_exact(80.0)
+    print(f"P_exact(analytic cap) = {p_cap_exact:.10f}")
+    print(f"s_max(full geometry) = {s_exact:.7f} m")
+    print(f"P_exact(full cap) = {p_exact_cross:.10f}")
+    print(f"P(80 m): linearized = {p80_lin:.7f}, exact = {p80_exact:.7f}")
+
+    p_heads, rel_err, geom_max = mc_common_points(
+        [s_max, s_exact], N_HEADLINE_MC, RNG_SEED)
+    p_head, p_head_exact = map(float, p_heads)
     lo, hi = wilson(p_head, N_HEADLINE_MC)
-    p_head_lin = float(b["hit_lin"].mean())
-    print(f"MC@s_max: P_exact = {p_head:.5f} [{lo:.5f},{hi:.5f}], "
-          f"P_linearized = {p_head_lin:.5f}")
-
-    # 近似误差实证: 线性化几何项与精确 atan2 的最大绝对差
-    print(f"lin vs exact: max abs geom diff = {b['geom_diff_deg'].max():.3e} deg, "
-          f"max rel err = {b['lin_err_rel'].max():.3e}")
+    lo2, hi2 = wilson(p_head_exact, N_HEADLINE_MC)
+    q50, q95, q99, q999, qmax = np.quantile(
+        rel_err, [0.50, 0.95, 0.99, 0.999, 1.0])
+    assert lo <= p_cap_exact <= hi
+    assert lo2 <= p_exact_cross <= hi2
+    print(f"MC@analytic cap: {p_head:.7f} Wilson [{lo:.7f},{hi:.7f}]")
+    print(f"MC@exact cap:    {p_head_exact:.7f} Wilson [{lo2:.7f},{hi2:.7f}]")
+    print(f"linearization rel err pct P50/P95/P99/P99.9/max = "
+          f"{100*q50:.4f}/{100*q95:.4f}/{100*q99:.4f}/{100*q999:.4f}/{100*qmax:.4f}")
 
     m3 = conservative_bounds()
+    cross_gb = crossover(SIGMA_BIAS)
+    cross_gc = crossover(SIGMA_CTRL)
+    cross_half = (R_HORIZ / DEG - SIGMA_LOC0) / SIGMA_LOC_K
     print(f"M3 Chebyshev s_max = {m3['chebyshev']['s_max_m']:.3f} m; "
-          f"Cantelli 可行? {m3['cantelli']['feasible_with_fixed_gimbal']}")
+          f"Cantelli feasible = {m3['cantelli']['feasible_with_fixed_gimbal']}")
+    print(f"variance crossovers: ctrl {cross_gc:.3f} m, bias {cross_gb:.3f} m, "
+          f"half {cross_half:.3f} m")
 
-    cross_gb = crossover(SIGMA_BIAS, None)
-    cross_gc = crossover(SIGMA_CTRL, None)
-    print(f"定位项方差追上云台零偏/控制: s = {cross_gb:.3f} / {cross_gc:.3f} m")
-
-    # (a,b) 约束域: a + 80b ≤ σ_loc_max, a,b ≥ 0
     ab_area = sloc_max ** 2 / 160.0
     baseline_in = SIGMA_LOC0 + 80 * SIGMA_LOC_K <= sloc_max + 1e-12
-
-    # wrap 敏感性: |几何方位差| > 180° 的概率上界(正态尾, 双精度下溢记 0)
     wrap_p = float(math.erfc((180.0 / sigma1(80.0)) / math.sqrt(2.0)))
 
     summary = {
@@ -214,43 +286,66 @@ def main():
                   "sigma1_max_deg": round(s1_max, 6),
                   "sigma_loc_max_m": round(sloc_max, 6),
                   "s_max_m": round(s_max, 4)},
-        "model": "σ_tot² = [(180/π)·(0.3+0.02s)/40]² + 0.8² + 0.6²; "
-                 "P(|Δψ|≤5°) = 2Φ(5/σ_tot)−1 ≥ 0.95",
+        "model": "sigma_tot^2 = [(180/pi)*(0.3+0.02s)/40]^2 + 0.8^2 + 0.6^2; "
+                 "P(|dpsi|<=5deg) = 2Phi(5/sigma_tot)-1 >= 0.95",
         "linearization": {
-            "theory_rel_err_upper_1sigma": lin_rel,
-            "mc_max_rel_err_deg_above_1deg": float(b["lin_err_rel"].max()),
-            "mc_max_abs_geom_diff_deg": float(b["geom_diff_deg"].max()),
-            "mc_rel_err_filter": "|Δψ| < 1° 的样本不参与相对误差统计 "
-                                 "(比值在零点附近无意义)",
-            "p_at_smax_exact": p_head, "p_at_smax_wilson95": [lo, hi],
-            "p_at_smax_linearized": p_head_lin,
+            "theory_rel_err_upper_1sigma_pct": 100.0 * lin_rel,
+            "denominator_rel_scale_1sigma_pct": 100.0 * denom_rel,
+            "mc_n": N_HEADLINE_MC,
+            "mc_rel_err_filter": "|exact position-induced angle| >= 1 deg",
+            "mc_rel_err_pct": {"p50": 100.0 * float(q50),
+                               "p95": 100.0 * float(q95),
+                               "p99": 100.0 * float(q99),
+                               "p99_9": 100.0 * float(q999),
+                               "max": 100.0 * float(qmax)},
+            "mc_max_abs_geom_diff_deg": geom_max,
+        },
+        "exact_geometry": {
+            "density_norm_at_cap": float(density_norm),
+            "p_at_analytic_cap_quadrature": p_cap_exact,
+            "p_at_analytic_cap_mc": p_head,
+            "p_at_analytic_cap_wilson95": [lo, hi],
+            "sigma_loc_max_m": sloc_exact_max,
+            "s_max_m": s_exact,
+            "p_at_exact_cap_quadrature": p_exact_cross,
+            "p_at_exact_cap_mc": p_head_exact,
+            "p_at_exact_cap_wilson95": [lo2, hi2],
+            "analytic_minus_exact_cap_m": s_max - s_exact,
+            "reliability_gap_at_analytic_cap_pp": 100.0 * (RELIABILITY - p_cap_exact),
+            "p80_linearized": p80_lin,
+            "p80_exact": p80_exact,
+            "strict_deployment_cap_m": math.floor(s_exact * 100.0) / 100.0,
         },
         "mc_validation": {
             "n_per_point": N_SWEEP_MC, "seed": RNG_SEED,
-            "max_abs_p_diff_over_grid": float(np.max(np.abs(ps_mc - p_analytic(S_GRID)))),
+            "headline_n_per_point": N_HEADLINE_MC,
+            "max_abs_p_diff_over_grid": sweep_diff,
             "s_max_mc_interp_m": mc_sm,
             "sweep": [{"s": float(s), "p_analytic": float(pa), "p_mc": float(pm)}
                       for s, pa, pm in zip(S_GRID, p_analytic(S_GRID), ps_mc)],
         },
         "conservative_bounds_m3": m3,
         "contribution_crossovers_m": {"loc_vs_gimbal_bias": round(cross_gb, 3),
-                                      "loc_vs_gimbal_ctrl": round(cross_gc, 3)},
+                                      "loc_vs_gimbal_ctrl": round(cross_gc, 3),
+                                      "loc_half_total": round(cross_half, 3)},
         "contribution_at": {str(s): {k: float(v)
                                      for k, v in contribution(s).items()}
                             for s in (0, 40, 80)},
-        "ab_region": {"constraint": "a + 80b ≤ σ_loc_max, a,b ≥ 0",
+        "ab_region": {"constraint": "a + 80b <= sigma_loc_max, a,b >= 0",
                       "sigma_loc_max_m": round(sloc_max, 6),
-                      "vertices": [[0, 0], [round(sloc_max, 6), 0], [0, round(sloc_max / 80, 6)]],
+                      "exact_constraint": "a + 80b <= sigma_loc_max_exact, a,b >= 0",
+                      "sigma_loc_max_exact_m": round(sloc_exact_max, 6),
+                      "vertices": [[0, 0], [round(sloc_max, 6), 0],
+                                   [0, round(sloc_max / 80, 6)]],
                       "area_m2": round(ab_area, 6),
                       "baseline_0.3+0.02s_inside": baseline_in,
-                      "baseline_note": "题面基线 (a,b)=(0.3,0.02) 在 80 m 处超差, "
-                                       "与 s_max≈66.9<80 一致"},
+                      "baseline_note": "baseline (0.3,0.02) exceeds the 80 m budget"},
         "wrap_sensitivity": {"p_geom_gt_180deg_at_s80": wrap_p,
-                             "note": "双精度下溢为 0, 卷绕在可行域内不起作用"},
+                             "note": "underflows to zero in double precision"},
         "cross_question": {
             "q2_1_travel_budget_m": 90.0,
-            "note": "指向可靠性行程上限 ≈66.93 m < Q2(1) 90 m 行驶预算, "
-                    "可靠性预算先约束; 部署应控制单车累计行程或中途换车",
+            "note": "linearized cap 66.9223 m; full-geometry cap 66.8373 m; "
+                    "strict deployment <=66.83 m, before the 90 m driving budget",
         },
     }
     with open(OUT / "q3_summary.json", "w", encoding="utf-8") as f:
@@ -259,7 +354,7 @@ def main():
     _plot_p_s(s_max, ps_mc, m3)
     _plot_contribution(s_max, cross_gb, cross_gc)
     _plot_ab(sloc_max)
-    print(f"输出已写入 {OUT}")
+    print(f"outputs written to {OUT}")
 
 
 def _plot_p_s(s_max, ps_mc, m3):
@@ -277,7 +372,7 @@ def _plot_p_s(s_max, ps_mc, m3):
     ax.axhline(RELIABILITY, color="crimson", lw=1.0, ls="--")
     ax.axvline(s_max, color="crimson", lw=1.0, ls="--")
     ax.text(s_max + 1.2, 0.62, f"$s_{{max}}$ = {s_max:.2f} m", color="crimson")
-    ax.text(2, RELIABILITY - 0.045, "0.95", color="crimson")
+    ax.text(2, RELIABILITY + 0.008, "0.95", color="crimson")
     ax.set_xlabel("cumulative travel distance s (m)")
     ax.set_ylabel(r"$P(|\Delta\psi|\leq 5°)$")
     ax.set_ylim(0.5, 1.02)
@@ -297,14 +392,14 @@ def _plot_contribution(s_max, cross_gb, cross_gc):
                  labels=["positioning (σ₁)", "gimbal bias (0.8°)",
                          "gimbal control (0.6°)"],
                  colors=["#5dade2", "#f5b041", "#58d68d"], alpha=0.9)
-    for x, txt in ((cross_gc, f"s = {cross_gc:.1f} m\nloc = ctrl"),
-                   (cross_gb, f"s = {cross_gb:.1f} m\nloc = bias")):
+    for x, y, txt in ((cross_gc, 0.40, f"s = {cross_gc:.1f} m\nloc = ctrl"),
+                      (cross_gb, 0.60, f"s = {cross_gb:.1f} m\nloc = bias")):
         ax.axvline(x, color="k", lw=0.8, ls=":")
-        ax.text(x + 1, 0.52, txt, fontsize=8)
+        ax.text(x + 1, y, txt, fontsize=8)
     ax.axvline(s_max, color="crimson", lw=1.2, ls="--")
     ax.text(s_max + 1.2, 0.08, f"$s_{{max}}$ = {s_max:.1f} m", color="crimson")
     ax.set_xlabel("cumulative travel distance s (m)")
-    ax.set_ylabel("variance share of σ_tot²")
+    ax.set_ylabel(r"variance share of $\sigma_{tot}^2$")
     ax.set_ylim(0, 1.0)
     ax.set_xlim(0, 100)
     ax.legend(loc="center right", fontsize=8)

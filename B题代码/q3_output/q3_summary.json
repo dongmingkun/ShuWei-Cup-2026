@@ -6,22 +6,47 @@
     "sigma_loc_max_m": 1.638446,
     "s_max_m": 66.9223
   },
-  "model": "σ_tot² = [(180/π)·(0.3+0.02s)/40]² + 0.8² + 0.6²; P(|Δψ|≤5°) = 2Φ(5/σ_tot)−1 ≥ 0.95",
+  "model": "sigma_tot^2 = [(180/pi)*(0.3+0.02s)/40]^2 + 0.8^2 + 0.6^2; P(|dpsi|<=5deg) = 2Phi(5/sigma_tot)-1 >= 0.95",
   "linearization": {
-    "theory_rel_err_upper_1sigma": 0.0005592719260514646,
-    "mc_max_rel_err_deg_above_1deg": 0.19235587299596754,
-    "mc_max_abs_geom_diff_deg": 1.2222481442494217,
-    "mc_rel_err_filter": "|Δψ| < 1° 的样本不参与相对误差统计 (比值在零点附近无意义)",
-    "p_at_smax_exact": 0.9493175,
-    "p_at_smax_wilson95": [
-      0.9486334188303852,
-      0.9499929510791268
+    "theory_rel_err_upper_1sigma_pct": 0.05592719260514646,
+    "denominator_rel_scale_1sigma_pct": 4.096114961954064,
+    "mc_n": 5000000,
+    "mc_rel_err_filter": "|exact position-induced angle| >= 1 deg",
+    "mc_rel_err_pct": {
+      "p50": 2.763330614385283,
+      "p95": 8.036294685594857,
+      "p99": 10.553542181780461,
+      "p99_9": 13.491783113635694,
+      "max": 20.34991298024231
+    },
+    "mc_max_abs_geom_diff_deg": 1.3391342824144132
+  },
+  "exact_geometry": {
+    "density_norm_at_cap": 1.0000000000000004,
+    "p_at_analytic_cap_quadrature": 0.9497982126065669,
+    "p_at_analytic_cap_mc": 0.9498684,
+    "p_at_analytic_cap_wilson95": [
+      0.9496767824868348,
+      0.9500593262533227
     ],
-    "p_at_smax_linearized": 0.94957
+    "sigma_loc_max_m": 1.636745168558887,
+    "s_max_m": 66.83725842794435,
+    "p_at_exact_cap_quadrature": 0.9500000000000002,
+    "p_at_exact_cap_mc": 0.9500798,
+    "p_at_exact_cap_wilson95": [
+      0.9498885647978814,
+      0.9502703436174428
+    ],
+    "analytic_minus_exact_cap_m": 0.08504081113692052,
+    "reliability_gap_at_analytic_cap_pp": 0.02017873934330172,
+    "p80_linearized": 0.9153756669066699,
+    "p80_exact": 0.915068231160825,
+    "strict_deployment_cap_m": 66.83
   },
   "mc_validation": {
     "n_per_point": 100000,
     "seed": 2026,
+    "headline_n_per_point": 5000000,
     "max_abs_p_diff_over_grid": 0.0017834123253746004,
     "s_max_mc_interp_m": 66.56299212598427,
     "sweep": [
@@ -547,7 +572,8 @@
   },
   "contribution_crossovers_m": {
     "loc_vs_gimbal_bias": 12.925,
-    "loc_vs_gimbal_ctrl": 5.944
+    "loc_vs_gimbal_ctrl": 5.944,
+    "loc_half_total": 19.907
   },
   "contribution_at": {
     "0": {
@@ -567,8 +593,10 @@
     }
   },
   "ab_region": {
-    "constraint": "a + 80b ≤ σ_loc_max, a,b ≥ 0",
+    "constraint": "a + 80b <= sigma_loc_max, a,b >= 0",
     "sigma_loc_max_m": 1.638446,
+    "exact_constraint": "a + 80b <= sigma_loc_max_exact, a,b >= 0",
+    "sigma_loc_max_exact_m": 1.636745,
     "vertices": [
       [
         0,
@@ -585,14 +613,14 @@
     ],
     "area_m2": 0.016778,
     "baseline_0.3+0.02s_inside": false,
-    "baseline_note": "题面基线 (a,b)=(0.3,0.02) 在 80 m 处超差, 与 s_max≈66.9<80 一致"
+    "baseline_note": "baseline (0.3,0.02) exceeds the 80 m budget"
   },
   "wrap_sensitivity": {
     "p_geom_gt_180deg_at_s80": 0.0,
-    "note": "双精度下溢为 0, 卷绕在可行域内不起作用"
+    "note": "underflows to zero in double precision"
   },
   "cross_question": {
     "q2_1_travel_budget_m": 90.0,
-    "note": "指向可靠性行程上限 ≈66.93 m < Q2(1) 90 m 行驶预算, 可靠性预算先约束; 部署应控制单车累计行程或中途换车"
+    "note": "linearized cap 66.9223 m; full-geometry cap 66.8373 m; strict deployment <=66.83 m, before the 90 m driving budget"
   }
 }

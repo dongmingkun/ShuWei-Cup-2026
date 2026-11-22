@@ -1,40 +1,20 @@
 \section{Conclusion}\label{sec:conclusion}
 
-We developed a unified observe-deploy-reschedule framework for coordinated vehicle
-localization of UAV alerts over a built 100-m field, and answered all four questions
-with a shared geometry engine:
-
 \begin{itemize}
-\item \textbf{Q1.} The three-alert observable regions are $5628.7/6432.5/5484.8\,
-\mathrm{m}^2$ (T1/T2/T3, single components, $\le0.23\%$ refinement drift), with
-mission-cycle-minimizing stations at $(83.32,62.53)$, $(10.02,78.23)$ and
-$(58.21,4.09)$ for the designated vehicles V4/V3/V2, each with slew $=$ reset
-$=2.667\,\mathrm{s}$ and the $0.10$-m clearance margin of Assumption~7.
-\item \textbf{Q2(1).} Joint RMSE $=\sigma_b\sqrt{d_1^2+d_2^2}/\sin\gamma$ with exact
-lower bound $0.14362\,\mathrm{m}$---attained once the operating margins are relaxed
-to zero; the deployed margin-compliant pair is V3+V5
-($\mathrm{RMSE}=0.1461\,\mathrm{m}$, $+1.73\%$; total travel $19.88\,\mathrm{s}$),
-validated by Monte Carlo to $0.0\%$ deviation.
-\item \textbf{Q2(2).} The min--max schedule starts all alerts by
-$11.046\,\mathrm{s}$ (makespan $21.705\,\mathrm{s}$) via one shared-station doubling
-(V3: $T_1\!\to\!T_3$, zero-travel second leg), beating the greedy baseline by
-$5.352\,\mathrm{s}$ ($32.6\%$); the honest gap to the per-alert lower bound is
-$7.17\,\mathrm{s}$ ($6.78\,\mathrm{s}$ against the cross-implementation refined
-incumbent, a certified $3.6\%$ station-level residual).
-\item \textbf{Q3.} The pointing-error chain caps single-leg travel at
-$s_{\max}=66.92\,\mathrm{m}$ for $95\%$ reliability (exact crossing $67.09\,\mathrm{m}$
-by quadrature, so the analytic cap is conservative by $0.17\,\mathrm{m}$); at the
-stated 80-m approach the reliability is only $91.54\%$, so reliability,
-not range, binds deployment.
-\item \textbf{Q4.} Event-triggered re-optimization restores full coverage in all 86
-disturbed scenarios (worst $t_{\mathrm{last}}=33.75\,\mathrm{s}$), the original plan
-absorbs only outages $\le10\,\mathrm{s}$ untouched, and the explainable greedy rule is
-a certified $\le4.53\,\mathrm{s}$ slower fallback.
+\item \textbf{Q1.} Observable areas are $5628.7/6432.5/5484.8\,\mathrm{m}^2$
+($\le0.43\%$ drift); optimal stations are $(83.32,62.53)$, $(10.02,78.23)$ and
+$(58.21,4.09)$, with slew/reset $2.667\,\mathrm{s}$.
+\item \textbf{Q2(1).} The Fisher law gives the exact bound $0.14362\,\mathrm{m}$.
+The margin-compliant V3+V5 pair attains $0.1461\,\mathrm{m}$ ($+1.73\%$) with
+$19.88\,\mathrm{s}$ total travel; Monte Carlo deviation is $0.0\%$.
+\item \textbf{Q2(2).} Shared-station V3 doubling starts all alerts by
+$11.046\,\mathrm{s}$, $32.6\%$ faster than baseline; the $7.17\,\mathrm{s}$ lower-bound
+gap and $3.6\%$ station residual are reported explicitly.
+\item \textbf{Q3.} The linearized cap is $66.9223\,\mathrm{m}$, the full-geometry bound
+$66.8373\,\mathrm{m}$, and strict deployment $66.83\,\mathrm{m}$. At 80 m reliability is
+only $91.51\%$, so reliability binds before range.
+\item \textbf{Q4.} Re-optimization restores full coverage in all 86 scenarios (worst
+$t_{\mathrm{last}}=33.75\,\mathrm{s}$). Pure outages $\le10\,\mathrm{s}$ need no action;
+the explainable fallback is at most $4.53\,\mathrm{s}$ slower.
 \end{itemize}
 
-Operationally, the framework converts into three field rules: place station pairs at
-right angles to the alert (Q2(1)'s $\gamma=90^\circ$ law); keep every vehicle's
-cumulative leg under $\approx67\,\mathrm{m}$ (Q3's reliability budget); and trigger a
-re-solve on every disturbance except a pure outage shorter than ten seconds (Q4's value
-boundary). The model layer is deliberately conservative, so every schedule reported
-here can be executed as printed.

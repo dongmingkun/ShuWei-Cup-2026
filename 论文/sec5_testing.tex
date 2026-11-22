@@ -13,7 +13,7 @@ exercises the closed-set boundary semantics (exactly-$1.5$-m clearance admissibl
 tangent sightline blocked), and contains the dedicated sharp-corner regression
 described in the table.
 
-\begin{table}[!htb]\centering
+\begin{table}[!htb]\centering\footnotesize
 \caption{Engine regression suite (51 checks, all passing).}
 \label{tab:testsuite}
 \begin{tabular}{lll}
@@ -46,7 +46,7 @@ cross-checks (Section~\ref{sec:testing} last subsection), and \textbf{(L4)} sens
 sweeps (Section~\ref{sec:sens}). Table~\ref{tab:mcsummary} maps each check to its
 layer; every random experiment uses the fixed seed 2026.
 
-\begin{table}[!htb]\centering
+\begin{table}[!htb]\centering\footnotesize
 \caption{Monte-Carlo and refinement validations across the paper (fixed seed 2026;
 layer tags in parentheses).}
 \label{tab:mcsummary}
@@ -54,7 +54,7 @@ layer tags in parentheses).}
 \toprule
 Where & Method & Metric & Result \\
 \midrule
-Q1 (\S\ref{sec:q1}) & $0.02$ m boundary refinement (L1) & area drift & $\le0.23\%$ \\
+Q1 (\S\ref{sec:q1}) & analytic arc audit + $0.002^\circ$ refinement (L1) & area drift & $\le0.43\%$ \\
 Q2(1) (\S\ref{sec:q21}) & exact-geometry MC, $2\times10^{5}$ (L2) & RMSE rel.\ diff & $0.0\%$ \\
 Q2(1) (\S\ref{sec:q21}) & $\sigma_b\in\{0.5^\circ,1^\circ,2^\circ\}$ (L4) & optimal pair & invariant \\
 Q2(2) (\S\ref{sec:q22}) & simulator replay (L3) & all starts & match \\
@@ -65,16 +65,14 @@ Q4 (\S\ref{sec:q4}) & replay from captured states (L3) & all starts & match \\
 \end{tabular}
 \end{table}
 
-Table~\ref{tab:mcsummary} collects the statistical evidence: wherever an analytic curve
-exists (Q2(1) RMSE, Q3 reliability), the exact-geometry Monte Carlo agrees to within
-sampling error, and all random experiments use the fixed seed 2026. Sampling intervals
-are stated analytically rather than by re-running: the $2\times10^{5}$-sample RMSE
-estimate carries a standard error of $\mathrm{RMSE}/\sqrt{2N}=2.3\times10^{-4}\,\mathrm{m}$
-($0.16\%$), so the observed $0.007\%$ relative deviation is well inside one standard
-error; the Q3 sweep's per-point binomial standard errors are
-$\sqrt{p(1-p)/10^{5}}\le7.0\times10^{-4}$ ($0.07$ pp). The two Q3 critical points are
-additionally checked with $5\times10^{6}$ samples each; both Wilson intervals in
-Section~\ref{sec:q3} contain their corresponding quadrature probabilities.
+Wherever an analytic curve exists (Q2(1) RMSE, Q3 reliability), exact-geometry Monte
+Carlo agrees within sampling error (seed 2026). Analytic sampling intervals: the
+$2\times10^{5}$-sample RMSE standard error is
+$\mathrm{RMSE}/\sqrt{2N}=2.3\times10^{-4}\,\mathrm{m}$ ($0.16\%$), so the observed
+$0.007\%$ deviation is inside one standard error; Q3 per-point binomial errors are
+$\sqrt{p(1-p)/10^{5}}\le7.0\times10^{-4}$ ($0.07$ pp), and $5\times10^{6}$-sample Wilson
+intervals at both critical points contain the quadrature probabilities
+(Section~\ref{sec:q3}).
 
 \subsection{Optimality Evidence and Honest Gaps}
 
@@ -91,22 +89,19 @@ is certified by comparing both against identical replayed schedules.
 
 All headline numbers were re-derived by a fully independent second implementation
 (different codebase, rounded-corner routing with an exact $R_V$-neighbourhood
-clearance predicate, polar-candidate station parameterization, and a global-objective
-coordinate-descent scheduler). Results: Q1's arc endpoints
-$(80.500050,63.648619)$, Q2(1)'s unconstrained attaining pair V3+V5 (RMSE
+clearance predicate, polar-candidate stations, global-objective coordinate-descent
+scheduler). It reproduces exactly Q1's clearance-limited arc endpoint
+$(80.5004,63.6484)$, Q2(1)'s unconstrained attaining pair V3+V5 (RMSE
 $0.14362\,\mathrm{m}$, the Fisher bound, total travel $52.47\,\mathrm{m}$) and Q3's
-$s_{\max}=66.92\,\mathrm{m}$ reproduce exactly; the \emph{deployed} margin-compliant
-convention (Section~\ref{sec:q21}) supersedes the unconstrained numbers as the
-reported answer ($\mathrm{RMSE}=0.1461\,\mathrm{m}$, $+1.73\%$), and Q2(2)'s
-incumbent improves to $10.651\,\mathrm{s}$ on the same structure family. The two
-routers agree on every audited leg, and the refined schedule replays bit-compatibly in
-this paper's own simulator---mutual oracles, not shared-derivative duplicates. The same
-second implementation also re-studied Q4 on an \emph{independent} disturbance family
-(45 scenarios, different baseline schedule, different rescheduling engine) and
-reproduced every qualitative boundary of Section~\ref{sec:q4}: full $\eta=1$ recovery
-under event-triggered re-optimization, the zero value of a pure outage, the benign
-V5-failure case, and approximately additive combination penalties (Section~\ref{sec:q4},
-Validation).
+$s_{\max}=66.92\,\mathrm{m}$; the deployed margin-compliant convention
+(Section~\ref{sec:q21}) supersedes the unconstrained numbers
+($\mathrm{RMSE}=0.1461\,\mathrm{m}$, $+1.73\%$), and Q2(2)'s incumbent improves to
+$10.651\,\mathrm{s}$ on the same structure family. The two routers agree on every
+audited leg and the refined schedule replays bit-compatibly in this paper's simulator.
+On an independent 45-scenario disturbance family (different baseline and engine) it
+reproduces every qualitative boundary of Section~\ref{sec:q4}: full $\eta=1$ recovery
+under event-triggered re-optimization, zero value of a pure outage, the benign
+V5-failure case, and approximately additive combination penalties.
 
 \section{Sensitivity Analysis}\label{sec:sens}
 
@@ -124,7 +119,7 @@ $\pm10\%$ speed moves it by $+3.6\%/-1.5\%$. In all four cases the optimal
 qualitative scheduling conclusion (double V3 on $T_1\!\to\!T_3$ with a shared station)
 is robust to $\pm10\%$ parameter error.
 
-\begin{table}[!htb]\centering
+\begin{table}[!htb]\centering\footnotesize
 \caption{Q2(2) sensitivity: $\pm10\%$ in gimbal slew rate and vehicle speed.}
 \label{tab:sens}
 \begin{tabular}{lcccc}
@@ -148,11 +143,10 @@ $\sigma_b\in\{0.5^\circ,1^\circ,2^\circ\}$ changes only the scale of the RMSE
 the $\gamma=90^\circ$ station geometry, and the travel tie-break are invariant. The
 deployment recommendation does not depend on knowing $\sigma_b$ precisely.
 
-\textbf{Boundary margins.} Q1's optimal stations sit at arc endpoints where either
-clearance or line-of-sight binds; all constraints are evaluated as \emph{closed} sets
-(touching allowed, entering forbidden), so the reported points are feasible exactly as
-stated, and the $0.1$-m grid plus $0.02$-m refinement bounds the possible drift at
-$0.23\%$ of area.
+\textbf{Boundary margins.} Q1's optimal stations sit on the elevation boundary but
+inside the clearance/LOS constraints by the declared $0.10$-m margin; all constraints
+are evaluated as \emph{closed} sets (touching allowed, entering forbidden). Halving the
+$0.1$-m grid step drifts the area by $\le0.23\%$, doubling it by $\le0.43\%$.
 
 \textbf{Error-growth law (Q3).} The $(a,b)$ region of Fig.~\ref{fig:q3ab} is the
 linearized robustness map at the 80-m operating point: any $(a,b)$ with
@@ -169,14 +163,13 @@ threshold effect beyond the $t_{rec}\le10\,\mathrm{s}$ zero-gain band of pure fa
 (c).
 
 \textbf{Policy robustness under kinematic error (Q4).} The event-triggered response
-was re-derived under $\pm10\%$ perturbations of speed and slew rate on four
-representative disturbed scenarios (hardest/easiest new-alert cells, a V3 failure, a
-pure outage). $\eta=1$ is \emph{invariant} in all $20$ configurations; $t_{\mathrm{last}}$
-drifts by at most $4.1\%$ (slew rate $-10\%$ on the hardest new-alert cell,
-$19.97\to20.79\,\mathrm{s}$; speed is milder at $\pm1.5\%$), the re-optimized
-\emph{structure} is unchanged, and the nominal re-runs reproduce the committed values
-exactly (deterministic machinery). The restored-coverage guarantee is thus robust to
-moderate kinematic uncertainty.
+was re-derived under $\pm10\%$ speed/slew perturbations on four representative
+disturbed scenarios (hardest/easiest new-alert cells, a V3 failure, a pure outage).
+$\eta=1$ is \emph{invariant} in all $20$ configurations; $t_{\mathrm{last}}$ drifts by
+at most $4.1\%$ (slew $-10\%$ on the hardest cell, $19.97\to20.79\,\mathrm{s}$; speed
+$\pm1.5\%$), the re-optimized \emph{structure} is unchanged, and nominal re-runs
+reproduce the committed values exactly. The restored-coverage guarantee is thus robust
+to moderate kinematic uncertainty.
 
 \emph{Overall: every model's decision survives $\pm10\%$ kinematic perturbation and
 wide noise-level variation; the only sharp sensitivities are directional ones (Q3's

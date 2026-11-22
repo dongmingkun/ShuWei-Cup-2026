@@ -1,6 +1,6 @@
 \section{Assumptions and Justifications}
 
-\begin{itemize}\setlength{\itemsep}{4pt}
+\begin{itemize}\setlength{\itemsep}{2pt}
 \item \textbf{Assumption 1 (station--camera coincidence).} The station coordinate equals
 the horizontal position of the camera, which sits at the center of the vehicle disc at
 height $2\,\mathrm{m}$. \emph{Justification:} this is the problem's own convention; it
@@ -18,7 +18,7 @@ require edge-stacking; the upper-bound reading keeps every reported schedule exe
 quantified at $\le0.643\,\mathrm{m}$ per corner in Section~\ref{sec:sens}.
 \item \textbf{Assumption 3 (error model and independence).} In Q2(1) the two bearing
 measurement errors are independent $N(0,1^{\circ^2})$; in Q3 the three pointing error
-sources (target position error with $\sigma_{loc}(s)=0.3+0.02s$ m per axis, gimbal zero
+sources (vehicle-position error with $\sigma_{loc}(s)=0.3+0.02s$ m per axis, gimbal zero
 bias $0.8^\circ$, control error $0.6^\circ$) are independent and independent of Q2(1)'s
 measurement error. \emph{Justification:} the distributions and parameters are given by
 the problem; independence across the three Q3 sources is stated there, and Q2(1)/Q3
@@ -28,13 +28,14 @@ Section~\ref{sec:q3}: under Chebyshev (no normality, no independence between the
 axes) the travel budget collapses to $2.45\,\mathrm{m}$.
 \item \textbf{Assumption 4 (small-angle linearization).} The position-induced pointing
 error is linearized as $\Delta\psi_{loc}\approx\delta_\perp/r$ (radians), and the
-$\pm180^\circ$ wrap never activates because $|\Delta\psi|\le5^\circ$ in the feasible
-region. \emph{Justification:} the linearization's theoretical relative error at one
-sigma is $5.6\times10^{-4}$, and the Monte Carlo validation of Section~\ref{sec:q3}
-measures a worst-case deviation of $0.18$ percentage points in probability; wrap
-probability is exactly zero at $s=80\,\mathrm{m}$. \emph{Used by Q3 only;} the exact
-$\arctan$ law (quadrature) puts the true crossing at $67.09\,\mathrm{m}$, i.e.\ the
-linearized $s_{\max}$ is conservative by $0.17\,\mathrm{m}$ (Section~\ref{sec:q3}).
+$\pm180^\circ$ wrap has negligible effect on the $\pm5^\circ$ reliability event.
+\emph{Justification:} the arctan cubic term and denominator perturbation have one-sigma
+relative scales $0.0559\%$ and $4.0961\%$, respectively; exact-geometry Monte Carlo
+differs from the analytic sweep by at most $0.18$ percentage points, and the linearized
+wrap tail at $s=80\,\mathrm{m}$ underflows in double precision. \emph{Used by Q3 only;}
+full \texttt{atan2} quadrature puts the crossing at $66.8373\,\mathrm{m}$, so the
+linearized cap is non-conservative by $0.0850\,\mathrm{m}$ and deployment uses the
+strict $66.83\,\mathrm{m}$ cap (Section~\ref{sec:q3}).
 \item \textbf{Assumption 5 (at most two task slots per vehicle).} Each vehicle executes
 at most two alert tasks in Q2(2) and in every Q4 reschedule. \emph{Justification:} 6
 slots and 5 vehicles imply a doubling vehicle; the cap keeps the structure family
@@ -72,7 +73,7 @@ normality is stress-tested against distribution-free bounds in Section~\ref{sec:
 Table~\ref{tab:notation} lists the symbols shared by all four models; symbols specific
 to one question are defined at their first use in the text.
 
-\begin{table}[!htb]\centering\small
+\begin{table}[!htb]\centering\footnotesize
 \caption{Main symbols.}
 \label{tab:notation}
 \begin{tabular}{cl}

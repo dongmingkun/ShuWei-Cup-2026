@@ -1,0 +1,233 @@
+{
+  "scope": "Accuracy and station-feasibility audit of two frozen Q2(2) schedules; no re-optimization.",
+  "main_decision": "Retain the 11.046 s time-first schedule as the Q2(2) result and Q4 baseline; report the 30 deg variant as a speed-accuracy trade-off.",
+  "sigma_b_deg": 1.0,
+  "rmse_formula": "sigma_b * sqrt(d1^2 + d2^2) / sin(gamma)",
+  "q2_1_reference": {
+    "rmse_m": 0.14362,
+    "note": "Different objective and geometry: close-range T2 stations with crossing angle 90 deg; not a Q2(2) feasibility threshold."
+  },
+  "results": {
+    "time_first": {
+      "label": "Time-first",
+      "source": "q2_2_summary.json, azimuth_guard_deg=1.0",
+      "azimuth_guard_deg": 1.0,
+      "max_start_s": 11.046,
+      "makespan_s": 21.705,
+      "alert_start_s": {
+        "T1": 2.943,
+        "T2": 10.73,
+        "T3": 11.046
+      },
+      "alerts": {
+        "T1": {
+          "alert": "T1",
+          "vehicles": [
+            "V3",
+            "V5"
+          ],
+          "stations_xy_m": [
+            [
+              18.0,
+              90.0
+            ],
+            [
+              51.0,
+              93.0
+            ]
+          ],
+          "target_xy_m": [
+            84.64101615137756,
+            70.0
+          ],
+          "station_distances_m": [
+            69.57747504536339,
+            40.751907534460834
+          ],
+          "baseline_m": 33.13608305156178,
+          "crossing_angle_deg": 17.65468137067461,
+          "rmse_m": 4.640334457793903,
+          "fisher_rmse_crosscheck_m": 4.6403344577939,
+          "stations_feasible": true
+        },
+        "T2": {
+          "alert": "T2",
+          "vehicles": [
+            "V2",
+            "V4"
+          ],
+          "stations_xy_m": [
+            [
+              70.0,
+              3.5
+            ],
+            [
+              87.5,
+              73.5
+            ]
+          ],
+          "target_xy_m": [
+            11.02885682970026,
+            72.5
+          ],
+          "station_distances_m": [
+            90.76671045494592,
+            76.47768130489104
+          ],
+          "baseline_m": 72.15434844830907,
+          "crossing_angle_deg": 50.23020792730961,
+          "rmse_m": 2.695138487886972,
+          "fisher_rmse_crosscheck_m": 2.6951384878869726,
+          "stations_feasible": true
+        },
+        "T3": {
+          "alert": "T3",
+          "vehicles": [
+            "V3",
+            "V1"
+          ],
+          "stations_xy_m": [
+            [
+              18.0,
+              90.0
+            ],
+            [
+              15.0,
+              15.0
+            ]
+          ],
+          "target_xy_m": [
+            59.83512371389577,
+            13.2948186010154
+          ],
+          "station_distances_m": [
+            87.37197737036799,
+            44.86753795389025
+          ],
+          "baseline_m": 75.05997601918082,
+          "crossing_angle_deg": 59.21384254609948,
+          "rmse_m": 1.9954330073497777,
+          "fisher_rmse_crosscheck_m": 1.995433007349778,
+          "stations_feasible": true
+        }
+      },
+      "worst_rmse_m": 4.640334457793903,
+      "min_crossing_angle_deg": 17.65468137067461
+    },
+    "accuracy_guarded": {
+      "label": "Accuracy-guarded",
+      "source": "q2_2_scheduler.py frozen result, azimuth_guard_deg=30.0",
+      "azimuth_guard_deg": 30.0,
+      "max_start_s": 11.649,
+      "makespan_s": 18.791,
+      "alert_start_s": {
+        "T1": 3.545,
+        "T2": 7.816,
+        "T3": 11.649
+      },
+      "alerts": {
+        "T1": {
+          "alert": "T1",
+          "vehicles": [
+            "V3",
+            "V2"
+          ],
+          "stations_xy_m": [
+            [
+              18.0,
+              90.0
+            ],
+            [
+              87.0,
+              9.0
+            ]
+          ],
+          "target_xy_m": [
+            84.64101615137756,
+            70.0
+          ],
+          "station_distances_m": [
+            69.57747504536339,
+            61.04559611305358
+          ],
+          "baseline_m": 106.4048871058092,
+          "crossing_angle_deg": 108.91994497147378,
+          "rmse_m": 1.707765239449928,
+          "fisher_rmse_crosscheck_m": 1.707765239449928,
+          "stations_feasible": true
+        },
+        "T2": {
+          "alert": "T2",
+          "vehicles": [
+            "V4",
+            "V5"
+          ],
+          "stations_xy_m": [
+            [
+              87.5,
+              73.5
+            ],
+            [
+              45.5,
+              94.5
+            ]
+          ],
+          "target_xy_m": [
+            11.02885682970026,
+            72.5
+          ],
+          "station_distances_m": [
+            76.47768130489104,
+            40.893272202983496
+          ],
+          "baseline_m": 46.95742752749558,
+          "crossing_angle_deg": 31.79742454478871,
+          "rmse_m": 2.872600416956666,
+          "fisher_rmse_crosscheck_m": 2.8726004169566655,
+          "stations_feasible": true
+        },
+        "T3": {
+          "alert": "T3",
+          "vehicles": [
+            "V3",
+            "V1"
+          ],
+          "stations_xy_m": [
+            [
+              18.0,
+              90.0
+            ],
+            [
+              15.0,
+              15.0
+            ]
+          ],
+          "target_xy_m": [
+            59.83512371389577,
+            13.2948186010154
+          ],
+          "station_distances_m": [
+            87.37197737036799,
+            44.86753795389025
+          ],
+          "baseline_m": 75.05997601918082,
+          "crossing_angle_deg": 59.21384254609948,
+          "rmse_m": 1.9954330073497777,
+          "fisher_rmse_crosscheck_m": 1.995433007349778,
+          "stations_feasible": true
+        }
+      },
+      "worst_rmse_m": 2.872600416956666,
+      "min_crossing_angle_deg": 31.79742454478871
+    }
+  },
+  "comparison": {
+    "max_start_delta_s": 0.6029999999999998,
+    "max_start_delta_pct": 5.458989679521986,
+    "worst_rmse_before_m": 4.640334457793903,
+    "worst_rmse_after_m": 2.872600416956666,
+    "worst_rmse_reduction_pct": 38.0949704577469,
+    "t1_rmse_reduction_pct": 63.19736745308161,
+    "t2_rmse_delta_m": 0.1774619290696937
+  }
+}

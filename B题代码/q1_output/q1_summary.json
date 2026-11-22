@@ -1,19 +1,35 @@
 {
+  "model": {
+    "objective": "min horizontal range r over clearance ∩ LOS ∩ elevation",
+    "lower_bound": "r >= r80 = (H-2)/tan(80 deg)",
+    "tie_breaking": "on the r80 optimal arc: clearance margin >= 0.10 m beyond the 1.5 m buffer, then minimise designated vehicle mission cycle = travel + slew + 5 s + reset; ties: larger margin, nearer O, smaller azimuth",
+    "designated_vehicle_rule": "nearest standby vehicle to target projection",
+    "clearance_margin_m": 0.1,
+    "printed_station_precision_decimals": 6,
+    "arc_search": {
+      "feasible_arc_step_deg": 0.01,
+      "coarse_step_deg": 0.05,
+      "fine_step_deg": 0.002
+    }
+  },
   "targets": {
     "T1": {
       "projection": [
-        84.641,
+        84.641016,
         70.0
       ],
       "H_m": 45.0,
-      "r80_m": 7.5821,
+      "r80_m": 7.58206,
+      "Q_star_per_m": 0.13189,
       "r80_circle_feasible": true,
+      "full_circle": false,
       "feasible_arcs_deg": [
         [
           -123.1,
           160.74
         ]
       ],
+      "arc_span_deg": 283.84,
       "arc_endpoint_causes": [
         {
           "angle_deg": 236.89,
@@ -28,39 +44,60 @@
           ]
         }
       ],
-      "optimal_station": {
-        "x": 80.5004,
-        "y": 63.6484,
-        "azimuth_on_circle_deg": 236.9,
-        "pan_deg": 56.9,
-        "tilt_deg": 80.0,
-        "elevation_angle_deg": 80.0,
-        "slew_s": 2.667,
-        "reset_s": 2.667,
-        "dist_to_O_m": 33.415
-      },
       "area_m2_by_res": {
         "0.2": 5607.8,
         "0.1": 5628.7,
         "0.05": 5619.6
       },
       "n_components_0.1m": 1,
-      "largest_component_area_m2": 5628.7
+      "largest_component_area_m2": 5628.7,
+      "designated_vehicle": "V4",
+      "optimal_station": {
+        "x": 83.324405,
+        "y": 62.533128,
+        "azimuth_on_circle_deg": 260.0,
+        "pan_deg": 80.0,
+        "tilt_deg": 80.0,
+        "elevation_angle_deg": 80.0,
+        "range_m": 7.58206,
+        "clearance_margin_m": 2.824405,
+        "slew_s": 2.667,
+        "reset_s": 2.667,
+        "travel_time_s": 2.397866,
+        "travel_distance_m": 7.193599,
+        "observation_s": 5.0,
+        "mission_cycle_s": 12.7312,
+        "dist_to_O_m": 35.603304,
+        "feasible": true,
+        "clearance_margin_used_m": 0.1
+      },
+      "alternative_nearest_O": {
+        "x": 80.500438,
+        "y": 63.648366,
+        "azimuth_on_circle_deg": 236.9,
+        "clearance_margin_m": 0.000438,
+        "dist_to_O_m": 33.414886,
+        "mission_cycle_s": 13.223549,
+        "note": "earlier nearest-to-O tie-break without the 0.10 m margin"
+      }
     },
     "T2": {
       "projection": [
-        11.0289,
+        11.028857,
         72.5
       ],
       "H_m": 35.0,
-      "r80_m": 5.8188,
+      "r80_m": 5.81879,
+      "Q_star_per_m": 0.171857,
       "r80_circle_feasible": true,
+      "full_circle": false,
       "feasible_arcs_deg": [
         [
           59.66,
           244.24
         ]
       ],
+      "arc_span_deg": 184.58,
       "arc_endpoint_causes": [
         {
           "angle_deg": 59.65,
@@ -75,72 +112,183 @@
           ]
         }
       ],
-      "optimal_station": {
-        "x": 8.5,
-        "y": 67.2595,
-        "azimuth_on_circle_deg": 244.24,
-        "pan_deg": 64.24,
-        "tilt_deg": 80.0,
-        "elevation_angle_deg": 80.0,
-        "slew_s": 2.667,
-        "reset_s": 2.667,
-        "dist_to_O_m": 44.946
-      },
       "area_m2_by_res": {
         "0.2": 6411.7,
         "0.1": 6432.5,
         "0.05": 6422.9
       },
       "n_components_0.1m": 1,
-      "largest_component_area_m2": 6432.5
+      "largest_component_area_m2": 6432.5,
+      "designated_vehicle": "V3",
+      "optimal_station": {
+        "x": 10.018434,
+        "y": 78.23039,
+        "azimuth_on_circle_deg": 100.0,
+        "pan_deg": 280.0,
+        "tilt_deg": 80.0,
+        "elevation_angle_deg": 80.0,
+        "range_m": 5.81879,
+        "clearance_margin_m": 0.73039,
+        "slew_s": 2.667,
+        "reset_s": 2.667,
+        "travel_time_s": 2.91013,
+        "travel_distance_m": 8.73039,
+        "observation_s": 5.0,
+        "mission_cycle_s": 13.243463,
+        "dist_to_O_m": 48.943646,
+        "feasible": true,
+        "clearance_margin_used_m": 0.1
+      },
+      "alternative_nearest_O": {
+        "x": 8.499996,
+        "y": 67.259467,
+        "azimuth_on_circle_deg": 244.24,
+        "clearance_margin_m": 4e-06,
+        "dist_to_O_m": 44.945962,
+        "mission_cycle_s": 17.121587,
+        "note": "earlier nearest-to-O tie-break without the 0.10 m margin"
+      }
     },
     "T3": {
       "projection": [
-        59.8351,
-        13.2948
+        59.835124,
+        13.294819
       ],
       "H_m": 55.0,
-      "r80_m": 9.3453,
+      "r80_m": 9.34533,
+      "Q_star_per_m": 0.107005,
       "r80_circle_feasible": true,
+      "full_circle": true,
       "feasible_arcs_deg": [
         [
           0.0,
-          359.99
+          360.0
         ]
       ],
-      "arc_endpoint_causes": [
-        {
-          "angle_deg": 359.99,
-          "blocked_by": []
-        },
-        {
-          "angle_deg": 0.0,
-          "blocked_by": []
-        }
-      ],
-      "optimal_station": {
-        "x": 57.4164,
-        "y": 22.3217,
-        "azimuth_on_circle_deg": 105.0,
-        "pan_deg": 285.0,
-        "tilt_deg": 80.0,
-        "elevation_angle_deg": 80.0,
-        "slew_s": 2.667,
-        "reset_s": 2.667,
-        "dist_to_O_m": 28.655
-      },
+      "arc_span_deg": 360.0,
+      "arc_endpoint_causes": [],
       "area_m2_by_res": {
         "0.2": 5461.4,
         "0.1": 5484.8,
         "0.05": 5472.5
       },
       "n_components_0.1m": 1,
-      "largest_component_area_m2": 5484.8
+      "largest_component_area_m2": 5484.8,
+      "designated_vehicle": "V2",
+      "optimal_station": {
+        "x": 58.212324,
+        "y": 4.091465,
+        "azimuth_on_circle_deg": 260.0,
+        "pan_deg": 80.0,
+        "tilt_deg": 80.0,
+        "elevation_angle_deg": 80.0,
+        "range_m": 9.34533,
+        "clearance_margin_m": 2.591465,
+        "slew_s": 2.667,
+        "reset_s": 2.667,
+        "travel_time_s": 10.122672,
+        "travel_distance_m": 30.368016,
+        "observation_s": 5.0,
+        "mission_cycle_s": 20.456005,
+        "dist_to_O_m": 46.637279,
+        "feasible": true,
+        "clearance_margin_used_m": 0.1
+      },
+      "alternative_nearest_O": {
+        "x": 57.416374,
+        "y": 22.321714,
+        "azimuth_on_circle_deg": 105.0,
+        "clearance_margin_m": 13.083626,
+        "dist_to_O_m": 28.65467,
+        "mission_cycle_s": 21.324152,
+        "note": "earlier nearest-to-O tie-break without the 0.10 m margin"
+      }
     }
   },
   "validation": {
-    "T1": true,
-    "T2": true,
-    "T3": true
+    "T1": {
+      "vectorised_vs_scalar_400pts": true,
+      "pointwise": {
+        "feasible": true,
+        "los_clear": true,
+        "elevation_deg": 79.999999,
+        "clearance_margin_m": 2.824405,
+        "margin_satisfied": true
+      },
+      "interior_arc_step": {
+        "step_deg": 0.5,
+        "station": [
+          83.389615,
+          62.521923
+        ],
+        "feasible": true,
+        "clearance_margin_m": 2.889615,
+        "range_m": 7.58206
+      },
+      "area_rel_change_halving_step": 0.001617,
+      "area_rel_change_doubling_step": 0.003713
+    },
+    "T2": {
+      "vectorised_vs_scalar_400pts": true,
+      "pointwise": {
+        "feasible": true,
+        "los_clear": true,
+        "elevation_deg": 80.0,
+        "clearance_margin_m": 0.73039,
+        "margin_satisfied": true
+      },
+      "interior_arc_step": {
+        "step_deg": 0.5,
+        "station": [
+          9.968467,
+          78.221354
+        ],
+        "feasible": true,
+        "clearance_margin_m": 0.721578,
+        "range_m": 5.81879
+      },
+      "area_rel_change_halving_step": 0.001492,
+      "area_rel_change_doubling_step": 0.003234
+    },
+    "T3": {
+      "vectorised_vs_scalar_400pts": true,
+      "pointwise": {
+        "feasible": true,
+        "los_clear": true,
+        "elevation_deg": 80.0,
+        "clearance_margin_m": 2.591465,
+        "margin_satisfied": true
+      },
+      "interior_arc_step": {
+        "step_deg": 0.5,
+        "station": [
+          58.292699,
+          4.077654
+        ],
+        "feasible": true,
+        "clearance_margin_m": 2.577654,
+        "range_m": 9.34533
+      },
+      "area_rel_change_halving_step": 0.002243,
+      "area_rel_change_doubling_step": 0.004266
+    },
+    "resolution_max_rel_change": {
+      "halving_step_0.1_to_0.05": 0.002243,
+      "doubling_step_0.1_to_0.2": 0.004266
+    }
+  },
+  "figure_rasters": {
+    "T1": {
+      "step_m": 0.2,
+      "feasible_fraction": 0.597961
+    },
+    "T2": {
+      "step_m": 0.25,
+      "feasible_fraction": 0.682985
+    },
+    "T3": {
+      "step_m": 0.25,
+      "feasible_fraction": 0.583382
+    }
   }
 }

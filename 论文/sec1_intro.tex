@@ -42,9 +42,10 @@ best schedule starts all alerts within $11.046\,\mathrm{s}$ ($32.6\%$ faster tha
 required nearest-assignment baseline) via a zero-travel shared-station double task
 (Section~\ref{sec:q22}).
 \item \textbf{Q3} propagates the three independent error sources into pointing error
-$\Delta\psi$ and returns the maximal safe travel $s_{\max}=66.9223\,\mathrm{m}$, an
+$\Delta\psi$ and returns the linearized travel cap $s_{\max}=66.9223\,\mathrm{m}$, an
 $(a,b)$ feasibility region for the error-growth law, and a variance-contribution
-decomposition (Section~\ref{sec:q3}).
+decomposition. Exact-geometry quadrature tightens the cap to $66.8373\,\mathrm{m}$
+(Section~\ref{sec:q3}).
 \item \textbf{Q4} evaluates 86 disturbance scenarios against retain ($P_0$),
 re-optimize ($P_1$) and rule-based ($P_2$) strategies; $P_1$ restores full completion
 $\eta=1$ everywhere, and a value-boundary analysis identifies when rescheduling is
@@ -56,8 +57,8 @@ region solver, the simulator, the travel-budget insight) are explicit, so the pa
 as one model system rather than four disconnected answers. The transfer quantities are
 concrete: $\mathcal{F}_{T}$ regions from Q1 define station feasibility in Q2(1)--Q2(2);
 the RMSE law of Q2(1) is the accuracy metric Q2(2) trades against speed; the
-event-timeline simulator built for Q2(2) is replayed unchanged in Q4; the travel cap
-$s_{\max}=66.92\,\mathrm{m}$ from Q3 bounds every leg of every schedule; and the
+event-timeline simulator built for Q2(2) is replayed unchanged in Q4; the strict travel
+cap $66.83\,\mathrm{m}$ from Q3 bounds every vehicle's cumulative travel; and the
 360-structure enumerator of Q2(2) is the re-solver invoked by Q4's $P_1$. The abstract's
 five innovations land respectively in Sections~\ref{sec:q1}/\ref{sec:q21} (i),
 \ref{sec:q22} (ii), \ref{sec:q3} (iii), \ref{sec:q4} (iv) and \ref{sec:testing} (v).

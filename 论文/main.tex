@@ -3,23 +3,25 @@
 % 2026 ShuWei Cup (Autumn) Problem B -- Team SWBMCM2600001
 \documentclass{swmcmthesis}
 \graphicspath{{figures/}}
-\linespread{1.0}
+\linespread{0.97}
 \setcounter{tocdepth}{2}
 \usepackage{enumitem}
-\setlist{itemsep=1pt, topsep=3pt, parsep=0pt}
+\setlist{itemsep=0pt, topsep=2pt, parsep=0pt}
 \usepackage{titlesec}
-\titlespacing*{\subsection}{0pt}{8pt plus 2pt minus 2pt}{4pt}
-\titlespacing*{\subsubsection}{0pt}{6pt plus 2pt minus 2pt}{3pt}
+\usepackage{multicol}
+\titlespacing*{\section}{0pt}{6pt plus 2pt minus 2pt}{3pt}
+\titlespacing*{\subsection}{0pt}{6pt plus 2pt minus 2pt}{3pt}
+\titlespacing*{\subsubsection}{0pt}{5pt plus 2pt minus 2pt}{2pt}
 \AtBeginDocument{%
-  \setlength{\abovedisplayskip}{6pt plus 2pt minus 3pt}%
-  \setlength{\belowdisplayskip}{6pt plus 2pt minus 3pt}%
-  \setlength{\abovedisplayshortskip}{3pt plus 2pt minus 2pt}%
-  \setlength{\belowdisplayshortskip}{4pt plus 2pt minus 2pt}%
+  \setlength{\abovedisplayskip}{4pt plus 2pt minus 2pt}%
+  \setlength{\belowdisplayskip}{4pt plus 2pt minus 2pt}%
+  \setlength{\abovedisplayshortskip}{2pt plus 2pt minus 1pt}%
+  \setlength{\belowdisplayshortskip}{3pt plus 2pt minus 1pt}%
 }
-\setlength{\textfloatsep}{12pt plus 3pt minus 4pt}
-\setlength{\floatsep}{10pt plus 2pt minus 3pt}
-\setlength{\intextsep}{10pt plus 2pt minus 3pt}
-\setlength{\dbltextfloatsep}{12pt plus 3pt minus 4pt}
+\setlength{\textfloatsep}{8pt plus 3pt minus 3pt}
+\setlength{\floatsep}{6pt plus 2pt minus 2pt}
+\setlength{\intextsep}{6pt plus 2pt minus 2pt}
+\setlength{\dbltextfloatsep}{8pt plus 3pt minus 3pt}
 
 \title{Rapid UAV Localization via Coordinated Mobile Vehicles:\\
 Observable Regions, Optimal Deployment,\\
@@ -39,8 +41,8 @@ event-timeline simulator---with identical conventions and independent re-computa
 throughout.
 
 \textbf{Problem 1.} The observable region is the intersection of three closed-set
-constraint sets, computed on a $0.2$-m grid (T1 area $5628.7\,\mathrm{m}^2$;
-resolution drift $\le0.23\%$). The minimum target distance
+constraint sets, computed on a $0.1$-m grid (T1 area $5628.7\,\mathrm{m}^2$;
+resolution drift $\le0.43\%$). The minimum target distance
 $r^{*}=7.5821\,\mathrm{m}$ is attained on the elevation-bound circle
 $r=(H-2)/\tan80^{\circ}$; the declared tie-break---shortest mission cycle from the
 designated standby vehicle, under a $0.10$-m clearance margin---selects
@@ -64,8 +66,9 @@ serves T1 then T3 from one shared station $(18,90)$ with a zero-travel second le
 valid lower bound $3.873\,\mathrm{s}$ and the honest gap $7.17\,\mathrm{s}$ are both reported.
 
 \textbf{Problem 3.} The three independent error sources propagate analytically to the
-pointing error $\Delta\psi$, capping single-leg travel at
-$s_{\max}=66.9223\,\mathrm{m}$ for $P(|\Delta\psi|\le5^{\circ})\ge0.95$; at $80\,\mathrm{m}$
+pointing error $\Delta\psi$, capping cumulative travel at
+$s_{\max}=66.9223\,\mathrm{m}$ for $P(|\Delta\psi|\le5^{\circ})\ge0.95$; full-geometry
+quadrature gives the slightly tighter value $66.8373\,\mathrm{m}$. At $80\,\mathrm{m}$
 the baseline error law reaches only $91.54\%$. Reliability, not driving range, binds
 deployment.
 
@@ -109,7 +112,6 @@ Sensitivity analysis confirms stability.
 \input{sec8_conclusion}
 \input{refs}
 
-\newpage
 \input{appendix}
 
 \end{document}

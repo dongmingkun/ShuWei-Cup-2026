@@ -46,7 +46,7 @@ question as the \emph{minimum admissible target distance}, and is the key consta
 makes both Q1's and Q2(1)'s optima analytically attainable.
 
 \begin{figure}[!htb]\centering
-\includegraphics[width=0.68\textwidth]{fig_geometry_schematic.png}
+\includegraphics[width=0.62\textwidth]{fig_geometry_schematic.png}
 \caption{(a) Field layout: buildings with heights, the $1.5$-m clearance inflation
 (dashed), vehicles $V_1$--$V_5$ (blue) and alert targets (red diamonds).
 (b) The three feasibility sieves around a target: elevation excludes $r<r_{80}$
@@ -107,15 +107,16 @@ which greedy shortcut costs how much.
 \subsection{Analysis of Question 3}
 
 Question 3 is a one-dimensional error-synthesis problem plus an inverse problem: three
-independent Gaussian sources---target position error (variance growing with cumulative
+independent Gaussian sources---vehicle-position error (variance growing with cumulative
 travel $s$), gimbal zero bias ($0.8^\circ$) and control error ($0.6^\circ$)---enter the
 pointing error $\Delta\psi$ additively to first order, so $\Delta\psi$ is Gaussian with
 closed-form $\sigma_{tot}(s)$ and the reliability constraint
 $P(|\Delta\psi|\le5^\circ)\ge0.95$ becomes a linear inequality in $(a,b)$ for the error
 law $\sigma_{loc}(s)=a+bs$. The analytical chain is cheap to invert but rests on a
-small-angle linearization; we validate it with an exact-geometry Monte Carlo
-\cite{metropolis1949} (exact \texttt{atan2}, angle wrapping, no linearization) and
-complement the Gaussian result with distribution-free bounds (Chebyshev/Cantelli) to
+small-angle linearization; we validate it by deterministic quadrature of the exact
+\texttt{atan2} angle law and exact-geometry Monte Carlo \cite{metropolis1949} (angle
+wrapping, no linearization), and complement the Gaussian result with distribution-free
+bounds (Chebyshev/Cantelli) to
 show what normality buys. Q3 runs parallel to Q2 but feeds back a deployment insight:
 the pointing-reliability travel budget is compared with the 90-m driving budget of
 Q2(1).
@@ -138,7 +139,7 @@ optimizer with a rule-based fallback lets us attribute \emph{when} and \emph{why
 rescheduling pays---a value-boundary analysis rather than a single average number.
 
 \begin{figure}[!htb]\centering
-\includegraphics[width=0.62\textwidth]{fig_framework.png}
+\includegraphics[width=0.56\textwidth]{fig_framework.png}
 \caption{Overall technical route. Three shared engines (blue) serve all questions
 (green); dashed arrows are cross-question transfers: Q3's deployment insight feeds the
 schedule discussion, Q2(2)'s plan is Q4's baseline, and every question carries its own
@@ -178,10 +179,10 @@ lower bound, $\propto\sigma_b$ so the pair choice is noise-level free \\
 Q2(2) & min--max makespan; total-completion-time; list scheduling & min--max epigraph
 (Eq.~\eqref{eq:minmax}) & matches the required objective verbatim; total-time variants
 optimize a different (unasked) quantity \\
-Q3 & analytic linear chain; exact-geometry Monte Carlo only; distribution-free bounds
-& analytic chain $+$ MC validation $+$ Chebyshev/Cantelli contrast & only the chain is
-invertible to the $(a,b)$ region; MC quantifies its $0.18$-pp error; the free bounds
-price the normality assumption \\
+Q3 & analytic linear chain; exact quadrature $+$ Monte Carlo; distribution-free bounds
+& analytic chain $+$ full-geometry validation $+$ Chebyshev/Cantelli contrast & the chain
+is directly invertible to the $(a,b)$ region; quadrature and MC quantify its approximation
+error; the free bounds price the normality assumption \\
 Q4 & $P_1$ enumeration $+$ coordinate descent; rule-based greedy ($P_2$); re-enumerate
 everything at every event & event-triggered $P_1$ with $P_2$ fallback vs.\ $P_0$ &
 lexicographic $(\eta,t_{last})$; the pairing attributes \emph{when} rescheduling pays

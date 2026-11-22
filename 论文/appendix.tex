@@ -1,4 +1,6 @@
 % Appendix: core code + AI tool usage report
+\titlespacing*{\section}{0pt}{8pt plus 2pt minus 2pt}{4pt}
+\titlespacing*{\subsection}{0pt}{6pt plus 2pt minus 2pt}{3pt}
 \lstset{
   language=Python,
   basicstyle=\ttfamily\footnotesize,
@@ -16,33 +18,14 @@
   xleftmargin=1.2em,
 }
 
-\section*{Declaration of AI Tool Usage}
-\addcontentsline{toc}{section}{Declaration of AI Tool Usage}
-
-In accordance with the competition's rules on generative-AI use, we disclose that an
-AI pair-programming assistant (built into the Qoder development environment,
-\url{https://qoder.com}) was used in three bounded roles: (i) implementing, debugging
-and regression-testing the Python code realizing our models (geometry predicates,
-Dijkstra routing, Fisher information, simulator, scenario batching); (ii) polishing
-the English wording of sections the team had already outlined, argued and numerically
-filled; (iii) assisting with \LaTeX{} typesetting. \textbf{All modeling ideas,
-mathematical derivations, convention decisions, optimality arguments, and every
-numerical conclusion were produced, checked and approved by the team}; AI served as
-an implementation and language tool, not a source of results. Three in-text
-annotations mark substantive assistance (\S\ref{sec:analysis}*, \S\ref{sec:q4}*,
-Appendix~A code headers carry AI-assistance comments), and the detailed usage record
-is Appendix~B. We take full responsibility for the entire submission.
-
 \section*{Appendix}
 \addcontentsline{toc}{section}{Appendix}
 
 \subsection*{A. Core Code}
 \addcontentsline{toc}{subsection}{A. Core Code}
 
-All code is Python~3. The listings below are the computational cores of each question,
-condensed from the full implementation (comments translated into English); the complete
-repository structure is summarized at the end of this appendix. Header comments mark
-where AI assistance was used in implementation.
+These condensed Python~3 listings give each question's computational core; the full
+repository structure ends the appendix. Header comments mark AI assistance.
 
 \begin{lstlisting}[caption={Shared geometry engine: closed-set three-constraint
 predicate (AI-assisted implementation, team-specified conventions).},label={lst:geom}]
@@ -247,8 +230,18 @@ script listed in Appendix~A.
 \noindent\textbf{Usage records.} Sessions are logged in the team's shared repository
 (commit history and analysis notes); three substantive in-text annotations appear at
 \S2.1 (footnote), \S4.5 (footnote), and the Appendix~A listing headers, consistent
-with this report and with the Declaration at the head of the Appendix.
+with this report and with the Declaration in Appendix~C.
 
 \medskip
 \noindent\textbf{Responsibility.} The team takes full responsibility for the validity
 of the models, the correctness of the code, and all conclusions of this paper.
+
+\subsection*{C. Declaration of AI Tool Usage}
+\addcontentsline{toc}{subsection}{C. Declaration of AI Tool Usage}
+
+Qoder's AI assistant (\url{https://qoder.com}) supported Python implementation and
+testing, English polishing, and \LaTeX{} typesetting. \textbf{The team produced, checked
+and approved every modeling idea, derivation, convention, optimality argument and
+numerical conclusion}; AI supplied no results. Assistance is marked in
+\S\ref{sec:analysis}*, \S\ref{sec:q4}* and Appendix~A headers; Appendix~B gives the
+detailed record. We take full responsibility for the submission.
