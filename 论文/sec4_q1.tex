@@ -65,9 +65,10 @@ rule (2) decides.
 
 \subsubsection{Results}
 
-\begin{table}[!htb]\centering\small
+\begin{table}[!htb]\centering\footnotesize\setlength{\tabcolsep}{4pt}
 \caption{Observable regions and min-$r$ optimal stations (grid $0.1$ m; angles on the
-$r_{80}$-circle measured from the target projection, CCW from east).}
+$r_{80}$-circle measured from the target projection, CCW from east). Stations are
+reported to six decimals---see the printed-precision note below.}
 \label{tab:q1opt}
 \begin{tabular}{lccc}
 \toprule
@@ -78,7 +79,7 @@ feasible arc on $r_{80}$-circle & $[236.90^\circ,160.74^\circ]$ & $[59.66^\circ,
 arc span / endpoint cause & $283.84^\circ$ / clearance & $184.58^\circ$ / LOS, clearance & $360^\circ$ / -- \\
 area of $\mathcal{F}_T$ (m$^2$) & 5628.7 & 6432.5 & 5484.8 \\
 connected components & 1 & 1 & 1 \\
-optimal station $(x,y)$ & $(80.5004,\,63.6484)$ & $(8.5000,\,67.2595)$ & $(57.4164,\,22.3217)$ \\
+optimal station $(x,y)$ & $(80.500050,\,63.648619)$ & $(8.499996,\,67.259467)$ & $(57.416374,\,22.321714)$ \\
 pan / tilt ($^\circ$) & $56.9\,/\,80.0$ & $64.24\,/\,80.0$ & $285.0\,/\,80.0$ \\
 slew $=$ reset (s) & 2.667 & 2.667 & 2.667 \\
 distance to $O$ (m) & 33.415 & 44.946 & 28.655 \\
@@ -94,6 +95,26 @@ closest-to-$O$ direction ($210^\circ$) is blocked, so the nearest arc endpoint
 $236.90^\circ$ is chosen. Table~\ref{tab:q1opt} lists the stations; all three sit
 \emph{exactly} on the $80^\circ$ elevation boundary, feasible on the closed
 set---robustness is examined in Section~\ref{sec:sens}.
+
+\emph{Printed precision.} The table reports six decimals deliberately: all three
+stations are double-boundary points ($80.000000^\circ$ elevation, and for T1/T2 also
+exact $1.5$-m clearance at the arc endpoint), so a four-decimal rounding can push the
+printed point $10^{-5}\,\mathrm{m}$ inside the elevation boundary and a strict
+re-check would---wrongly---reject it. Deployments should use the six-decimal values
+(or the exact construction $p^{*}=T_p+r_{80}(\cos\varphi^{*},\sin\varphi^{*})$); a
+$0.5^\circ$ step along the arc into the interior (e.g.\ T1 at azimuth $237.4^\circ$,
+clearance $1.556$ m) is strictly feasible in both of our implementations with
+\emph{identical} $Q$, since every arc point has $r=r_{80}$.
+
+\emph{Alternative operational tie-break.} An independent team run employed a
+different declared rule---minimize the deployed vehicle's full mission-cycle time
+(travel $+$ slew $+$ 5-s observation $+$ reset) from its standby position---which
+selects, for the nearest vehicle V4, the station $(83.32,\,62.53)$ on the same
+optimal arc (cycle $12.73\,\mathrm{s}$ vs.\ $13.22\,\mathrm{s}$ at the reported
+station, clearance margin $4.32$ m vs.\ $1.50$ m, $Q$ lower by only $0.05\%$ from
+grid resolution). Both rules are reasonable tie-breaks under the problem statement;
+the paper retains the declared nearest-to-$O$ rule for reproducibility, and the
+coexistence of the two outcomes on the same arc confirms the flat-optimum structure.
 
 \begin{figure}[!htb]\centering
 \includegraphics[width=0.32\textwidth]{fig_q1_T1_region.png}\hfill
