@@ -23,3 +23,6 @@ desktop.ini
 issues_cache.json
 论文/render_*.png
 render_*.png
+results/debug_*.json
+*.fdb_latexmk
+*.fls
