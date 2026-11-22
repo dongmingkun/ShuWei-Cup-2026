@@ -65,23 +65,22 @@ $16.399\,\mathrm{s}$ for the required nearest-assignment baseline ($32.6\%$ fast
 serves T1 then T3 from one shared station $(18,90)$ with a zero-travel second leg; the
 valid lower bound $3.873\,\mathrm{s}$ and the honest gap $7.17\,\mathrm{s}$ are both reported.
 
-\textbf{Problem 3.} The three independent error sources propagate analytically to the
-pointing error $\Delta\psi$, capping cumulative travel at
-$s_{\max}=66.9223\,\mathrm{m}$ for $P(|\Delta\psi|\le5^{\circ})\ge0.95$; full-geometry
-quadrature gives the slightly tighter value $66.8373\,\mathrm{m}$. At $80\,\mathrm{m}$
-the baseline error law reaches only $91.54\%$. Reliability, not driving range, binds
-deployment.
+\textbf{Problem 3.} At a fixed horizontal target range of $40\,\mathrm{m}$, the
+linearized and full-geometry cumulative travel limits for $95\%$ pointing reliability
+are $66.9223\,\mathrm{m}$ and $66.8373\,\mathrm{m}$, respectively. At $80\,\mathrm{m}$
+of travel, the full-geometry reliability is $91.51\%$.
 
 \textbf{Problem 4.} An event-triggered rescheduling model on 86 disturbance scenarios
-shows that full re-optimization ($P_1$) restores full completion $\eta=1$ everywhere
-($t_{\mathrm{last}}$ $10.55$--$33.75\,\mathrm{s}$), that a pure communication outage has
-\emph{zero} rescheduling value below ten seconds, and that the rule-based strategy $P_2$
-keeps $\eta=1$ at a cost of at most $4.53\,\mathrm{s}$.
+shows that cap-free re-optimization ($P_1$) restores full completion $\eta=1$ everywhere
+($t_{\mathrm{last}}$ $10.34$--$33.46\,\mathrm{s}$), that a pure communication outage is
+worth at most a $0.31\,\mathrm{s}$ re-aim of a committed gimbal (zero once every alert is
+locked), and that the rule-based strategy $P_2$ keeps $\eta=1$ at a cost of up to
+$6.07\,\mathrm{s}$.
 
 Innovations: (i) exact attainment proofs for the min-$r$ and min-RMSE bounds with a
 declared tie-break; (ii) a shared-station zero-travel double task compressing fleet
-response by one third; (iii) a cross-question reliability budget showing pointing
-reliability binds before range; (iv) a value boundary for when rescheduling pays; and
+response by one third; (iii) a pointing-reliability budget at a specified target
+range; (iv) a value boundary for when rescheduling pays; and
 (v) dual-implementation cross-validation---an independent codebase reproduces every
 closed-form result exactly and certifies the reported schedule within $3.6\%$ of the
 best known.

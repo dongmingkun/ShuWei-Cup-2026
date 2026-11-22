@@ -621,6 +621,7 @@
   },
   "cross_question": {
     "q2_1_travel_budget_m": 90.0,
-    "note": "linearized cap 66.9223 m; full-geometry cap 66.8373 m; strict deployment <=66.83 m, before the 90 m driving budget"
+    "q3_target_horizontal_range_m": 40.0,
+    "note": "Q3 uses a 40 m horizontal target range and cumulative travel. The Q2(1) driving limit is a separate constraint; this comparison does not audit Q2/Q4 schedules."
   }
 }

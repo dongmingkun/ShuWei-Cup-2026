@@ -49,10 +49,10 @@ $(0,0.02048)$, shown in Fig.~\ref{fig:q3ab}. The full-geometry check below tight
 boundary to $a+80b\le1.636745$.
 
 \begin{figure}[!htb]\centering
-\includegraphics[width=0.39\textwidth]{fig_q3_ab_region.png}
-\caption{Feasible region of the error-growth law $(a,b)$ at the 80-m operating point
-(shaded): the baseline $(0.3,0.02)$ lies strictly outside---at $80$ m the linearized
-pointing reliability would be only $91.54\%$ (full geometry: $91.51\%$).}
+\includegraphics[width=0.50\textwidth]{fig_q3_ab_region.png}
+\caption{Linearized $(a,b)$ region at $s=80\,\mathrm{m}$ and $r=40\,\mathrm{m}$.
+The baseline $(0.3,0.02)$ lies outside it. The distance limits at right apply
+under different conditions.}
 \label{fig:q3ab}
 \end{figure}
 
@@ -68,7 +68,7 @@ their actual reliability impact.
 in double precision, while full \texttt{atan2} and wrap remain in both independent checks.
 (iii) \emph{Gaussian synthesis}: exact within the linearized model by independence.
 
-For an approximation-free probability check, let $\lambda(s)=r/\sigma_{loc}(s)$ and
+For a check without linearizing the geometry, let $\lambda(s)=r/\sigma_{loc}(s)$ and
 $\sigma_g=\sqrt{0.8^2+0.6^2}=1^\circ$. The exact angle $\alpha$ in
 Eq.~\eqref{eq:exactgeom} has density
 \begin{equation}\label{eq:angledensity}
@@ -84,46 +84,32 @@ P_{exact}(s)=\int_{-\pi}^{\pi}f_{\lambda(s)}(\theta)
 -\Phi\!\left(\frac{-5^\circ-\theta_{deg}}{\sigma_g}\right)\right]d\theta,
 \quad \theta_{deg}=\frac{180\theta}{\pi},
 \end{equation}
-which we evaluate by adaptive quadrature, without linearization or sampling error.
+We evaluate this integral by adaptive quadrature, neglecting wrap tails as above.
 
 \subsubsection{Results and Validation}
 
 \begin{figure}[!htb]\centering
-\includegraphics[width=0.39\textwidth]{fig_q3_p_s_curve.png}\hfill
-\includegraphics[width=0.39\textwidth]{fig_q3_contribution.png}
-\caption{(a) Pointing reliability $P(|\Delta\psi|\le5^\circ)$ versus cumulative travel:
-analytic chain (line) and exact-geometry Monte Carlo, $10^{5}$ samples per point, seed
-2026 (dots); the dashed rule marks the $95\%$ requirement, crossing at
-$s_{\max}=66.92\,\mathrm{m}$. (b) Variance-contribution decomposition along $s$: gimbal
-zero bias dominates below $12.93\,\mathrm{m}$ (54.0\% at $s=0$), control error below
-$5.94\,\mathrm{m}$; beyond $40\,\mathrm{m}$ the localization term owns $71.3\%$, rising
-to $88.1\%$ at $80\,\mathrm{m}$.}
+\includegraphics[width=0.53\textwidth]{fig_q3_p_s_curve.png}\hfill
+\includegraphics[width=0.37\textwidth]{fig_q3_contribution.png}
+\caption{(a) Reliability at $r=40\,\mathrm{m}$, with $10^{5}$ Monte Carlo draws per
+point (seed 2026). The $95\%$ crossings are $66.9223\,\mathrm{m}$ (linearized) and
+$66.8373\,\mathrm{m}$ (full geometry). (b) Linearized variance shares.
+Figure editing: Codex \cite{codex2026}.}
 \label{fig:q3ps}
 \end{figure}
 
-Over $s\in[0,100]\,\mathrm{m}$, Fig.~\ref{fig:q3ps}a has maximum analytic--Monte Carlo
-deviation $0.18$ percentage points; the interpolated Monte Carlo crossing is
-$66.56\,\mathrm{m}$, $0.36\,\mathrm{m}$ below the analytic cap. At that cap,
-Eq.~\eqref{eq:pexact} gives $P_{exact}=0.9497982$; a $5\times10^6$-sample exact-geometry
-simulation gives $0.9498684$, Wilson 95\% CI \cite{wilson1927}
-$[0.9496768$, $0.9500593]$. Solving $P_{exact}(s)=0.95$ gives $66.8373\,\mathrm{m}$,
-where the same-size simulation gives $0.9500798$, Wilson interval $[0.9498886$,
-$0.9502703]$.
-Both intervals contain their quadrature targets.
+Across $0$--$100\,\mathrm{m}$, the linearized curve differs from Monte Carlo by at most
+$0.18$ percentage points. At the linearized crossing, quadrature gives $P=0.9497982$;
+at the full-geometry crossing $66.8373\,\mathrm{m}$ it gives $P=0.95$. Both lie within
+the Wilson 95\% intervals \cite{wilson1927} from five million draws at each point:
+$[0.9496768,0.9500593]$ and $[0.9498886,0.9502703]$, respectively.
 
-The linearized cap exceeds the exact crossing by $0.0850\,\mathrm{m}$, hence is slightly
-\emph{non-conservative}, although the reliability difference is only $0.0202$ percentage
-points. We retain $66.9223\,\mathrm{m}$ as the analytic answer, report the full-geometry
-bound as $66.8373\,\mathrm{m}$ ($66.84\,\mathrm{m}$), and deploy at $66.83\,\mathrm{m}$
-without rounding upward. At $80\,\mathrm{m}$, baseline reliability is $91.5376\%$
-(linearization) and $91.5068\%$ (full geometry): an 80-m approach is infeasible.
+At $80\,\mathrm{m}$ of travel, the modeled reliability is $91.54\%$ (linearized) and
+$91.51\%$ (full geometry). Chebyshev gives a sufficient travel limit of
+$2.45\,\mathrm{m}$; the symmetric Cantelli bound cannot certify the target with the
+given gimbal variance. Localization contributes over half the linearized variance
+beyond $19.91\,\mathrm{m}$.
 
-Chebyshev's distribution-free bound is only $2.45\,\mathrm{m}$; symmetric Cantelli is
-infeasible because $\sigma_{tot}^2\le0.641$ is below the fixed gimbal variance $1.0$.
-Figure~\ref{fig:q3ps}b gives crossovers at $5.94\,\mathrm{m}$ (control) and
-$12.93\,\mathrm{m}$ (bias); localization owns over half the variance beyond
-$19.91\,\mathrm{m}$.
-
-\textbf{Deployment insight (feeding Q2/Q4).} The strict $66.83\,\mathrm{m}$ cap binds
-before Q2(1)'s 90-m driving budget, so travel must stay below it or tasks must rotate.
-All reported schedules comply; Q2(2)'s legs span $0$--$19.1\,\mathrm{m}$.
+\textbf{Scope of the travel limit.} Round down to $66.83\,\mathrm{m}$ of cumulative
+travel at $r=40\,\mathrm{m}$. Q2(1)'s $90\,\mathrm{m}$ is a separate driving limit.
+Checking a Q2 or Q4 observation requires both cumulative travel and target range.

@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """B题问题3: 三误差源 -> Δψ 传播模型 + 最大安全行程 + (a,b) 约束域.
 
+绘图标注和排版由 OpenAI Codex Desktop 26.1117.4957.0 辅助修订（2026-11-22）。
+
 口径(框架 §4.4, 题面给定):
 - 位置误差 (δx,δy) 逐轴独立 N(0, σ_loc²(s)), σ_loc(s)=0.3+0.02s m, 各向同性;
 - 云台零偏 0.8°、控制 0.6° 独立, 直接以度加到方位角上;
@@ -344,42 +346,63 @@ def main():
                              "note": "underflows to zero in double precision"},
         "cross_question": {
             "q2_1_travel_budget_m": 90.0,
-            "note": "linearized cap 66.9223 m; full-geometry cap 66.8373 m; "
-                    "strict deployment <=66.83 m, before the 90 m driving budget",
+            "q3_target_horizontal_range_m": R_HORIZ,
+            "note": "Q3 uses a 40 m horizontal target range and cumulative travel. "
+                    "The Q2(1) driving limit is a separate constraint; "
+                    "this comparison does not audit Q2/Q4 schedules.",
         },
     }
     with open(OUT / "q3_summary.json", "w", encoding="utf-8") as f:
         json.dump(summary, f, ensure_ascii=False, indent=2)
 
-    _plot_p_s(s_max, ps_mc, m3)
+    _plot_p_s(s_max, s_exact, ps_mc)
     _plot_contribution(s_max, cross_gb, cross_gc)
     _plot_ab(sloc_max)
     print(f"outputs written to {OUT}")
 
 
-def _plot_p_s(s_max, ps_mc, m3):
+def _plot_p_s(s_max, s_exact, ps_mc):
     fig, ax = plt.subplots(figsize=(9.2, 5.6))
     ss = np.linspace(0, 100, 1001)
-    ax.plot(ss, p_analytic(ss), lw=2, color="#1f618d",
-            label=r"analytic  $2\Phi(5/\sigma_{tot})-1$")
-    ax.plot(S_GRID, ps_mc, "o", ms=3.5, color="#e67e22", alpha=0.75,
-            label=f"MC exact ({N_SWEEP_MC:,}/pt)")
+    analytic_color, exact_color = "#1f618d", "#b44814"
+    ax.plot(ss, p_analytic(ss), lw=2, color=analytic_color,
+            label="Linearized probability")
+    ax.plot(S_GRID, ps_mc, ".", ms=4, color="#525252", alpha=0.55,
+            label=f"Full-geometry MC ({N_SWEEP_MC:,}/point)")
     st = sigma_tot(ss)
     ax.plot(ss, 1 - st ** 2 / PSI_TOL ** 2, ls="--", lw=1.2, color="#7f8c8d",
             label="Chebyshev lower bound")
     ax.plot(ss, 1 - 2 * st ** 2 / (st ** 2 + PSI_TOL ** 2), ls=":", lw=1.2,
             color="#95a5a6", label="symmetric Cantelli lower bound")
-    ax.axhline(RELIABILITY, color="crimson", lw=1.0, ls="--")
-    ax.axvline(s_max, color="crimson", lw=1.0, ls="--")
-    ax.text(s_max + 1.2, 0.62, f"$s_{{max}}$ = {s_max:.2f} m", color="crimson")
-    ax.text(2, RELIABILITY + 0.008, "0.95", color="crimson")
-    ax.set_xlabel("cumulative travel distance s (m)")
+    ax.axhline(RELIABILITY, color="#646464", lw=0.9, ls="--")
+    ax.set_xlabel("Cumulative travel distance $s$ (m)")
     ax.set_ylabel(r"$P(|\Delta\psi|\leq 5°)$")
     ax.set_ylim(0.5, 1.02)
-    ax.legend(loc="lower left", fontsize=8)
-    ax.set_title("Q3 reliability vs cumulative travel: analytic, MC and "
-                 "distribution-free bounds", fontsize=10)
-    fig.tight_layout()
+    ax.legend(loc="lower left", fontsize=12, frameon=False)
+    ax.set_title("Pointing reliability at a 40 m target range", fontsize=13)
+    fig.tight_layout(pad=1.1)
+
+    # Resolve the 8.5 cm separation without changing the full-range scale.
+    zoom = ax.inset_axes([0.45, 0.35, 0.51, 0.38])
+    half_span = 0.11
+    xx = np.linspace(s_exact - half_span, s_max + half_span, 45)
+    zoom.plot(xx, p_analytic(xx), color=analytic_color, lw=1.6,
+              label=f"Linearized: {s_max:.4f} m")
+    zoom.plot(xx, [p_exact(float(s)) for s in xx], color=exact_color, ls="--", lw=1.6,
+              label=f"Full geometry: {s_exact:.4f} m")
+    zoom.axhline(RELIABILITY, color="#646464", lw=0.8, ls=":")
+    zoom.scatter([s_max, s_exact], [RELIABILITY, RELIABILITY],
+                 color=[analytic_color, exact_color], s=15, zorder=5)
+    zoom.set_xlim(xx[0], xx[-1])
+    zoom.set_ylim(RELIABILITY - 0.00053, RELIABILITY + 0.00046)
+    zoom.set_xticks(np.linspace(s_exact, s_max, 3))
+    zoom.xaxis.set_major_formatter("{x:.2f}")
+    zoom.set_yticks([0.9496, 0.95, 0.9504], labels=["94.96%", "95.00%", "95.04%"])
+    zoom.set_title("Near the 95% threshold", fontsize=12, pad=4,
+                   bbox={"facecolor": "white", "edgecolor": "none", "pad": 1.5})
+    zoom.tick_params(labelsize=10, pad=1.5)
+    zoom.legend(loc="lower left", fontsize=10, frameon=True, framealpha=1)
+    ax.indicate_inset_zoom(zoom, edgecolor="#777777", lw=0.7)
     fig.savefig(OUT / "q3_p_s_curve.png", dpi=300)
     plt.close(fig)
 
@@ -397,13 +420,14 @@ def _plot_contribution(s_max, cross_gb, cross_gc):
         ax.axvline(x, color="k", lw=0.8, ls=":")
         ax.text(x + 1, y, txt, fontsize=8)
     ax.axvline(s_max, color="crimson", lw=1.2, ls="--")
-    ax.text(s_max + 1.2, 0.08, f"$s_{{max}}$ = {s_max:.1f} m", color="crimson")
+    ax.text(s_max + 1.2, 0.08, f"Linearized limit\n{s_max:.2f} m",
+            color="crimson", fontsize=9)
     ax.set_xlabel("cumulative travel distance s (m)")
     ax.set_ylabel(r"variance share of $\sigma_{tot}^2$")
     ax.set_ylim(0, 1.0)
     ax.set_xlim(0, 100)
     ax.legend(loc="center right", fontsize=8)
-    ax.set_title("Q3 variance contribution decomposition", fontsize=10)
+    ax.set_title("Variance shares under the linearized model", fontsize=10)
     fig.tight_layout()
     fig.savefig(OUT / "q3_contribution.png", dpi=300)
     plt.close(fig)
@@ -430,20 +454,20 @@ def _plot_ab(sloc_max):
     ax.set_ylim(-0.0006, bmax * 1.25)
     ax.set_xlabel("intercept a (m)")
     ax.set_ylabel("slope b (m/m)")
-    ax.set_title(f"(a,b) feasible region (area = {sloc_max ** 2 / 160:.4f} m²)",
-                 fontsize=10)
+    ax.set_title("Linearized feasible region at 80 m", fontsize=10)
     ax.legend(fontsize=8, loc="upper right")
 
     ax2 = axes[1]
-    labels = ["pointing reliability\nbudget (Q3)", "travel budget\n(Q2(1))"]
+    labels = ["Q3 linearized limit\n(target range 40 m)",
+              "Q2(1) driving limit\n(30 s at 3 m/s)"]
     vals = [(sloc_max - SIGMA_LOC0) / SIGMA_LOC_K, 90.0]
     bars = ax2.barh(labels, vals, color=["#e67e22", "#5dade2"], height=0.5)
     for bar, v in zip(bars, vals):
         ax2.text(v + 1.5, bar.get_y() + bar.get_height() / 2, f"{v:.1f} m",
                  va="center", fontsize=9)
     ax2.set_xlim(0, 105)
-    ax2.set_xlabel("maximum cumulative travel (m)")
-    ax2.set_title("Q3 reliability budget vs Q2(1) travel budget", fontsize=10)
+    ax2.set_xlabel("Distance (m)")
+    ax2.set_title("Limits under different conditions", fontsize=10)
     fig.tight_layout()
     fig.savefig(OUT / "q3_ab_region.png", dpi=300)
     plt.close(fig)

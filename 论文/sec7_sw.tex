@@ -1,58 +1,10 @@
 \section{Strengths and Weaknesses}\label{sec:sw}
 
-\subsection{Strengths}
+\textbf{Strengths.} Q1, Q2 and Q4 share the same geometric conventions. The
+regression suite, route checks and comparisons of implementations are documented
+above.
 
-\begin{itemize}
-\item \textbf{One geometry engine, four answers.} All four questions consume the same
-closed-set predicate layer (clearance, tangent-blocked line of sight, elevation cone)
-and the same obstacle-aware router, so conventions are consistent and one 51-check
-regression suite certifies them.
-\item \textbf{Closed-form cores with certified numerics.} Q1's feasible arcs and Q2(1)'s
-RMSE law are exact; grids and Monte Carlo only \emph{verify}, and every random
-experiment is seed-fixed and reproducible.
-\item \textbf{Bounds reported honestly.} Q2(1)'s Fisher lower bound is attained
-exactly when the operating margins are relaxed to zero; the deployed margin-compliant
-station pair gives up $1.73\%$ RMSE for $0.1$-m$/0.1^\circ$ robustness. Q2(2)'s
-optimality gap ($7.17\,\mathrm{s}$; $6.78\,\mathrm{s}$ against the refined
-incumbent) is stated rather than disguised, and the restricted structure space is
-declared as a convention.
-\item \textbf{Bounded, replayable schedules.} Q2(2) and Q4 results are simulator
-replays, not paper arithmetic; route legality is certified by an independent
-segment-level auditor with explicit gap numbers.
-\item \textbf{Independently cross-validated.} A second, independently written
-implementation reproduces the unconstrained Q1--Q3 headlines exactly (Q1 arc
-endpoints, Q2(1) bound pair RMSE $0.14362\,\mathrm{m}$, Q3 $s_{\max}$); the deployed
-margin-compliant convention supersedes them ($\mathrm{RMSE}=0.1461\,\mathrm{m}$,
-$+1.73\%$). It also refines Q2(2) to $10.651\,\mathrm{s}$ on the same structure
-family---a replay-verified $3.6\%$ station-level bound; Q4's value boundary is
-unchanged.
-\item \textbf{Robustness as budgets, not anecdotes.} Sensitivity is expressed as full
-feasible regions (Q3's $(a,b)$ map) or swept parameters ($t_{rec}$, $\pm10\%$
-kinematics), each with a quantified margin.
-\end{itemize}
-
-\subsection{Weaknesses}
-
-\begin{itemize}
-\item \textbf{Restricted structure space (Q2(2)/Q4).} We search single-doubler
-structures with at most two task slots per vehicle (360 structures); a multi-doubler
-plan could in principle close part of the $7.17\,\mathrm{s}$ gap, though no explored
-structure beats the incumbent and the station-level residual is bounded at $3.6\%$
-by the cross-implementation search.
-\item \textbf{Visibility-graph conservatism.} Corner-vertex paths can exceed the true
-geodesic optimum by up to $0.643\,\mathrm{m}$ per corner, so all travel times are
-feasible upper bounds (the independent engine's exact $R_V$-neighbourhood predicate
-agrees on every audited leg).
-\item \textbf{Linearized pointing error (Q3).} Full-geometry quadrature at the analytic
-cap gives $P=0.9497982$ and a crossing $0.0850\,\mathrm{m}$ earlier, at
-$66.8373\,\mathrm{m}$; the analytic cap is therefore slightly too permissive. Local
-relative error reaches a $10.55\%$ 99th percentile, but changes reliability by only
-$0.0202$ percentage points. Deployment uses the strict $66.83\,\mathrm{m}$ cap.
-\item \textbf{Independence assumptions.} The sensor errors are modeled as mutually
-independent Gaussians, as the problem states; correlated or heavy-tailed sensors would
-require the distribution-free route, which collapses the travel budget
-($2.45\,\mathrm{m}$ under Chebyshev).
-\item \textbf{Greedy P2 is a fallback, not a guarantee.} The rule-based dispatcher
-stays within $4.53\,\mathrm{s}$ of P1 on the tested families but carries no optimality
-certificate beyond that empirical range.
-\end{itemize}
+\textbf{Limitations.} The finite routing graph and restricted reuse search can miss
+shorter routes or better schedules. Q3's linearized result overstates the travel
+limit by $0.0850\,\mathrm{m}$ at $r=40\,\mathrm{m}$ and assumes independent Gaussian
+errors. Q4's observed timing gaps apply to the tested scenarios.

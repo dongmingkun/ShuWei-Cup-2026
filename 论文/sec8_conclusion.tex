@@ -10,11 +10,12 @@ $19.88\,\mathrm{s}$ total travel; Monte Carlo deviation is $0.0\%$.
 \item \textbf{Q2(2).} Shared-station V3 doubling starts all alerts by
 $11.046\,\mathrm{s}$, $32.6\%$ faster than baseline; the $7.17\,\mathrm{s}$ lower-bound
 gap and $3.6\%$ station residual are reported explicitly.
-\item \textbf{Q3.} The linearized cap is $66.9223\,\mathrm{m}$, the full-geometry bound
-$66.8373\,\mathrm{m}$, and strict deployment $66.83\,\mathrm{m}$. At 80 m reliability is
-only $91.51\%$, so reliability binds before range.
-\item \textbf{Q4.} Re-optimization restores full coverage in all 86 scenarios (worst
-$t_{\mathrm{last}}=33.75\,\mathrm{s}$). Pure outages $\le10\,\mathrm{s}$ need no action;
-the explainable fallback is at most $4.53\,\mathrm{s}$ slower.
+\item \textbf{Q3.} At $r=40\,\mathrm{m}$, the linearized and full-geometry cumulative
+travel limits are $66.9223\,\mathrm{m}$ and $66.8373\,\mathrm{m}$, respectively. The
+full-geometry reliability at $80\,\mathrm{m}$ of travel is $91.51\%$.
+\item \textbf{Q4.} Cap-free re-optimization restores full coverage in all 86 scenarios
+(worst $t_{\mathrm{last}}=33.46\,\mathrm{s}$); removing the two-slot convention pays up
+to $2.40\,\mathrm{s}$. Pure outages $\ge15\,\mathrm{s}$ need no action; the explainable
+fallback is at most $6.07\,\mathrm{s}$ slower.
 \end{itemize}
 
