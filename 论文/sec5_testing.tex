@@ -90,10 +90,13 @@ is certified by comparing both against identical replayed schedules.
 
 All headline numbers were re-derived by a fully independent second implementation
 (different codebase, rounded-corner routing with an exact $R_V$-neighbourhood
-clearance predicate, polar-candidate stations, global-objective coordinate descent;
-cf.\ Section~\ref{sec:q22}, Validation~(4)). Results: Q1's optimal station
-$(80.5004,63.6484)$, Q2(1)'s attaining pair V3+V5 (RMSE $0.14362\,\mathrm{m}$, travel
-$52.47\,\mathrm{m}$) and Q3's $s_{\max}=66.92\,\mathrm{m}$ reproduce exactly; Q2(2)'s
+clearance predicate, polar-candidate station parameterization, and a global-objective
+coordinate-descent scheduler). Results: Q1's arc endpoints
+$(80.500050,63.648619)$, Q2(1)'s unconstrained attaining pair V3+V5 (RMSE
+$0.14362\,\mathrm{m}$, the Fisher bound, total travel $52.47\,\mathrm{m}$) and Q3's
+$s_{\max}=66.92\,\mathrm{m}$ reproduce exactly; the \emph{deployed} margin-compliant
+convention (Section~\ref{sec:q21}) supersedes the unconstrained numbers as the
+reported answer ($\mathrm{RMSE}=0.1461\,\mathrm{m}$, $+1.73\%$), and Q2(2)'s
 incumbent improves to $10.651\,\mathrm{s}$ on the same structure family. The two
 routers agree on every audited leg, and the refined schedule replays bit-compatibly in
 this paper's own simulator---mutual oracles, not shared-derivative duplicates.
@@ -134,7 +137,7 @@ Speed $+10\%$           & 10.875 & $-1.5\%$ & 21.125 & $-2.7\%$ \\
 
 \textbf{Bearing-noise level (Q2(1)).} Re-running the pair optimization for
 $\sigma_b\in\{0.5^\circ,1^\circ,2^\circ\}$ changes only the scale of the RMSE
-($0.07181/0.14362/0.28725\,\mathrm{m}$, exactly proportional): the optimal pair set,
+($0.07301/0.14609/0.29219\,\mathrm{m}$ at the deployed pair, exactly proportional): the optimal pair set,
 the $\gamma=90^\circ$ station geometry, and the travel tie-break are invariant. The
 deployment recommendation does not depend on knowing $\sigma_b$ precisely.
 

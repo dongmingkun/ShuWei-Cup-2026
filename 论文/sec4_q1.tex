@@ -56,12 +56,17 @@ clearance and LOS, yielding the feasible arc(s) with the cause of each endpoint-
 audit certifies whether Eq.~\eqref{eq:q1opt}'s lower bound is attained.
 
 Tie-breaking over the optimal arc is declared as part of the model, in priority order:
-\textbf{(1)} minimize the slew+reset time
-$\max(|\Delta\mathrm{pan}|,|\Delta\mathrm{tilt}|)/30^\circ\mathrm{/s}$; \textbf{(2)}
-minimize the distance to the dispatch center $O$; \textbf{(3)} keep the sector opposite
-the field center free. On the $r_{80}$-arc every station has $\mathrm{tilt}=80^\circ$,
-so rule (1) is constant ($2.667\,\mathrm{s}$) wherever $\mathrm{pan}\le80^\circ$ and
-rule (2) decides.
+\textbf{(1)} a hard clearance margin of $0.10\,\mathrm{m}$ beyond the $1.5$-m vehicle
+buffer (boundary robustness); \textbf{(2)} minimize the designated vehicle's
+\emph{mission-cycle time} from its standby position---travel $+$ slew $+$ 5-s joint
+observation $+$ reset $=$ travel $+2\tau+5\,\mathrm{s}$, since the reset mirrors the
+slew---with the nearest standby vehicle designated as the observer for each target
+(V4 for T1, V3 for T2, V2 for T3); \textbf{(3)} ties: larger clearance margin, then
+distance to the dispatch center $O$, then azimuth. On the $r_{80}$-arc every station
+has $\mathrm{tilt}=80^\circ$, so $\tau=2.667\,\mathrm{s}$ whenever
+$|\mathrm{wrap}(\mathrm{pan})|\le80^\circ$ and the cycle reduces to
+$\mathrm{travel}+10.33\,\mathrm{s}$---the rule selects the arc point closest to the
+designated vehicle.
 
 \subsubsection{Results}
 
@@ -79,10 +84,12 @@ feasible arc on $r_{80}$-circle & $[236.90^\circ,160.74^\circ]$ & $[59.66^\circ,
 arc span / endpoint cause & $283.84^\circ$ / clearance & $184.58^\circ$ / LOS, clearance & $360^\circ$ / -- \\
 area of $\mathcal{F}_T$ (m$^2$) & 5628.7 & 6432.5 & 5484.8 \\
 connected components & 1 & 1 & 1 \\
-optimal station $(x,y)$ & $(80.500050,\,63.648619)$ & $(8.499996,\,67.259467)$ & $(57.416374,\,22.321714)$ \\
-pan / tilt ($^\circ$) & $56.9\,/\,80.0$ & $64.24\,/\,80.0$ & $285.0\,/\,80.0$ \\
+designated vehicle & V4 & V3 & V2 \\
+optimal station $(x,y)$ & $(83.324405,\,62.533128)$ & $(10.018434,\,78.230390)$ & $(58.212324,\,4.091465)$ \\
+pan / tilt ($^\circ$) & $80.0\,/\,80.0$ & $280.0\,/\,80.0$ & $80.0\,/\,80.0$ \\
 slew $=$ reset (s) & 2.667 & 2.667 & 2.667 \\
-distance to $O$ (m) & 33.415 & 44.946 & 28.655 \\
+mission cycle (s) & 12.731 & 13.243 & 20.456 \\
+clearance beyond buffer (m) & 2.824 & 0.730 & 2.591 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -90,44 +97,53 @@ distance to $O$ (m) & 33.415 & 44.946 & 28.655 \\
 The minimum $r^{*}=r_{80}$ is attained for all three targets: T1's critical circle
 survives over a $283.84^\circ$ arc, T2's over $184.58^\circ$ (one end LOS-limited, the
 other clearance-limited), and T3's entire circle is feasible ($H=55$ clears every
-building). Rule (2) selects, on each arc, the point closest to $O$: for T1 the
-closest-to-$O$ direction ($210^\circ$) is blocked, so the nearest arc endpoint
-$236.90^\circ$ is chosen. Table~\ref{tab:q1opt} lists the stations; all three sit
-\emph{exactly} on the $80^\circ$ elevation boundary, feasible on the closed
-set---robustness is examined in Section~\ref{sec:sens}.
+building). Rule (2) selects, on each arc, the point closest to the designated
+vehicle's standby position: V4 for T1 (azimuth $260.0^\circ$), V3 for T2
+($100.0^\circ$---the edge of the constant-slew sector, where travel toward V3 is
+shortest), and V2 for T3 ($260.0^\circ$). Table~\ref{tab:q1opt} lists the stations;
+all three sit \emph{exactly} on the $80^\circ$ elevation boundary---inherent to the
+objective, since $Q=1/r$ is maximal only on the $r_{80}$-circle---feasible on the
+closed set, with robustness examined in Section~\ref{sec:sens}.
 
 \emph{Printed precision.} The table reports six decimals deliberately: all three
-stations are double-boundary points ($80.000000^\circ$ elevation, and for T1/T2 also
-exact $1.5$-m clearance at the arc endpoint), so a four-decimal rounding can push the
-printed point $10^{-5}\,\mathrm{m}$ inside the elevation boundary and a strict
-re-check would---wrongly---reject it. Deployments should use the six-decimal values
-(or the exact construction $p^{*}=T_p+r_{80}(\cos\varphi^{*},\sin\varphi^{*})$); a
-$0.5^\circ$ step along the arc into the interior (e.g.\ T1 at azimuth $237.4^\circ$,
-clearance $1.556$ m) is strictly feasible in both of our implementations with
-\emph{identical} $Q$, since every arc point has $r=r_{80}$.
+stations sit at exactly $80.000000^\circ$ elevation (T2 additionally at the edge of
+the constant-slew sector), so a four-decimal rounding can push the printed point
+$10^{-5}\,\mathrm{m}$ inside the elevation boundary and a strict re-check would---wrongly---reject
+it. Deployments should use the six-decimal values (or the exact construction
+$p^{*}=T_p+r_{80}(\cos\varphi^{*},\sin\varphi^{*})$); every reported station carries
+the $0.10$-m clearance margin of rule (1), and a $0.5^\circ$ step along the arc into
+the interior is strictly feasible in both of our implementations with \emph{identical}
+$Q$, since every arc point has $r=r_{80}$.
 
-\emph{Alternative operational tie-break.} An independent team run employed a
-different declared rule---minimize the deployed vehicle's full mission-cycle time
-(travel $+$ slew $+$ 5-s observation $+$ reset) from its standby position---which
-selects, for the nearest vehicle V4, the station $(83.32,\,62.53)$ on the same
-optimal arc (cycle $12.73\,\mathrm{s}$ vs.\ $13.22\,\mathrm{s}$ at the reported
-station, clearance margin $4.32$ m vs.\ $1.50$ m, $Q$ lower by only $0.05\%$ from
-grid resolution). Both rules are reasonable tie-breaks under the problem statement;
-the paper retains the declared nearest-to-$O$ rule for reproducibility, and the
-coexistence of the two outcomes on the same arc confirms the flat-optimum structure.
+\emph{Alternative tie-break (nearest to $O$).} An earlier draft declared a different
+rule---minimize the distance to the dispatch center over the arc---which selects
+$(80.500050,\,63.648619)$ for T1 at the clearance-tangent arc endpoint (mission cycle
+$13.22\,\mathrm{s}$, clearance margin $0.0004\,\mathrm{m}$). Both rules are reasonable
+under the problem statement; the mission-cycle rule is adopted because the problem's
+objective is \emph{rapid} deployment and it matches the convention used in Q2(1), and
+the coexistence of the two outcomes on the same arc---identical $Q$, cycle differing
+by $0.49\,\mathrm{s}$---confirms the flat-optimum structure.
 
 \begin{figure}[!htb]\centering
-\includegraphics[width=0.32\textwidth]{fig_q1_T1_region.png}\hfill
-\includegraphics[width=0.59\textwidth]{fig_q1_T2_T3_regions.png}
-\caption{Observable regions at $0.1$-m resolution: T1 (left) and T2/T3 (right). The
-feasible annulus $r\ge7.5821$ m for T1 is cut by clearance holes and the LOS shadow
-southwest of the target; T2 is pinched by $B_3$'s shadow and clearance, while T3 (the
-tallest target) keeps its full elevation circle. The chosen optimal stations (markers)
-lie on the elevation circle nearest the dispatch center.}
+\includegraphics[width=\textwidth]{fig_q1_T1_region.png}
+\caption{T1 observable region (left: $0.2$-m raster, $59.8\%$ of sampled centers;
+right: zoom on the quality field $Q=1/r$). The gold arc is the optimal set
+$S^{*}$---every point of it attains $r^{*}=7.5821$ m ($Q^{*}=0.1319$ m$^{-1}$); the
+blocked sector ($160.74^\circ$--$236.90^\circ$) is the $B_2$ shadow. The selected
+station for the designated vehicle V4 (square, with its $1.5$-m disk) carries a
+$2.82$-m clearance margin, and the annotation reports V4's full mission cycle.}
 \label{fig:q1t1}
 \end{figure}
+\begin{figure}[!htb]\centering
+\includegraphics[width=0.78\textwidth]{fig_q1_T2_T3_regions.png}
+\caption{Observable regions of T2 (left) and T3 (right) at $0.25$-m resolution with
+the selected stations. T2 is pinched by $B_3$'s shadow and clearance, while T3 (the
+tallest target) keeps its full elevation circle; all three selected stations
+lie on the elevation circle closest to their designated vehicle.}
+\label{fig:q1t23}
+\end{figure}
 
-Figures~\ref{fig:q1t1} confirm the mechanism predicted in Section~2.2: elevation removes
+Figures~\ref{fig:q1t1} and~\ref{fig:q1t23} confirm the mechanism predicted in Section~2.2: elevation removes
 a disc around each target, clearance removes collars around buildings and the boundary,
 and LOS removes wedges only on the far side of buildings relative to the (high)
 target---for T2 the wedge is large because the target hovers low ($35$ m) above $B_3$,
@@ -137,9 +153,10 @@ has ample freedom for the later questions.
 
 \subsubsection{Validation}
 
-Three checks close Q1. First, at each chosen station all three constraints were
-re-evaluated pointwise: clearance equals exactly $1.5$ m where an arc endpoint is
-clearance-limited, and elevations equal exactly $80^\circ$, as designed. Second,
+Four checks close Q1. First, at each chosen station all three constraints were
+re-evaluated pointwise: elevations equal exactly $80.000000^\circ$ (the objective
+boundary, inherent to $Q=1/r$), and the clearance margins of rule (1) are
+$2.82/0.73/2.59\,\mathrm{m}$ beyond the buffer for T1/T2/T3, as designed. Second,
 halving and doubling the grid resolution changes the region areas by at most $0.23\%$
 (T1: $5628.7\,\mathrm{m}^2$ at $0.1$ m, $5619.6$ at $0.05$ m, $5607.8$ at $0.2$ m), so
 the reported areas are resolution-stable. Third, the analytic critical-circle trace

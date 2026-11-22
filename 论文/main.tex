@@ -39,19 +39,23 @@ event-timeline simulator---with identical conventions and independent re-computa
 throughout.
 
 \textbf{Problem 1.} The observable region is the intersection of three closed-set
-constraint sets, computed on a $0.1$-m grid (T1 area $5628.7\,\mathrm{m}^2$;
+constraint sets, computed on a $0.2$-m grid (T1 area $5628.7\,\mathrm{m}^2$;
 resolution drift $\le0.23\%$). The minimum target distance
 $r^{*}=7.5821\,\mathrm{m}$ is attained on the elevation-bound circle
-$r=(H-2)/\tan80^{\circ}$; the declared tie-break selects $(80.50,\,63.65)$ with slew
-$2.667\,\mathrm{s}$ (similarly $(8.50,67.26)$, $(57.42,22.32)$ for T2/T3).
+$r=(H-2)/\tan80^{\circ}$; the declared tie-break---shortest mission cycle from the
+designated standby vehicle, under a $0.10$-m clearance margin---selects
+$(83.32,\,62.53)$ with slew $2.667\,\mathrm{s}$ (similarly $(10.02,78.23)$,
+$(58.21,4.09)$ for T2/T3).
 
 \textbf{Problem 2(1).} Fisher information yields the accuracy law
 $\mathrm{RMSE}$ $=\sigma_b\sqrt{d_1^2+d_2^2}/\sin\gamma$ with attainable lower bound
 $\sigma_b\sqrt{2}\,(H-2)/\tan80^{\circ}$, reached at a $90^{\circ}$ crossing angle on
-the $r_{80}$-circle. Exhaustive optimization over all 10 vehicle pairs returns
-V3+V5 at $(6.00,75.43)$, $(13.96,77.52)$ with $\mathrm{RMSE}=0.14362\,\mathrm{m}$---exactly
-the bound---both travels within the 30-s budget;
-a $2\times10^{5}$-sample Monte Carlo confirms 0.0\% deviation.
+the $r_{80}$-circle. Under hard operating margins ($0.10$-m clearance beyond the
+buffer, $0.1^{\circ}$ elevation), exhaustive optimization of the analytic $90^{\circ}$
+family returns V3+V5 at $(5.20,71.45)$, $(9.98,78.33)$ with
+$\mathrm{RMSE}=0.1461\,\mathrm{m}$---within $1.7\%$ of the bound---travels
+$5.67\,\mathrm{s}$ and $14.21\,\mathrm{s}$, mission completion $24.53\,\mathrm{s}$;
+a $2\times10^{5}$-sample Monte Carlo confirms the error model to $0.0\%$ deviation.
 
 \textbf{Problem 2(2).} Exhaustive search over 360 assignment structures with greedy
 screening and best-response refinement starts all alerts by $11.046\,\mathrm{s}$ versus

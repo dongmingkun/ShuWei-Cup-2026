@@ -1,0 +1,257 @@
+{
+  "target": "T1",
+  "target_xyz": [
+    84.641016,
+    70.0,
+    45.0
+  ],
+  "pan_mode": "shortest",
+  "designated_vehicle": "V4",
+  "grid": {
+    "step_m": 0.2,
+    "points": 236196,
+    "feasible_points": 141236,
+    "feasible_fraction": 0.597961
+  },
+  "theoretical_r_min_m": 7.58206,
+  "Q_star_per_m": 0.13189,
+  "grid_optimum": {
+    "r_m": 7.584815,
+    "x": 86.7,
+    "y": 77.3,
+    "elevation_deg": 79.9964
+  },
+  "optimal_set": {
+    "description": "Q = 1/r depends only on range, so every feasible point on the r = r_min circle is optimal; the optimum is an arc, not a single point.",
+    "intervals_deg_unwrapped": [
+      [
+        236.9,
+        520.74
+      ]
+    ],
+    "intervals_deg_normalised": [
+      [
+        -123.1,
+        160.74
+      ]
+    ],
+    "blocked_sectors_deg": [
+      [
+        160.74,
+        236.9
+      ]
+    ],
+    "arc_length_deg": 283.84
+  },
+  "selected_station": {
+    "name": "selected (fastest time)",
+    "x": 83.3244,
+    "y": 62.5331,
+    "station_polar_angle_deg": 260.0,
+    "gimbal_pan_deg": 80.0,
+    "elevation_deg": 80.0,
+    "range_m": 7.5821,
+    "Q_per_m": 0.13189,
+    "clearance_m": 2.8244,
+    "distance_to_nearest_building_m": 4.3244,
+    "slew_time_s": 2.667,
+    "best_vehicle": "V4",
+    "mission_time_s": 12.731,
+    "travel_time_s": 2.398,
+    "pointing_time_s": 2.667,
+    "observation_time_s": 5.0,
+    "reset_time_s": 2.667,
+    "vehicle_times_s": {
+      "V1": 39.84,
+      "V2": 27.953,
+      "V3": 36.405,
+      "V4": 12.731,
+      "V5": 26.036
+    },
+    "distance_to_center_m": 35.603,
+    "feasible": true,
+    "clearance_margin_used_m": 0.1,
+    "vehicle_disk_radius_m": 1.5
+  },
+  "unconstrained_nearest_O_direction": {
+    "name": "nearest-O direction (infeasible)",
+    "x": 78.0748,
+    "y": 66.209,
+    "station_polar_angle_deg": 210.0,
+    "gimbal_pan_deg": 30.0,
+    "elevation_deg": 80.0,
+    "range_m": 7.5821,
+    "Q_per_m": 0.13189,
+    "clearance_m": -1.5,
+    "distance_to_nearest_building_m": 0.0,
+    "slew_time_s": 2.667,
+    "best_vehicle": "V1",
+    "mission_time_s": Infinity,
+    "travel_time_s": Infinity,
+    "pointing_time_s": 2.667,
+    "observation_time_s": 5.0,
+    "reset_time_s": 2.667,
+    "vehicle_times_s": {
+      "V1": Infinity,
+      "V2": Infinity,
+      "V3": Infinity,
+      "V4": Infinity,
+      "V5": Infinity
+    },
+    "distance_to_center_m": 32.418,
+    "feasible": false
+  },
+  "alternatives": [
+    {
+      "name": "SW arc endpoint",
+      "x": 80.5004,
+      "y": 63.6484,
+      "station_polar_angle_deg": 236.9,
+      "gimbal_pan_deg": 56.9,
+      "elevation_deg": 80.0,
+      "range_m": 7.5821,
+      "Q_per_m": 0.13189,
+      "clearance_m": 0.0004,
+      "distance_to_nearest_building_m": 1.5004,
+      "slew_time_s": 2.667,
+      "best_vehicle": "V4",
+      "mission_time_s": 13.224,
+      "travel_time_s": 2.89,
+      "pointing_time_s": 2.667,
+      "observation_time_s": 5.0,
+      "reset_time_s": 2.667,
+      "vehicle_times_s": {
+        "V1": 39.965,
+        "V2": 28.503,
+        "V3": 35.903,
+        "V4": 13.224,
+        "V5": 25.534
+      },
+      "distance_to_center_m": 33.415,
+      "feasible": true
+    },
+    {
+      "name": "N",
+      "x": 84.641,
+      "y": 77.5821,
+      "station_polar_angle_deg": 90.0,
+      "gimbal_pan_deg": 270.0,
+      "elevation_deg": 80.0,
+      "range_m": 7.5821,
+      "Q_per_m": 0.13189,
+      "clearance_m": 7.1686,
+      "distance_to_nearest_building_m": 8.6686,
+      "slew_time_s": 3.0,
+      "best_vehicle": "V4",
+      "mission_time_s": 14.385,
+      "travel_time_s": 3.385,
+      "pointing_time_s": 3.0,
+      "observation_time_s": 5.0,
+      "reset_time_s": 3.0,
+      "vehicle_times_s": {
+        "V1": 44.049,
+        "V2": 33.561,
+        "V3": 34.714,
+        "V4": 14.385,
+        "V5": 23.639
+      },
+      "distance_to_center_m": 44.281,
+      "feasible": true
+    },
+    {
+      "name": "E",
+      "x": 92.2231,
+      "y": 70.0,
+      "station_polar_angle_deg": 0.0,
+      "gimbal_pan_deg": 180.0,
+      "elevation_deg": 80.0,
+      "range_m": 7.5821,
+      "Q_per_m": 0.13189,
+      "clearance_m": 6.2769,
+      "distance_to_nearest_building_m": 13.2231,
+      "slew_time_s": 6.0,
+      "best_vehicle": "V4",
+      "mission_time_s": 18.558,
+      "travel_time_s": 1.558,
+      "pointing_time_s": 6.0,
+      "observation_time_s": 5.0,
+      "reset_time_s": 6.0,
+      "vehicle_times_s": {
+        "V1": 50.288,
+        "V2": 37.049,
+        "V3": 43.614,
+        "V4": 18.558,
+        "V5": 33.027
+      },
+      "distance_to_center_m": 46.72,
+      "feasible": true
+    },
+    {
+      "name": "S",
+      "x": 84.641,
+      "y": 62.4179,
+      "station_polar_angle_deg": 270.0,
+      "gimbal_pan_deg": 90.0,
+      "elevation_deg": 80.0,
+      "range_m": 7.5821,
+      "Q_per_m": 0.13189,
+      "clearance_m": 4.141,
+      "distance_to_nearest_building_m": 5.641,
+      "slew_time_s": 3.0,
+      "best_vehicle": "V4",
+      "mission_time_s": 13.172,
+      "travel_time_s": 2.172,
+      "pointing_time_s": 3.0,
+      "observation_time_s": 5.0,
+      "reset_time_s": 3.0,
+      "vehicle_times_s": {
+        "V1": 40.714,
+        "V2": 28.525,
+        "V3": 37.252,
+        "V4": 13.172,
+        "V5": 26.883
+      },
+      "distance_to_center_m": 36.8,
+      "feasible": true
+    },
+    {
+      "name": "selected (fastest time)",
+      "x": 83.3244,
+      "y": 62.5331,
+      "station_polar_angle_deg": 260.0,
+      "gimbal_pan_deg": 80.0,
+      "elevation_deg": 80.0,
+      "range_m": 7.5821,
+      "Q_per_m": 0.13189,
+      "clearance_m": 2.8244,
+      "distance_to_nearest_building_m": 4.3244,
+      "slew_time_s": 2.667,
+      "best_vehicle": "V4",
+      "mission_time_s": 12.731,
+      "travel_time_s": 2.398,
+      "pointing_time_s": 2.667,
+      "observation_time_s": 5.0,
+      "reset_time_s": 2.667,
+      "vehicle_times_s": {
+        "V1": 39.84,
+        "V2": 27.953,
+        "V3": 36.405,
+        "V4": 12.731,
+        "V5": 26.036
+      },
+      "distance_to_center_m": 35.603,
+      "feasible": true
+    }
+  ],
+  "clearance_definition": "min(field-boundary margin, distance to nearest building - 1.5 m); 0 means the vehicle disk touches the 1.5 m buffer boundary.",
+  "time_model": "P1 has no vehicle assignment; V4 is the closest/fastest standby vehicle and is treated as the designated observer. Total time from V4's start to task end = geodesic travel + gimbal pointing + 5 s observation + gimbal reset; reset time equals pointing time. tau uses the shortest pan direction unless pan_mode='ccw'.",
+  "optimization_criterion": "maximise Q(p)=1/r(p) over the feasible set; equivalent to minimise horizontal range r.",
+  "tie_breaking": "within the Q-optimal arc: require clearance >= 0.10 m beyond the 1.5 m vehicle buffer, then minimise the total mission time T(alpha)=d_V4(alpha)/3 + 2*tau(alpha) + 5 s over the arc angle alpha; ties by larger clearance, then smaller distance to the dispatch centre O, then polar angle. The search uses a Euclidean lower bound plus exact-path branch-and-bound, so not every arc point is path-planned.",
+  "assumptions": [
+    "Vehicle disk must stay inside the field and outside building footprints.",
+    "Camera is at the disk centre, 2 m above ground.",
+    "Each vehicle starts at its initial position with the gimbal due east and horizontal, so pointing time = tau(p) and reset time = tau(p).",
+    "LOS tangency/contact with a building counts as occlusion.",
+    "The vehicle disk may touch (not enter) the 1.5 m buffer boundary; a 0.10 m margin is imposed for the reported station."
+  ]
+}

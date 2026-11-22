@@ -1,0 +1,166 @@
+{
+  "target": "T2",
+  "target_xyz": [
+    11.028857,
+    72.5,
+    35.0
+  ],
+  "theoretical_bound": {
+    "r_min_m": 5.81879,
+    "sigma_lower_bound_m": 0.143623
+  },
+  "margins": {
+    "clearance_min_m": 0.1,
+    "elevation_margin_deg": 0.1,
+    "travel_max_s": 30.0
+  },
+  "robust_optimal": {
+    "vehicles": [
+      "V3",
+      "V5"
+    ],
+    "stations": [
+      [
+        5.203609349571633,
+        71.45187254549492
+      ],
+      [
+        9.980729375195176,
+        78.32524748012862
+      ]
+    ],
+    "r_m": 5.91879,
+    "baseline_m": 8.3704,
+    "intersection_angle_deg": 90.0,
+    "travel_times_s": [
+      5.667,
+      14.208
+    ],
+    "pointing_times_s": [
+      2.661,
+      2.661
+    ],
+    "observation_start_s": 16.869,
+    "mission_time_s": 24.53,
+    "sigma_rms_m": 0.146092,
+    "clearance_m": [
+      3.2964,
+      0.8253
+    ],
+    "elevation_deg": [
+      79.8317,
+      79.8317
+    ],
+    "los_min_distance_m": [
+      2.985,
+      0.5515
+    ]
+  },
+  "pair_table": [
+    {
+      "pair": "V3+V5",
+      "sigma_rms_m": 0.146,
+      "r_m": 5.9188,
+      "travel_total_s": 19.875,
+      "mission_time_s": 24.53,
+      "stations": [
+        [
+          5.203609349571633,
+          71.45187254549492
+        ],
+        [
+          9.980729375195176,
+          78.32524748012862
+        ]
+      ]
+    },
+    {
+      "pair": "V1+V3",
+      "sigma_rms_m": 0.146,
+      "r_m": 5.9188,
+      "travel_total_s": 22.428,
+      "mission_time_s": 28.197,
+      "stations": [
+        [
+          8.397154415921062,
+          67.19846986512941
+        ],
+        [
+          5.727326694829671,
+          75.1317024137792
+        ]
+      ]
+    },
+    {
+      "pair": "V1+V5",
+      "sigma_rms_m": 0.146,
+      "r_m": 5.9188,
+      "travel_total_s": 33.857,
+      "mission_time_s": 28.197,
+      "stations": [
+        [
+          8.397154415921062,
+          67.19846986512941
+        ],
+        [
+          5.727326694829671,
+          75.1317024137792
+        ]
+      ]
+    },
+    {
+      "pair": "V3+V4",
+      "sigma_rms_m": 0.146,
+      "r_m": 5.9188,
+      "travel_total_s": 32.172,
+      "mission_time_s": 36.827,
+      "stations": [
+        [
+          5.203609349571633,
+          71.45187254549492
+        ],
+        [
+          9.980729375195176,
+          78.32524748012862
+        ]
+      ]
+    },
+    {
+      "pair": "V4+V5",
+      "sigma_rms_m": 0.146,
+      "r_m": 5.9188,
+      "travel_total_s": 43.568,
+      "mission_time_s": 36.827,
+      "stations": [
+        [
+          9.980729375195176,
+          78.32524748012862
+        ],
+        [
+          5.203609349571633,
+          71.45187254549492
+        ]
+      ]
+    },
+    {
+      "pair": "V1+V4",
+      "sigma_rms_m": 0.146,
+      "r_m": 5.9188,
+      "travel_total_s": 45.932,
+      "mission_time_s": 36.827,
+      "stations": [
+        [
+          5.203609349571633,
+          71.45187254549492
+        ],
+        [
+          9.980729375195176,
+          78.32524748012862
+        ]
+      ]
+    }
+  ],
+  "method": "hard-constrained search on the analytic 90-degree family: r in r_min+{0.10,0.12,0.15,0.20}, alpha step 0.1 deg, clearance>=0.10 m, elevation<=79.9 deg, travel<=30 s, then local refinement at 0.005 deg / 0.002 m.",
+  "tie_break": "accuracy first (sigma rounded to 0.001 m), then the two-vehicle mission completion time max_i(t_i+tau_i)+5+max_i(tau_i), then total travel, then midpoint distance to O, then angle.",
+  "path_planner": "S.PathPlanner: buildings inflated by 1.5 m, visibility graph on 20 inflated corners, Floyd-Warshall, direct segment when clear, path length/3 m/s."
+}

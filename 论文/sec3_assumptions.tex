@@ -52,11 +52,21 @@ rule is Q4-08 of the problem; the decision-instant reading resolves the problem'
 phrasing of outage length and recovery time, and is applied uniformly to all strategies.
 \emph{Used by Q4 only;} a different locking reading would change $P_0$'s family-(b)
 losses, not the $P_1$/$P_2$ rankings.
+\item \textbf{Assumption 7 (operating margins).} Stations
+\emph{reported as deployments} carry hard margins---clearance
+$\ge0.10\,\mathrm{m}$ beyond the $1.5$-m buffer and elevation $\le79.9^\circ$ in
+Q2(1)---so that manufacturing and pointing tolerances cannot push a deployed station
+out of the feasible set. \emph{Justification:} the RMSE cost of the Q2(1) margin is
+$1.73\%$ ($0.1461$ vs $0.14362\,\mathrm{m}$); Q1's optimum deliberately keeps zero
+elevation margin because $Q=1/r$ is maximal exactly on the $r_{80}$-circle---any
+retreat strictly reduces the objective---so only the clearance margin applies there.
+\emph{Used by Q1 (clearance margin) and Q2(1) (both margins);} every Q2(2)/Q4 station
+was verified a posteriori to satisfy the same margins (Section~\ref{sec:q22}), so the
+convention is global and no downstream number changes.
 \end{itemize}
 \noindent Every assumption above is re-visited where it is load-bearing: Assumptions
 2, 4 and 5 have dedicated sensitivity rows in Section~\ref{sec:sens}, and Assumption 3's
 normality is stress-tested against distribution-free bounds in Section~\ref{sec:q3}.
-\end{itemize}
 
 \subsection{Notations}
 Table~\ref{tab:notation} lists the symbols shared by all four models; symbols specific

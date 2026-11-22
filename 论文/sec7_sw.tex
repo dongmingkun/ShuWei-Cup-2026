@@ -10,17 +10,22 @@ regression suite certifies them.
 \item \textbf{Closed-form cores with certified numerics.} Q1's feasible arcs and Q2(1)'s
 RMSE law are exact; grids and Monte Carlo only \emph{verify}, and every random
 experiment is seed-fixed and reproducible.
-\item \textbf{Bounds reported honestly.} Q2(1) attains its Fisher lower bound exactly;
-Q2(2)'s optimality gap ($7.17\,\mathrm{s}$; $6.78\,\mathrm{s}$ against the refined
+\item \textbf{Bounds reported honestly.} Q2(1)'s Fisher lower bound is attained
+exactly when the operating margins are relaxed to zero; the deployed margin-compliant
+station pair gives up $1.73\%$ RMSE for $0.1$-m$/0.1^\circ$ robustness. Q2(2)'s
+optimality gap ($7.17\,\mathrm{s}$; $6.78\,\mathrm{s}$ against the refined
 incumbent) is stated rather than disguised, and the restricted structure space is
 declared as a convention.
 \item \textbf{Bounded, replayable schedules.} Q2(2) and Q4 results are simulator
 replays, not paper arithmetic; route legality is certified by an independent
 segment-level auditor with explicit gap numbers.
 \item \textbf{Independently cross-validated.} A second, independently written team
-implementation reproduces every Q1--Q3 headline exactly (same Q1 station, Q2(1) pair
-and RMSE, Q3 $s_{\max}$) and refines the Q2(2) incumbent to $10.651\,\mathrm{s}$ on the
-same structure family---a replay-verified $3.6\%$ bound on station-level
+implementation reproduces the unconstrained Q1--Q3 headlines exactly (Q1 arc
+endpoints, Q2(1) bound pair with RMSE $0.14362\,\mathrm{m}$, Q3 $s_{\max}$); the
+adopted margin-compliant convention supersedes those numbers as the reported
+deployment ($\mathrm{RMSE}=0.1461\,\mathrm{m}$, $+1.73\%$). The same second
+implementation refines the Q2(2) incumbent to $10.651\,\mathrm{s}$ on the same
+structure family---a replay-verified $3.6\%$ bound on station-level
 suboptimality; Q4's value boundary is unchanged.
 \item \textbf{Robustness as budgets, not anecdotes.} Sensitivity is expressed as full
 feasible regions (Q3's $(a,b)$ map) or swept parameters ($t_{rec}$, $\pm10\%$

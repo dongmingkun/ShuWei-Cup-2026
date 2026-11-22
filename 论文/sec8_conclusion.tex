@@ -7,12 +7,14 @@ with a shared geometry engine:
 \begin{itemize}
 \item \textbf{Q1.} The three-alert observable regions are $5628.7/6432.5/5484.8\,
 \mathrm{m}^2$ (T1/T2/T3, single components, $\le0.23\%$ refinement drift), with
-minimum-slew stations at $(80.50,63.65)$, $(8.50,67.26)$ and $(57.42,22.32)$, each with
-slew $=$ reset $=2.667\,\mathrm{s}$ (the $80^\circ$ tilt slew dominates at all three).
+mission-cycle-minimizing stations at $(83.32,62.53)$, $(10.02,78.23)$ and
+$(58.21,4.09)$ for the designated vehicles V4/V3/V2, each with slew $=$ reset
+$=2.667\,\mathrm{s}$ and the $0.10$-m clearance margin of Assumption~7.
 \item \textbf{Q2(1).} Joint RMSE $=\sigma_b\sqrt{d_1^2+d_2^2}/\sin\gamma$ with exact
-lower bound $0.14362\,\mathrm{m}$, attained by six of the ten vehicle pairs; the
-travel-optimized deployment is V3+V5 ($52.47\,\mathrm{m}$ total travel, $0.04^\circ$
-inside the LOS boundary), validated at $0.0\%$ Monte-Carlo deviation.
+lower bound $0.14362\,\mathrm{m}$---attained once the operating margins are relaxed
+to zero; the deployed margin-compliant pair is V3+V5
+($\mathrm{RMSE}=0.1461\,\mathrm{m}$, $+1.73\%$; total travel $19.88\,\mathrm{s}$),
+validated by Monte Carlo to $0.0\%$ deviation.
 \item \textbf{Q2(2).} The min--max schedule starts all alerts by
 $11.046\,\mathrm{s}$ (makespan $21.705\,\mathrm{s}$) via one shared-station doubling
 (V3: $T_1\!\to\!T_3$, zero-travel second leg), beating the greedy baseline by
