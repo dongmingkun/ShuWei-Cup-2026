@@ -1,0 +1,89 @@
+{
+  "artefact": "q2_1_accuracy_audit",
+  "belongs_to": "Q2(1) two-station accuracy (NOT Q2(2); the scheduler is untouched)",
+  "source": "problem2_1_results_v2.json",
+  "bound": {
+    "fisher_lower_bound_m": 0.143623,
+    "attained_when": "margins relaxed to zero, gamma=90 deg, d1=d2=r80"
+  },
+  "margins": {
+    "clearance_min_m": 0.1,
+    "elevation_margin_deg": 0.1,
+    "travel_max_s": 30.0
+  },
+  "margin_cost_pct": 1.655,
+  "pairs": [
+    {
+      "pair": "V3+V5",
+      "sigma_rms_m": 0.146,
+      "over_bound_pct": 1.66,
+      "total_travel_s": 19.875,
+      "mission_s": 24.53
+    },
+    {
+      "pair": "V1+V3",
+      "sigma_rms_m": 0.146,
+      "over_bound_pct": 1.66,
+      "total_travel_s": 22.428,
+      "mission_s": 28.197
+    },
+    {
+      "pair": "V1+V5",
+      "sigma_rms_m": 0.146,
+      "over_bound_pct": 1.66,
+      "total_travel_s": 33.857,
+      "mission_s": 28.197
+    },
+    {
+      "pair": "V3+V4",
+      "sigma_rms_m": 0.146,
+      "over_bound_pct": 1.66,
+      "total_travel_s": 32.172,
+      "mission_s": 36.827
+    },
+    {
+      "pair": "V4+V5",
+      "sigma_rms_m": 0.146,
+      "over_bound_pct": 1.66,
+      "total_travel_s": 43.568,
+      "mission_s": 36.827
+    },
+    {
+      "pair": "V1+V4",
+      "sigma_rms_m": 0.146,
+      "over_bound_pct": 1.66,
+      "total_travel_s": 45.932,
+      "mission_s": 36.827
+    }
+  ],
+  "selected": {
+    "pair": "V3+V5",
+    "stations": [
+      [
+        5.203609349571633,
+        71.45187254549492
+      ],
+      [
+        9.980729375195176,
+        78.32524748012862
+      ]
+    ],
+    "sigma_rms_m": 0.146092,
+    "travel_times_s": [
+      5.667,
+      14.208
+    ],
+    "mission_s": 24.53,
+    "margins": {
+      "clearance_m": [
+        3.2964,
+        0.8253
+      ],
+      "elevation_deg": [
+        79.8317,
+        79.8317
+      ]
+    }
+  },
+  "verdict": "all margin-compliant pairs (excluding V2) sit at the same RMSE = bound + margin cost; the mission-time tie-break selects V3+V5"
+}
