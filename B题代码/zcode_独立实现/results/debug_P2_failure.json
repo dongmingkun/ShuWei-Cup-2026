@@ -1,0 +1,72 @@
+{
+  "scenario": "(a+c) NA θ=15° R=40 t_rec=30",
+  "error": "TypeError(\"'<' not supported between instances of 'str' and 'float'\")",
+  "trace": "Traceback (most recent call last):\n  File \"D:\\数维杯\\B题代码\\zcode_独立实现\\problem4_v2.py\", line 218, in run_v2\n    g = strategy_P2(states, alive, [a for a in open_alerts if a != \"T4\"]\n                    + ([\"T4\"] if new_alert else []))\n  File \"D:\\数维杯\\B题代码\\zcode_独立实现\\problem4_v2.py\", line 155, in strategy_P2\n    if best is None or (completion, a) < (best[0], best[1]):\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: '<' not supported between instances of 'str' and 'float'\n",
+  "states": {
+    "V1": {
+      "t": 30.0,
+      "pos": [
+        15.131848235344536,
+        13.824489253723776
+      ],
+      "pan": 0.0,
+      "tilt": 0.0,
+      "commit": null
+    },
+    "V2": {
+      "t": 30.0,
+      "pos": [
+        88.02517500800658,
+        10.33192481764769
+      ],
+      "pan": 0.0,
+      "tilt": 0.0,
+      "commit": null
+    },
+    "V3": {
+      "t": 30.0,
+      "pos": [
+        15.162458725121468,
+        90.67014407107587
+      ],
+      "pan": 0.0,
+      "tilt": 0.0,
+      "commit": null
+    },
+    "V4": {
+      "t": 30.0,
+      "pos": [
+        87.84764719307961,
+        72.5
+      ],
+      "pan": 0.0,
+      "tilt": 0.0,
+      "commit": null
+    },
+    "V5": {
+      "t": 30.0,
+      "pos": [
+        50.16792592581843,
+        93.25239295901704
+      ],
+      "pan": 0.0,
+      "tilt": 0.0,
+      "commit": null
+    }
+  },
+  "alive": [
+    "V1",
+    "V2",
+    "V3",
+    "V4",
+    "V5"
+  ],
+  "open": [
+    "T4"
+  ],
+  "completed": [
+    "T1",
+    "T2",
+    "T3"
+  ]
+}

@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 """B题问题3: 三误差源 -> Δψ 传播模型 + 最大安全行程 + (a,b) 约束域.
 
-绘图标注和排版由 OpenAI Codex Desktop 26.1117.4957.0 辅助修订（2026-11-22）。
-
 口径(框架 §4.4, 题面给定):
 - 位置误差 (δx,δy) 逐轴独立 N(0, σ_loc²(s)), σ_loc(s)=0.3+0.02s m, 各向同性;
 - 云台零偏 0.8°、控制 0.6° 独立, 直接以度加到方位角上;
@@ -23,12 +21,10 @@ M3 附注: Chebyshev / 对称 Cantelli 分布无关下界(仅供稳健性讨论)
 """
 import json
 import math
+from math import erf, sqrt
+from statistics import NormalDist
 
 import numpy as np
-from scipy.integrate import quad
-from scipy.optimize import brentq
-from scipy.special import ndtr
-from scipy.stats import norm
 
 import matplotlib
 matplotlib.use("Agg")
@@ -43,13 +39,25 @@ SIGMA_CTRL = 0.6      # °, 云台控制
 SIGMA_LOC0, SIGMA_LOC_K = 0.3, 0.02   # σ_loc(s) = 0.3 + 0.02s m
 PSI_TOL = 5.0         # °
 RELIABILITY = 0.95
-Z975 = float(norm.ppf(0.975))
+Z975 = float(NormalDist().inv_cdf(0.975))
 DEG = 180.0 / math.pi
 S_GRID = np.arange(0.0, 100.0 + 1e-9, 1.0)
 N_SWEEP_MC = 100_000
 N_HEADLINE_MC = 5_000_000
 MC_BATCH = 250_000
 RNG_SEED = 2026
+
+_erf = np.vectorize(math.erf)
+
+
+def _ndtr(x):
+    return 0.5 * (1.0 + _erf(np.asarray(x) / math.sqrt(2.0)))
+
+
+# Gauss-Legendre quadrature on theta in [-pi, pi], without scipy.
+_GL_T, _GL_W = np.polynomial.legendre.leggauss(2000)
+THETA_GRID = _GL_T * math.pi
+THETA_WEIGHT = _GL_W * math.pi
 
 
 def sigma_loc(s):
@@ -66,29 +74,37 @@ def sigma_tot(s):
 
 
 def p_analytic(s):
-    return 2.0 * norm.cdf(PSI_TOL / sigma_tot(s)) - 1.0
+    return 2.0 * _ndtr(PSI_TOL / sigma_tot(s)) - 1.0
 
 
 def projected_normal_angle_density(theta, lam):
-    c = math.cos(theta)
-    return (math.exp(-lam * lam / 2.0) / (2.0 * math.pi)
-            + lam * c * math.exp(-lam * lam * math.sin(theta) ** 2 / 2.0)
-            * ndtr(lam * c) / math.sqrt(2.0 * math.pi))
+    theta = np.asarray(theta, dtype=float)
+    c = np.cos(theta)
+    return (np.exp(-lam * lam / 2.0) / (2.0 * math.pi)
+            + lam * c * np.exp(-lam * lam * np.sin(theta) ** 2 / 2.0)
+            * _ndtr(lam * c) / math.sqrt(2.0 * math.pi))
 
 
 def p_exact(s):
+    """Exact projected-normal geometry convolved with the gimbal normal."""
     lam = R_HORIZ / sigma_loc(s)
     sigma_gimbal = math.hypot(SIGMA_BIAS, SIGMA_CTRL)
+    theta_deg = THETA_GRID * DEG
+    central = (_ndtr((PSI_TOL - theta_deg) / sigma_gimbal)
+               - _ndtr((-PSI_TOL - theta_deg) / sigma_gimbal))
+    density = projected_normal_angle_density(THETA_GRID, lam)
+    return float(np.sum(THETA_WEIGHT * density * central))
 
-    def integrand(theta):
-        theta_deg = math.degrees(theta)
-        central = (ndtr((PSI_TOL - theta_deg) / sigma_gimbal)
-                   - ndtr((-PSI_TOL - theta_deg) / sigma_gimbal))
-        return projected_normal_angle_density(theta, lam) * central
 
-    value = quad(integrand, -math.pi, math.pi, points=[0.0],
-                 epsabs=2e-11, epsrel=2e-11, limit=300)[0]
-    return float(value)
+def bisect_root(f, lo, hi, iters=90):
+    """Find the decreasing crossing f=0 without scipy."""
+    for _ in range(iters):
+        mid = 0.5 * (lo + hi)
+        if f(mid) > 0.0:
+            lo = mid
+        else:
+            hi = mid
+    return 0.5 * (lo + hi)
 
 
 def mc_common_points(s_values, n_total, seed):
@@ -109,9 +125,9 @@ def mc_common_points(s_values, n_total, seed):
             exact = np.degrees(np.arctan2(-dy, R_HORIZ - dx))
             total = (exact + e0 + ec + 180.0) % 360.0 - 180.0
             hits[i] += int(np.count_nonzero(np.abs(total) <= PSI_TOL))
+            lin = -dy / R_HORIZ * DEG
+            geom_max = max(geom_max, float(np.abs(exact - lin).max()))
             if i == 0:
-                lin = -dy / R_HORIZ * DEG
-                geom_max = max(geom_max, float(np.abs(exact - lin).max()))
                 big = np.abs(exact) >= 1.0
                 rel_parts.append(np.abs(exact[big] - lin[big])
                                  / np.abs(exact[big]))
@@ -153,10 +169,11 @@ def mc_batch(s, n, rng):
     ex_rad = np.radians(dpsi_exact[big])
     lin_rad = np.radians(dpsi_lin[big])
     rel = np.abs(ex_rad - lin_rad) / np.abs(ex_rad)
+    lin_total = (dpsi_lin + e0 + ec + 180.0) % 360.0 - 180.0
     return {
         "hit_exact": np.abs(dpsi_total) <= PSI_TOL,
-        "hit_lin": np.abs(dpsi_lin + e0 + ec) <= PSI_TOL,
-        "geom_diff_deg": np.abs(dpsi_total - (dpsi_lin + e0 + ec)),
+        "hit_lin": np.abs(lin_total) <= PSI_TOL,
+        "geom_diff_deg": np.abs(dpsi_total - lin_total),
         "lin_err_rel": rel,
     }
 
@@ -221,42 +238,45 @@ def crossover(g1):
 
 def main():
     rng = np.random.default_rng(RNG_SEED)
-    stot_max, s1_max, sloc_max, s_max = s_max_analytic()
+    stot_max, s1_max, sloc_max, s_max_lin = s_max_analytic()
     print(f"z0.975 = {Z975:.6f}")
     print(f"sigma_tot_max = {stot_max:.6f} deg")
     print(f"sigma1_max = {s1_max:.6f} deg, sigma_loc_max = {sloc_max:.6f} m")
-    print(f"s_max(linearized) = {s_max:.4f} m")
+    print(f"s_max(linearized) = {s_max_lin:.4f} m")
 
     x_rad = s1_max / DEG
-    lin_rel = x_rad ** 2 / 3.0
+    second_order_term = x_rad ** 2 / 3.0
     denom_rel = sloc_max / R_HORIZ
 
     ps_mc, ps_lin = mc_sweep(rng)
     mc_sm = mc_smax_interp(ps_mc)
     sweep_diff = float(np.max(np.abs(ps_mc - p_analytic(S_GRID))))
     print(f"MC sweep: max|P_mc - P_ana| = {sweep_diff:.5f}")
-    print(f"MC s_max(interp) = {mc_sm:.3f} m")
+    print(f"MC s_max(grid interp, rough) = {mc_sm:.3f} m")
 
     lam_cap = R_HORIZ / sloc_max
-    density_norm = quad(lambda th: projected_normal_angle_density(th, lam_cap),
-                        -math.pi, math.pi, points=[0.0],
-                        epsabs=2e-11, epsrel=2e-11, limit=300)[0]
+    density_norm = float(np.sum(
+        THETA_WEIGHT * projected_normal_angle_density(THETA_GRID, lam_cap)))
     assert abs(density_norm - 1.0) < 1e-9
-    p_cap_exact = p_exact(s_max)
-    sloc_exact_max = brentq(
+    p_cap_exact = p_exact(s_max_lin)
+    sloc_exact_max = bisect_root(
         lambda v: p_exact((v - SIGMA_LOC0) / SIGMA_LOC_K) - RELIABILITY,
-        SIGMA_LOC0, 2.0, xtol=1e-12)
+        1.0, 2.0)
     s_exact = (sloc_exact_max - SIGMA_LOC0) / SIGMA_LOC_K
     p_exact_cross = p_exact(s_exact)
     p80_lin = float(p_analytic(80.0))
     p80_exact = p_exact(80.0)
+
+    # Headline value: exact geometry, not the linearized 66.92 m.
+    s_max = s_exact
     print(f"P_exact(analytic cap) = {p_cap_exact:.10f}")
+    print(f"linearization scale: first-order {100*denom_rel:.4f}% ; second-order angle term {100*second_order_term:.4f}%")
     print(f"s_max(full geometry) = {s_exact:.7f} m")
     print(f"P_exact(full cap) = {p_exact_cross:.10f}")
     print(f"P(80 m): linearized = {p80_lin:.7f}, exact = {p80_exact:.7f}")
 
     p_heads, rel_err, geom_max = mc_common_points(
-        [s_max, s_exact], N_HEADLINE_MC, RNG_SEED)
+        [s_max_lin, s_exact], N_HEADLINE_MC, RNG_SEED)
     p_head, p_head_exact = map(float, p_heads)
     lo, hi = wilson(p_head, N_HEADLINE_MC)
     lo2, hi2 = wilson(p_head_exact, N_HEADLINE_MC)
@@ -278,21 +298,24 @@ def main():
     print(f"variance crossovers: ctrl {cross_gc:.3f} m, bias {cross_gb:.3f} m, "
           f"half {cross_half:.3f} m")
 
-    ab_area = sloc_max ** 2 / 160.0
-    baseline_in = SIGMA_LOC0 + 80 * SIGMA_LOC_K <= sloc_max + 1e-12
+    ab_area = sloc_exact_max ** 2 / 160.0
+    baseline_in = SIGMA_LOC0 + 80 * SIGMA_LOC_K <= sloc_exact_max + 1e-12
     wrap_p = float(math.erfc((180.0 / sigma1(80.0)) / math.sqrt(2.0)))
 
     summary = {
         "z975": round(Z975, 6),
         "chain": {"sigma_tot_max_deg": round(stot_max, 6),
                   "sigma1_max_deg": round(s1_max, 6),
-                  "sigma_loc_max_m": round(sloc_max, 6),
-                  "s_max_m": round(s_max, 4)},
+                  "sigma_loc_max_m": round(sloc_exact_max, 6),
+                  "s_max_m": round(s_exact, 4),
+                  "s_max_linearized_m": round(s_max_lin, 4),
+                  "deployment_cap_m": math.floor(s_exact * 100.0) / 100.0},
         "model": "sigma_tot^2 = [(180/pi)*(0.3+0.02s)/40]^2 + 0.8^2 + 0.6^2; "
                  "P(|dpsi|<=5deg) = 2Phi(5/sigma_tot)-1 >= 0.95",
         "linearization": {
-            "theory_rel_err_upper_1sigma_pct": 100.0 * lin_rel,
-            "denominator_rel_scale_1sigma_pct": 100.0 * denom_rel,
+            "theory_rel_scale_1sigma_pct": 100.0 * denom_rel,
+            "second_order_angle_term_pct": 100.0 * second_order_term,
+            "note": "4.1% is the first-order relative scale; 0.056% is only the second-order angle term, not a relative error.",
             "mc_n": N_HEADLINE_MC,
             "mc_rel_err_filter": "|exact position-induced angle| >= 1 deg",
             "mc_rel_err_pct": {"p50": 100.0 * float(q50),
@@ -312,7 +335,7 @@ def main():
             "p_at_exact_cap_quadrature": p_exact_cross,
             "p_at_exact_cap_mc": p_head_exact,
             "p_at_exact_cap_wilson95": [lo2, hi2],
-            "analytic_minus_exact_cap_m": s_max - s_exact,
+            "analytic_minus_exact_cap_m": s_max_lin - s_exact,
             "reliability_gap_at_analytic_cap_pp": 100.0 * (RELIABILITY - p_cap_exact),
             "p80_linearized": p80_lin,
             "p80_exact": p80_exact,
@@ -322,7 +345,7 @@ def main():
             "n_per_point": N_SWEEP_MC, "seed": RNG_SEED,
             "headline_n_per_point": N_HEADLINE_MC,
             "max_abs_p_diff_over_grid": sweep_diff,
-            "s_max_mc_interp_m": mc_sm,
+            "s_max_mc_grid_interp_m_rough": mc_sm,
             "sweep": [{"s": float(s), "p_analytic": float(pa), "p_mc": float(pm)}
                       for s, pa, pm in zip(S_GRID, p_analytic(S_GRID), ps_mc)],
         },
@@ -333,12 +356,13 @@ def main():
         "contribution_at": {str(s): {k: float(v)
                                      for k, v in contribution(s).items()}
                             for s in (0, 40, 80)},
-        "ab_region": {"constraint": "a + 80b <= sigma_loc_max, a,b >= 0",
-                      "sigma_loc_max_m": round(sloc_max, 6),
+        "ab_region": {"constraint": "a + 80b <= sigma_loc_max_exact, a,b >= 0",
+                      "sigma_loc_max_m": round(sloc_exact_max, 6),
+                      "sigma_loc_max_linearized_m": round(sloc_max, 6),
                       "exact_constraint": "a + 80b <= sigma_loc_max_exact, a,b >= 0",
                       "sigma_loc_max_exact_m": round(sloc_exact_max, 6),
-                      "vertices": [[0, 0], [round(sloc_max, 6), 0],
-                                   [0, round(sloc_max / 80, 6)]],
+                      "vertices": [[0, 0], [round(sloc_exact_max, 6), 0],
+                                   [0, round(sloc_exact_max / 80, 6)]],
                       "area_m2": round(ab_area, 6),
                       "baseline_0.3+0.02s_inside": baseline_in,
                       "baseline_note": "baseline (0.3,0.02) exceeds the 80 m budget"},
@@ -346,63 +370,44 @@ def main():
                              "note": "underflows to zero in double precision"},
         "cross_question": {
             "q2_1_travel_budget_m": 90.0,
-            "q3_target_horizontal_range_m": R_HORIZ,
-            "note": "Q3 uses a 40 m horizontal target range and cumulative travel. "
-                    "The Q2(1) driving limit is a separate constraint; "
-                    "this comparison does not audit Q2/Q4 schedules.",
+            "note": f"linearized cap {s_max_lin:.4f} m; exact cap {s_exact:.4f} m; "
+                    f"strict deployment <={math.floor(s_exact * 100.0) / 100.0:.2f} m, "
+                    "before the 90 m driving budget",
         },
     }
     with open(OUT / "q3_summary.json", "w", encoding="utf-8") as f:
         json.dump(summary, f, ensure_ascii=False, indent=2)
 
-    _plot_p_s(s_max, s_exact, ps_mc)
+    _plot_p_s(s_max_lin, s_max, ps_mc, m3)
     _plot_contribution(s_max, cross_gb, cross_gc)
-    _plot_ab(sloc_max)
+    _plot_ab(sloc_exact_max)
     print(f"outputs written to {OUT}")
 
 
-def _plot_p_s(s_max, s_exact, ps_mc):
+def _plot_p_s(s_max_lin, s_max, ps_mc, m3):
     fig, ax = plt.subplots(figsize=(9.2, 5.6))
     ss = np.linspace(0, 100, 1001)
-    analytic_color, exact_color = "#1f618d", "#b44814"
-    ax.plot(ss, p_analytic(ss), lw=2, color=analytic_color,
-            label="Linearized probability")
-    ax.plot(S_GRID, ps_mc, ".", ms=4, color="#525252", alpha=0.55,
-            label=f"Full-geometry MC ({N_SWEEP_MC:,}/point)")
+    ax.plot(ss, p_analytic(ss), lw=2, color="#1f618d",
+            label=r"analytic  $2\Phi(5/\sigma_{tot})-1$")
+    ax.plot(S_GRID, ps_mc, "o", ms=3.5, color="#e67e22", alpha=0.75,
+            label=f"MC exact ({N_SWEEP_MC:,}/pt)")
     st = sigma_tot(ss)
     ax.plot(ss, 1 - st ** 2 / PSI_TOL ** 2, ls="--", lw=1.2, color="#7f8c8d",
             label="Chebyshev lower bound")
     ax.plot(ss, 1 - 2 * st ** 2 / (st ** 2 + PSI_TOL ** 2), ls=":", lw=1.2,
             color="#95a5a6", label="symmetric Cantelli lower bound")
-    ax.axhline(RELIABILITY, color="#646464", lw=0.9, ls="--")
-    ax.set_xlabel("Cumulative travel distance $s$ (m)")
+    ax.axhline(RELIABILITY, color="crimson", lw=1.0, ls="--")
+    ax.axvline(s_max_lin, color="#7f8c8d", lw=1.0, ls=":", label="linearized cap")
+    ax.axvline(s_max, color="crimson", lw=1.2, ls="--", label="exact cap")
+    ax.text(s_max + 1.2, 0.62, f"$s_{{max}}$ = {s_max:.2f} m", color="crimson")
+    ax.text(2, RELIABILITY + 0.008, "0.95", color="crimson")
+    ax.set_xlabel("cumulative travel distance s (m)")
     ax.set_ylabel(r"$P(|\Delta\psi|\leq 5°)$")
     ax.set_ylim(0.5, 1.02)
-    ax.legend(loc="lower left", fontsize=12, frameon=False)
-    ax.set_title("Pointing reliability at a 40 m target range", fontsize=13)
-    fig.tight_layout(pad=1.1)
-
-    # Resolve the 8.5 cm separation without changing the full-range scale.
-    zoom = ax.inset_axes([0.45, 0.35, 0.51, 0.38])
-    half_span = 0.11
-    xx = np.linspace(s_exact - half_span, s_max + half_span, 45)
-    zoom.plot(xx, p_analytic(xx), color=analytic_color, lw=1.6,
-              label=f"Linearized: {s_max:.4f} m")
-    zoom.plot(xx, [p_exact(float(s)) for s in xx], color=exact_color, ls="--", lw=1.6,
-              label=f"Full geometry: {s_exact:.4f} m")
-    zoom.axhline(RELIABILITY, color="#646464", lw=0.8, ls=":")
-    zoom.scatter([s_max, s_exact], [RELIABILITY, RELIABILITY],
-                 color=[analytic_color, exact_color], s=15, zorder=5)
-    zoom.set_xlim(xx[0], xx[-1])
-    zoom.set_ylim(RELIABILITY - 0.00053, RELIABILITY + 0.00046)
-    zoom.set_xticks(np.linspace(s_exact, s_max, 3))
-    zoom.xaxis.set_major_formatter("{x:.2f}")
-    zoom.set_yticks([0.9496, 0.95, 0.9504], labels=["94.96%", "95.00%", "95.04%"])
-    zoom.set_title("Near the 95% threshold", fontsize=12, pad=4,
-                   bbox={"facecolor": "white", "edgecolor": "none", "pad": 1.5})
-    zoom.tick_params(labelsize=10, pad=1.5)
-    zoom.legend(loc="lower left", fontsize=10, frameon=True, framealpha=1)
-    ax.indicate_inset_zoom(zoom, edgecolor="#777777", lw=0.7)
+    ax.legend(loc="lower left", fontsize=8)
+    ax.set_title("Q3 reliability vs cumulative travel: analytic, MC and "
+                 "distribution-free bounds", fontsize=10)
+    fig.tight_layout()
     fig.savefig(OUT / "q3_p_s_curve.png", dpi=300)
     plt.close(fig)
 
@@ -420,14 +425,13 @@ def _plot_contribution(s_max, cross_gb, cross_gc):
         ax.axvline(x, color="k", lw=0.8, ls=":")
         ax.text(x + 1, y, txt, fontsize=8)
     ax.axvline(s_max, color="crimson", lw=1.2, ls="--")
-    ax.text(s_max + 1.2, 0.08, f"Linearized limit\n{s_max:.2f} m",
-            color="crimson", fontsize=9)
+    ax.text(s_max + 1.2, 0.08, f"$s_{{max}}$ = {s_max:.1f} m", color="crimson")
     ax.set_xlabel("cumulative travel distance s (m)")
     ax.set_ylabel(r"variance share of $\sigma_{tot}^2$")
     ax.set_ylim(0, 1.0)
     ax.set_xlim(0, 100)
     ax.legend(loc="center right", fontsize=8)
-    ax.set_title("Variance shares under the linearized model", fontsize=10)
+    ax.set_title("Q3 variance contribution decomposition", fontsize=10)
     fig.tight_layout()
     fig.savefig(OUT / "q3_contribution.png", dpi=300)
     plt.close(fig)
@@ -454,20 +458,20 @@ def _plot_ab(sloc_max):
     ax.set_ylim(-0.0006, bmax * 1.25)
     ax.set_xlabel("intercept a (m)")
     ax.set_ylabel("slope b (m/m)")
-    ax.set_title("Linearized feasible region at 80 m", fontsize=10)
+    ax.set_title(f"(a,b) feasible region (area = {sloc_max ** 2 / 160:.4f} m²)",
+                 fontsize=10)
     ax.legend(fontsize=8, loc="upper right")
 
     ax2 = axes[1]
-    labels = ["Q3 linearized limit\n(target range 40 m)",
-              "Q2(1) driving limit\n(30 s at 3 m/s)"]
+    labels = ["pointing reliability\nbudget (Q3)", "travel budget\n(Q2(1))"]
     vals = [(sloc_max - SIGMA_LOC0) / SIGMA_LOC_K, 90.0]
     bars = ax2.barh(labels, vals, color=["#e67e22", "#5dade2"], height=0.5)
     for bar, v in zip(bars, vals):
         ax2.text(v + 1.5, bar.get_y() + bar.get_height() / 2, f"{v:.1f} m",
                  va="center", fontsize=9)
     ax2.set_xlim(0, 105)
-    ax2.set_xlabel("Distance (m)")
-    ax2.set_title("Limits under different conditions", fontsize=10)
+    ax2.set_xlabel("maximum cumulative travel (m)")
+    ax2.set_title("Q3 reliability budget vs Q2(1) travel budget", fontsize=10)
     fig.tight_layout()
     fig.savefig(OUT / "q3_ab_region.png", dpi=300)
     plt.close(fig)

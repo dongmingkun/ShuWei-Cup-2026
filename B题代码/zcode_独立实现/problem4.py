@@ -448,64 +448,65 @@ def run_scenario(name, failed=None, new_alert=None, t_rec=None):
 
 
 # ----------------------------------------------------------------------
-# 6. Scenario set
-# ----------------------------------------------------------------------
-scenarios = []
-for th in range(0, 360, 45):
-    for R in (30.0, 50.0):
-        scenarios.append(dict(name=f"NA θ={th}° R={R:.0f}", new_alert=(float(th), R, 50.0)))
-for v in VEHS:
-    scenarios.append(dict(name=f"FA {v}", failed=v))
-for tr in (10.0, 20.0, 30.0):
-    scenarios.append(dict(name=f"CO t_rec={tr:.0f}", t_rec=tr))
-for th in (0.0, 180.0):
+if __name__ == "__main__":
+    # 6. Scenario set
+    # ----------------------------------------------------------------------
+    scenarios = []
+    for th in range(0, 360, 45):
+        for R in (30.0, 50.0):
+            scenarios.append(dict(name=f"NA θ={th}° R={R:.0f}", new_alert=(float(th), R, 50.0)))
     for v in VEHS:
-        scenarios.append(dict(name=f"NA θ={th:.0f}°+FA {v}",
-                              new_alert=(th, 40.0, 50.0), failed=v))
-for v in VEHS:
-    scenarios.append(dict(name=f"FA {v}+CO(20)", failed=v, t_rec=20.0))
-for th in (0.0, 90.0, 180.0, 270.0):
-    scenarios.append(dict(name=f"NA θ={th:.0f}°+CO(20)",
-                          new_alert=(th, 40.0, 50.0), t_rec=20.0))
-scenarios.append(dict(name="NA θ=0°+FA V3+CO(20)",
-                      new_alert=(0.0, 40.0, 50.0), failed="V3", t_rec=20.0))
-scenarios.append(dict(name="NA θ=180°+FA V3+CO(20)",
-                      new_alert=(180.0, 40.0, 50.0), failed="V3", t_rec=20.0))
+        scenarios.append(dict(name=f"FA {v}", failed=v))
+    for tr in (10.0, 20.0, 30.0):
+        scenarios.append(dict(name=f"CO t_rec={tr:.0f}", t_rec=tr))
+    for th in (0.0, 180.0):
+        for v in VEHS:
+            scenarios.append(dict(name=f"NA θ={th:.0f}°+FA {v}",
+                                  new_alert=(th, 40.0, 50.0), failed=v))
+    for v in VEHS:
+        scenarios.append(dict(name=f"FA {v}+CO(20)", failed=v, t_rec=20.0))
+    for th in (0.0, 90.0, 180.0, 270.0):
+        scenarios.append(dict(name=f"NA θ={th:.0f}°+CO(20)",
+                              new_alert=(th, 40.0, 50.0), t_rec=20.0))
+    scenarios.append(dict(name="NA θ=0°+FA V3+CO(20)",
+                          new_alert=(0.0, 40.0, 50.0), failed="V3", t_rec=20.0))
+    scenarios.append(dict(name="NA θ=180°+FA V3+CO(20)",
+                          new_alert=(180.0, 40.0, 50.0), failed="V3", t_rec=20.0))
 
-print(f"\n=== {len(scenarios)} scenarios ===")
-results = [run_scenario(**sc) for sc in scenarios]
+    print(f"\n=== {len(scenarios)} scenarios ===")
+    results = [run_scenario(**sc) for sc in scenarios]
 
-# ----------------------------------------------------------------------
-# 7. Figures + save
-# ----------------------------------------------------------------------
-fig, axs = plt.subplots(2, 1, figsize=(13.5, 8.5), dpi=300, sharex=True)
-x = np.arange(len(results))
-names = [r["scenario"] for r in results]
-axs[0].bar(x - 0.2, [r["keep"]["eta"] for r in results], width=0.4,
-           label="KEEP original schedule", color="#ef5350")
-axs[0].bar(x + 0.2, [r["res"]["eta"] for r in results], width=0.4,
-           label="RES event-triggered rescheduling", color="#42a5f5")
-axs[0].set_ylabel("completion ratio η = k/N")
-axs[0].set_ylim(0, 1.15)
-axs[0].legend(fontsize=9, loc="lower left")
-axs[0].set_title("Problem 4 — disturbance scenarios, evaluation window [0, 60] s")
-axs[0].grid(axis="y", alpha=0.3)
-axs[1].bar(x - 0.2, [r["keep"]["t_last"] for r in results], width=0.4, color="#ef5350")
-axs[1].bar(x + 0.2, [r["res"]["t_last"] for r in results], width=0.4, color="#42a5f5")
-axs[1].set_ylabel("t_last (s)")
-axs[1].set_xticks(x)
-axs[1].set_xticklabels(names, rotation=62, ha="right", fontsize=7)
-axs[1].grid(axis="y", alpha=0.3)
-axs[1].set_xlabel("scenario")
-fig.tight_layout()
-fig.savefig(f"{OUT}/fig_p4_comparison.png", dpi=300)
+    # ----------------------------------------------------------------------
+    # 7. Figures + save
+    # ----------------------------------------------------------------------
+    fig, axs = plt.subplots(2, 1, figsize=(13.5, 8.5), dpi=300, sharex=True)
+    x = np.arange(len(results))
+    names = [r["scenario"] for r in results]
+    axs[0].bar(x - 0.2, [r["keep"]["eta"] for r in results], width=0.4,
+               label="KEEP original schedule", color="#ef5350")
+    axs[0].bar(x + 0.2, [r["res"]["eta"] for r in results], width=0.4,
+               label="RES event-triggered rescheduling", color="#42a5f5")
+    axs[0].set_ylabel("completion ratio η = k/N")
+    axs[0].set_ylim(0, 1.15)
+    axs[0].legend(fontsize=9, loc="lower left")
+    axs[0].set_title("Problem 4 — disturbance scenarios, evaluation window [0, 60] s")
+    axs[0].grid(axis="y", alpha=0.3)
+    axs[1].bar(x - 0.2, [r["keep"]["t_last"] for r in results], width=0.4, color="#ef5350")
+    axs[1].bar(x + 0.2, [r["res"]["t_last"] for r in results], width=0.4, color="#42a5f5")
+    axs[1].set_ylabel("t_last (s)")
+    axs[1].set_xticks(x)
+    axs[1].set_xticklabels(names, rotation=62, ha="right", fontsize=7)
+    axs[1].grid(axis="y", alpha=0.3)
+    axs[1].set_xlabel("scenario")
+    fig.tight_layout()
+    fig.savefig(f"{OUT}/fig_p4_comparison.png", dpi=300)
 
-with open(f"{OUT}/problem4_results.json", "w", encoding="utf-8") as fp:
-    json.dump(dict(baseline=dict(assignment=best_asg,
-                                 stations={f"{v}-{a}": [round(x, 3) for x in s]
-                                          for (v, a), s in best_st.items()},
-                                 starts={k: round(t, 3) for k, t in
-                                         base_sim["alert_start"].items()}),
-                     scenarios=results),
-              fp, ensure_ascii=False, indent=2)
-print("saved results + figure.")
+    with open(f"{OUT}/problem4_results.json", "w", encoding="utf-8") as fp:
+        json.dump(dict(baseline=dict(assignment=best_asg,
+                                     stations={f"{v}-{a}": [round(x, 3) for x in s]
+                                              for (v, a), s in best_st.items()},
+                                     starts={k: round(t, 3) for k, t in
+                                             base_sim["alert_start"].items()}),
+                         scenarios=results),
+                  fp, ensure_ascii=False, indent=2)
+    print("saved results + figure.")

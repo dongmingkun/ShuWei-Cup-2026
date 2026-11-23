@@ -81,13 +81,14 @@ For Q2(2), the per-alert lower bound gives $\max_a \mathrm{LB}_a=3.873\,\mathrm{
 against an achieved $11.046\,\mathrm{s}$: we report the honest $7.17\,\mathrm{s}$ gap
 ($6.78\,\mathrm{s}$ against the cross-implementation incumbent, a certified $3.6\%$
 station-level residual, Section~\ref{sec:q22}) rather than claiming global optimality;
-Q4 freezes the refined margin-compliant incumbent ($10.651\,\mathrm{s}$) as its
+Q4 freezes the $\sigma<2\,\mathrm{m}$ deployment schedule ($12.063\,\mathrm{s}$) as its
 operating baseline. For Q4, P1's structure search is \emph{exhaustive} over
-(order, pair) assignments at the observed scale ($\le6\times10^{3}$ structures) and its
-station refinement is a certified coordinate-descent local optimum, so P1 matches or
-improves upon the slot-capped control $P_{1c}$ in the overwhelming majority of the 86
-scenarios; P2's deficit is certified by comparing all strategies against identical
-replayed schedules.
+(order, pair) assignments at the observed scale ($\le6\times10^{3}$ structures) with
+quality repair to the same gate, and its station choice mirrors the baseline's
+time-first rule; the slot-capped control $P_{1c}$ coincides with P1 in all 86
+scenarios, which both certifies the search and shows the two-slot convention is
+lossless here, while P2's deficit ($\le9.61\,\mathrm{s}$) is certified by comparing
+all strategies against identical replayed schedules.
 
 \subsection{Cross-Implementation Reproducibility}
 
@@ -104,9 +105,10 @@ $10.651\,\mathrm{s}$ on the same structure family. The two routers agree on ever
 audited leg and the refined schedule replays bit-compatibly in this paper's simulator.
 On an independent 45-scenario disturbance family (different baseline and engine) it
 reproduces every qualitative boundary of Section~\ref{sec:q4}: full $\eta=1$ recovery
-under event-triggered re-optimization, the pure-outage value boundary (zero beyond the
-lock-in, with the same $0.31\,\mathrm{s}$ re-aim gain at the $10\,\mathrm{s}$ edge), the
-benign V5-failure case, and approximately additive combination penalties.
+under event-triggered re-optimization, zero value of a pure outage, a \emph{benign}
+failure for the vehicle that owns no open task (V5 under that study's baseline, V1
+here---the identity of the benign case is baseline-dependent, its existence is not),
+and approximately additive combination penalties.
 
 \section{Sensitivity Analysis}\label{sec:sens}
 
@@ -159,19 +161,17 @@ requires $a+80b\le1.636745\,\mathrm{m}$; the baseline gives $1.9\,\mathrm{m}$,
 about $16\%$ above that budget.
 
 \textbf{Recovery-time sweep (Q4).} The $t_{rec}$ sweep in Fig.~\ref{fig:q4trec} acts as
-a sensitivity analysis on the communication parameter: performance holds plateaus
-($17.52\,\mathrm{s}$ for $\tau\le10$; $18.88\,\mathrm{s}$ once $T_3$ locks
-mid-observation) and then degrades at $\approx0.85\,\mathrm{s}$ per second of outage,
-with no threshold effect beyond the $t_{rec}\ge15\,\mathrm{s}$ locked band of pure
-family (c).
+a sensitivity analysis on the communication parameter: for a \emph{pure} outage every
+strategy coincides with retention at all tested durations (zero value); once a new
+alert is pending, performance holds a $17.26\,\mathrm{s}$ plateau for $\tau\le10$, steps
+to $20.12\,\mathrm{s}$ as $T_1$ locks mid-observation, and reaches $27.97\,\mathrm{s}$ at
+$\tau=25$---degradation in steps rather than a threshold effect.
 
 \textbf{Policy robustness under kinematic error (Q4).} The event-triggered response
 was re-derived under $\pm10\%$ speed/slew perturbations on four representative
 disturbed scenarios (hardest/easiest new-alert cells, a V3 failure, a pure outage).
 $\eta=1$ is \emph{invariant} in all $20$ configurations; kinematics alone move
-$t_{\mathrm{last}}$ by at most $3.5\%$ (slew $-10\%$ on the hardest cell,
-$15.33\to15.87\,\mathrm{s}$; speed $\pm1.2\%$), one faster-gimbal cell additionally
-unlocks a better chain ($16.19\to14.90\,\mathrm{s}$ at slew $+10\%$), the
-re-optimized \emph{structure} is otherwise unchanged, and nominal re-runs reproduce
-the committed values exactly. The restored-coverage guarantee is thus robust to
-moderate kinematic uncertainty.
+$t_{\mathrm{last}}$ by at most $3.6\%$ (slew $-10\%$ on the easiest cell,
+$15.69\to16.26\,\mathrm{s}$; speed $\pm0.3\%$), the deployed \emph{structure} is
+unchanged, and nominal re-runs reproduce the committed values exactly. The
+restored-coverage guarantee is thus robust to moderate kinematic uncertainty.

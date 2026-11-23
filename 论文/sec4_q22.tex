@@ -126,10 +126,22 @@ screening and best-response refinement, and the valid lower bound is $3.873\,\ma
 for the reported schedule. The gap combines a weak bound with station-level
 suboptimality: the cross-implementation search (Validation (4)) reaches
 $10.651\,\mathrm{s}$ on one of the same 360 structures, narrowing the best-known gap to
-$6.78\,\mathrm{s}$. We report both rather than claiming global optimality.  Q4 freezes the
-refined margin-compliant incumbent ($10.651\,\mathrm{s}$, replayed
-bit-compatibly in this paper's simulator) as its operating baseline, while the
-conservative $11.046\,\mathrm{s}$ schedule populates the tables above.
+$6.78\,\mathrm{s}$. We report both rather than claiming global optimality.
+
+\textbf{Deployment variant ($\sigma<2\,\mathrm{m}$).} For deployment the team adopts a
+time-first variant with a hard accuracy gate, since Q4 reschedules on top of it. All
+$5{,}880$ assignment structures are enumerated with greedy time-optimal stations, then
+any pair violating $\sigma<2.0\,\mathrm{m}$ or $\gamma\ge30^\circ$ is repaired
+latest-first over a gated station pool (perpendicular-line search around each anchor
+station). The resulting schedule---V5 doubling $T_3\!\to\!T_1$ from the shared station
+$(50,93)$, V1$\to T_3$, V2$\to T_1$, V3$+$V4$\to T_2$---starts $T_3$ at
+$2.766\,\mathrm{s}$, $T_2$ at $7.501\,\mathrm{s}$, $T_1$ at $12.063\,\mathrm{s}$:
+$t_{\mathrm{last}}=12.063\,\mathrm{s}$ with pair accuracies
+$\sigma=1.621/1.395/1.593\,\mathrm{m}$ and
+$\gamma=82.1^\circ/77.6^\circ/126.8^\circ$, i.e.\ every observation inside the $2$-m
+requirement at a $+1.41\,\mathrm{s}$ max-start cost over the unconstrained
+$10.651\,\mathrm{s}$ plan. Q4 freezes this schedule as its operating baseline, while
+the conservative $11.046\,\mathrm{s}$ schedule populates the tables above.
 
 \subsubsection{Validation}
 
