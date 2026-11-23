@@ -27,3 +27,4 @@ results/debug_*.json
 *.fdb_latexmk
 *.fls
 承诺书检查/
+**/results/debug_*.json
